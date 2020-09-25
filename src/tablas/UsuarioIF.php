@@ -68,6 +68,7 @@ class UsuarioIF {
             exit($e->getMessage());
         }    
     }
+    
 
     public function insert(Array $input)
     {

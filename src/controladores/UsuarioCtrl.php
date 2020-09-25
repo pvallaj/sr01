@@ -23,11 +23,28 @@ class UsuarioCtrl {
         $this->resp=new Respuesta();
         $this->UsuarioIF = new UsuarioIF($db);
     }
+    
+    public function obtHeaders($dato){
+        foreach(getallheaders() as $campo => $valor){
+            if($dato === $campo){
+                return $valor;
+            }
+        }
+        return null;
+    }
 
     public function processRequest()
     {
         switch ($this->requestMethod) {
-            case 'GET':
+            case 'GET':            
+                if(!$this->validarToken()){
+                    $response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+                    $this->resp->responde('false', 'Sesion novalida', null);
+                    header($response['status_code_header']);
+                    $response['body'] = json_encode($this->resp);
+                    return $response;
+                }
+ 
                 if ($this->userId) {
                     $response = $this->getUser($this->userId);
                 } else {
@@ -202,6 +219,7 @@ class UsuarioCtrl {
                     'exp' => $time + (60*60*24), // Tiempo que expirará el token (+1 dia)
                     'data' => [ // información del usuario
                         'usr' => $_POST['usuario'],
+                        'diusr' => $usuario[0]['id'],
                         'nombre' => $usuario[0]['nombre'].' '.$usuario[0]['paterno'].' '.$usuario[0]['materno']
                     ]
                 );
@@ -221,5 +239,24 @@ class UsuarioCtrl {
         return $response;
     }
 
+    public function validarToken()
+    {
+        if(!array_key_exists('token', getallheaders())) return null;   
+        
+        $token = getallheaders()['token'];
+        
+        if(is_null($token)) return false;
 
+        $key=getenv('llave');
+        try {
+            $jwt = JWT::decode($token, $key,array('HS256'));
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        if($jwt->exp < time()) return false;
+        $this->userId=$jwt->data->diusr;
+
+        return true;
+    }
 }
