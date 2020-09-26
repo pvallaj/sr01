@@ -1,6 +1,7 @@
 <?php
 require "../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
+use Src\controladores\CnsltCatalogoCtrl;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -35,6 +36,16 @@ switch ($uri[1]) {
 
             $controller = new UsuarioCtrl($dbConnection, null, null);
             $controller->registrarAcceso();
+            break;
+    case 'catalogos':
+            $catalogo = null;
+            if (isset($uri[2])) {
+                $catalogo =  $uri[2];
+            }
+
+            $requestMethod = $_SERVER["REQUEST_METHOD"];
+            $controller = new CnsltCatalogoCtrl($dbConnection, $requestMethod, $catalogo);
+            $controller->procesa();
             break;
     default:
         header("HTTP/1.1 404 Not Found");
