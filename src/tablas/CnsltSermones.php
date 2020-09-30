@@ -1,7 +1,7 @@
 <?php
 namespace Src\tablas;
 
-class CnsltCatalogo {
+class CnsltSermones {
 
     private $db = null;
 
@@ -10,26 +10,21 @@ class CnsltCatalogo {
         $this->db = $db;
     }
 
-    public function obtenerCatalogo($catalogo)
+    public function obtenerSermones($parametros)
     {
-
-        switch ($catalogo) {
-            case 'Palabras':
-                $statement = "SELECT idPalabra as id, palabra, descrip as descripcion FROM cat_palabras2;";
-                break;
-
-            case 'Categorias':
-                    $statement = "SELECT id_clasificacion as id, categoria, `descripción` as descripcion FROM cat_clasificacion;";
-                    break;
-            default:
-                return null;
-        }
-
+        $statement = "Select
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, s.titulo, s.ciudad, s.`Año` as anio
+    from
+        autores as a,
+        sermones as s
+    where
+        a.id_autor=s.id_autor
+        and upper(autor_apellido) like upper(:autor);";
         try {
-            $statement = $this->db->query($statement);
-            $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('autor' => '%'.$parametros->autor.'%'));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }

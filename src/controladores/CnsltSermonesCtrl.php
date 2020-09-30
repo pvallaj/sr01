@@ -1,25 +1,24 @@
 <?php
 namespace Src\controladores;
 
-use Src\tablas\CnsltCatalogo;
+use Src\tablas\CnsltSermones;
 use Src\controladores\Respuesta;
 
-class CnsltCatalogoCtrl {
+class CnsltSermonesCtrl {
 
     private $db;
     private $requestMethod;
     private $catalogo;
     private $resp;
-    private $ConsultaCats;
+    private $ConsultaSermones;
     private $accion;
     private $parametros;
-    public function __construct($db, $requestMethod, $catalogo)
+    public function __construct($db, $requestMethod)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->catalogo = $catalogo;
         $this->resp=new Respuesta();
-        $this->ConsultaCats=new CnsltCatalogo($db);
+        $this->ConsultaSermones=new CnsltSermones($db);
 
         $this->accion='';
         try {
@@ -37,49 +36,33 @@ class CnsltCatalogoCtrl {
         }
     }
     
-    public function obtHeaders($dato){
-        foreach(getallheaders() as $campo => $valor){
-            if($dato === $campo){
-                return $valor;
-            }
-        }
-        return null;
-    }
-
     public function procesa()
     {
-        switch ($this->requestMethod) {
-            case 'GET':            
-                $response = $this->consultaCatalogo();
-            break;
-            default:
-                $response = $this->notFoundResponse();
-                break;
-        }
-        header($response['status_code_header']);
-        if ($response['body']) {
-            echo $response['body'];
-        }
-    }
-    public function procesaDetalle()
-    {
-        switch ($this->requestMethod) {
-            case 'POST':            
-                $response = $this->consultaDetalle();
-            break;
-            default:
-                $response = $this->notFoundResponse();
-                break;
-        }
+
+        if ($this->requestMethod =='POST'  ){
+
+            switch ($this->accion ) {
+                case 'consulta sermones':
+                    $response = $this->consultaSermones();
+                    break;
+                
+                default:
+                    $response = $this->notFoundResponse();
+                    break;
+            }
+        }      
+        else
+            $response = $this->notFoundResponse();
+
         header($response['status_code_header']);
         if ($response['body']) {
             echo $response['body'];
         }
     }
 
-    private function consultaCatalogo()
+    private function consultaSermones()
     {
-        $result = $this->ConsultaCats->obtenerCatalogo($this->catalogo);;
+        $result = $this->ConsultaSermones->obtenerSermones($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';
@@ -89,7 +72,7 @@ class CnsltCatalogoCtrl {
     }
     private function consultaDetalle()
     {
-        $result = $this->ConsultaCats->consultaDetalleCatalogo($this->parametros);;
+        $result = $this->ConsultaSermones->consultaDetalleCatalogo($this->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';

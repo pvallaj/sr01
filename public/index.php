@@ -2,6 +2,8 @@
 require "../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
 use Src\controladores\CnsltCatalogoCtrl;
+use Src\controladores\CnsltSermonesCtrl;
+ini_set('display_errors', 'off');
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -12,9 +14,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
-// all of our endpoints start with /person
-// everything else results in a 404 Not Found
-//echo $uri[1];
 switch ($uri[1]) {
     case 'usuario':
         $userId = null;
@@ -47,6 +46,21 @@ switch ($uri[1]) {
             $controller = new CnsltCatalogoCtrl($dbConnection, $requestMethod, $catalogo);
             $controller->procesa();
             break;
+    case 'detalleCatalogos':
+                $catalogo = null;
+                if (isset($uri[2])) {
+                    $catalogo =  $uri[2];
+                }
+                $requestMethod = $_SERVER["REQUEST_METHOD"];
+                $controller = new CnsltCatalogoCtrl($dbConnection, $requestMethod, $catalogo);
+                $controller->procesaDetalle();
+                break;
+    case 'sermones':
+        $catalogo = null;
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $controller = new CnsltSermonesCtrl($dbConnection, $requestMethod);
+        $controller->procesa();
+        break;
     default:
         header("HTTP/1.1 404 Not Found");
         exit();
