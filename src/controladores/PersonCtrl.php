@@ -38,7 +38,7 @@ class PersonCtrl {
                     echo 'llamando UPDATE'
                     $response = $this->updateUserFromRequest($this->userId);
                 } else {
-                    echo 'llamando INSERT'
+                    echo 'llamando INSERT';
                     $response = $this->createUserFromRequest();    
                 }
                 

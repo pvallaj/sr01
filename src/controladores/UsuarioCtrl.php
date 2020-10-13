@@ -200,20 +200,21 @@ class UsuarioCtrl {
     public function registrarAcceso()
     {
         
-        $usuario = $this->UsuarioIF->buscarUsuario($_POST['usuario']);
-        //var_dump($usuario);
+        $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
+        $usuario = $this->UsuarioIF->buscarUsuario($input['usuario']);
+        //var_dump($input);
         if ( !$usuario) {
             $this->resp->ok='false';
             $this->resp->message='Usuario / o contraseña incorrectos 1';
             $this->resp->resultado=null;
             
         }else{
-            if(!password_verify($_POST['contrasena'], $usuario[0]['contrasena'])){
+            if(!password_verify($input['contrasena'], $usuario[0]['contrasena'])){
                 $this->resp->message='Usuario / o contraseña incorrectos 2';
                 
             }else{
                 $time = time();
-                echo $time;
+                //echo $time;
                 $token = array(
                     'iat' => $time, // Tiempo que inició el token
                     'exp' => $time + (60*60*24), // Tiempo que expirará el token (+1 dia)
