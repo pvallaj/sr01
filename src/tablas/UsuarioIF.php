@@ -49,6 +49,7 @@ class UsuarioIF {
     }
 
 
+
     public function buscarUsuario($usuario)
     {
         $statement = "
@@ -75,9 +76,9 @@ class UsuarioIF {
 
         $statement = "
             INSERT INTO usuarios 
-                (nombre, paterno, materno, correo, role, contrasena)
+                (nombre, paterno, materno, correo, role, contrasena,telefono)
             VALUES
-                (:nombre, :paterno, :materno, :correo, :role, :contrasena);
+                (:nombre, :paterno, :materno, :correo, :role, :contrasena, :telefono);
         ";
         $hash = password_hash($input['contrasena'], PASSWORD_DEFAULT, [15]);
 
@@ -89,6 +90,7 @@ class UsuarioIF {
                 'materno' => $input['materno'],
                 'correo' => $input['correo'], //?? null  -- para omitir campo vacio
                 'role' => $input['role'],
+                'telefono' => $input['telefono'],
                 'contrasena' => $hash
             ));
             return $statement->rowCount();

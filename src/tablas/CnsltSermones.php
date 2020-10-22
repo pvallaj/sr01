@@ -9,7 +9,7 @@ class CnsltSermones {
     {
         $this->db = $db;
     }
-
+    
     public function obtenerSermones($parametros)
     {
         $statement = "Select

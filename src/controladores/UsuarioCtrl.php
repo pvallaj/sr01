@@ -52,9 +52,11 @@ class UsuarioCtrl {
                 };
                 break;
             case 'POST':
-                if ($this->userId){
+                $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
+                if ($input['accion']='actualizar'){
                     $response = $this->updateUserFromRequest($this->userId);
-                } else {
+                }
+                if ($input['accion']='crear'){
                     $response = $this->createUserFromRequest();    
                 }
                 break;
@@ -96,13 +98,19 @@ class UsuarioCtrl {
         return $response;
     }
 
-    private function createUserFromRequest()
+    private function createUserFromRequest($datos)
     {
 
-        if (! $this->validatePerson($_POST)) {
+        if (! $this->validatePerson($datos)) {
             return $this->unprocessableEntityResponse();
         }
-        $insertados=$this->UsuarioIF->insert($_POST);
+        if(count($this->UsuarioIF->buscarUsuario($datos['correo']))>=1){
+            $this->resp->ok='false';
+            $this->resp->message='El correo que desea registrar ya existe.';
+            $response['body'] = json_encode($this->resp);
+            return $response; 
+        } 
+        $insertados=$this->UsuarioIF->insert($datos);
         $regs=$response['status_code_header'] = 'HTTP/1.1 201 Created';
 
         $this->resp->ok='true';
@@ -171,6 +179,12 @@ class UsuarioCtrl {
         if (! isset($input['role'])) {
             return false;
         }
+        if (! isset($input['telefono'])) {
+            return false;
+        }
+        if (! isset($input['contrasena'])) {
+            return false;
+        }
         return true;
     }
 
@@ -211,8 +225,10 @@ class UsuarioCtrl {
         }else{
             if(!password_verify($input['contrasena'], $usuario[0]['contrasena'])){
                 $this->resp->message='Usuario / o contraseña incorrectos 2';
-                
+                $this->resp->ok='false';
             }else{
+                $this->resp->message='Registro exitoso';
+                $this->resp->ok='true';
                 $time = time();
                 //echo $time;
                 $token = array(
@@ -229,12 +245,36 @@ class UsuarioCtrl {
 
                 $this->resp->ok='true';
                 $this->resp->message='Login correcto';
-                $this->resp->resultado=(object)["token" => $jwt];
+                $this->resp->resultado=(object)[
+                    "token" => $jwt, 
+                    "role" => $usuario[0]['role'], 
+                    "nombre"=>$usuario[0]['nombre'].' '.$usuario[0]['paterno'].' '.$usuario[0]['materno'] 
+                ];
             }
         }
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($this->resp);
         $this->resp->resultado=null;
+        header($response['status_code_header']);
+        echo $response['body'];
+        return $response;
+    }
+    //Usuario
+    public function usuario(){
+        $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
+
+        if ($input['accion']=='actualizar'){
+            $response = $this->updateUserFromRequest($this->userId);
+        }
+        if ($input['accion']=='crear'){
+            $response = $this->createUserFromRequest($input);    
+        }
+        if ($input['accion']=='eliminar'){
+            $response = $this->createUserFromRequest();    
+        }
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = json_encode($this->resp);
+        //$this->resp->resultado=null;
         header($response['status_code_header']);
         echo $response['body'];
         return $response;

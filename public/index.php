@@ -16,19 +16,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
 switch ($uri[1]) {
-    case 'usuario':
-        $userId = null;
-        if (isset($uri[2])) {
-            $userId = (int) $uri[2];
-        }
-
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-
-        // pass the request method and user ID to the PersonController and process the HTTP request:
-        $controller = new UsuarioCtrl($dbConnection, $requestMethod, $userId);
-        $controller->processRequest();
-        break;
-    case 'registro':
+    case 'acceso':
             $userId = null;
             if (isset($uri[2])) {
                 $userId = (int) $uri[2];
@@ -37,6 +25,10 @@ switch ($uri[1]) {
             $controller = new UsuarioCtrl($dbConnection, null, null);
             $controller->registrarAcceso();
             break;
+    case 'usuario':
+                $controller = new UsuarioCtrl($dbConnection, null, null);
+                $controller->usuario();
+                break;
     case 'catalogos':
             $catalogo = null;
             if (isset($uri[2])) {
