@@ -235,7 +235,7 @@ class UsuarioCtrl {
                     'iat' => $time, // Tiempo que inició el token
                     'exp' => $time + (60*60*24), // Tiempo que expirará el token (+1 dia)
                     'data' => [ // información del usuario
-                        'usr' => $_POST['usuario'],
+                        'usr' => $input['usuario'],
                         'diusr' => $usuario[0]['id'],
                         'nombre' => $usuario[0]['nombre'].' '.$usuario[0]['paterno'].' '.$usuario[0]['materno']
                     ]

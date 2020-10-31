@@ -1,10 +1,10 @@
 <?php
 namespace Src\controladores;
 
-use Src\tablas\CnsltCatalogo;
+use Src\tablas\CnsltNarrativa;
 use Src\controladores\Respuesta;
 
-class CnsltCatalogoCtrl {
+class CnsltNarrativaCtrl {
 
     private $db;
     private $requestMethod;
@@ -19,7 +19,7 @@ class CnsltCatalogoCtrl {
         $this->requestMethod = $requestMethod;
         $this->catalogo = $catalogo;
         $this->resp=new Respuesta();
-        $this->ConsultaCats=new CnsltCatalogo($db);
+        $this->ConsultaCats=new CnsltNarrativa($db);
 
         $this->accion='';
         try {
@@ -48,14 +48,23 @@ class CnsltCatalogoCtrl {
 
     public function procesa()
     {
-        switch ($this->requestMethod) {
-            case 'GET':            
-                $response = $this->consultaCatalogo();
-            break;
-            default:
-                $response = $this->notFoundResponse();
-                break;
-        }
+        if ($this->requestMethod =='POST'  ){
+
+            switch ($this->accion ) {
+                case 'consulta catalogo base':
+                    $response = $this->consultaCatalogoBase();
+                    break;
+                case 'consulta narrativas':
+                        $response = $this->consultaNarrativas();
+                        break;
+                default:
+                    $response = $this->notFoundResponse();
+                    break;
+            }
+        }      
+        else
+            $response = $this->notFoundResponse();
+
         header($response['status_code_header']);
         if ($response['body']) {
             echo $response['body'];
@@ -77,9 +86,19 @@ class CnsltCatalogoCtrl {
         }
     }
 
-    private function consultaCatalogo()
+    private function consultaCatalogoBase()
     {
-        $result = $this->ConsultaCats->obtenerCatalogo($this->catalogo);;
+        $result = $this->ConsultaCats->consultaCatalogosBase();;
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+    private function consultaNarrativas()
+    {
+        $result = $this->ConsultaCats->consultaNarrativas($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';

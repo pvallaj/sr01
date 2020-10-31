@@ -1,9 +1,14 @@
 <?php
+ini_set('log_error', 'off');
+ini_set('display_errors', 'off');
+error_reporting(E_ALL);
+
 require "../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
-use Src\controladores\CnsltCatalogoCtrl;
+use Src\controladores\CnsltNarrativaCtrl;
 use Src\controladores\CnsltSermonesCtrl;
-ini_set('display_errors', 'off');
+//ini_set('display_errors', 'off');
+
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials: true");
@@ -15,6 +20,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
+error_log("csermones 10.".'URL:'.$uri[1].'----'.PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
 switch ($uri[1]) {
     case 'acceso':
             $userId = null;
@@ -22,11 +28,11 @@ switch ($uri[1]) {
                 $userId = (int) $uri[2];
             }
 
-            $controller = new UsuarioCtrl($dbConnection, null, null);
+            $controller = new UsuarioCtrl($dbSys, null, null);
             $controller->registrarAcceso();
             break;
     case 'usuario':
-                $controller = new UsuarioCtrl($dbConnection, null, null);
+                $controller = new UsuarioCtrl($dbSys, null, null);
                 $controller->usuario();
                 break;
     case 'catalogos':
@@ -36,22 +42,33 @@ switch ($uri[1]) {
             }
 
             $requestMethod = $_SERVER["REQUEST_METHOD"];
-            $controller = new CnsltCatalogoCtrl($dbConnection, $requestMethod, $catalogo);
+            $controller = new CnsltCatalogoCtrl($dbNNH, $requestMethod, $catalogo);
             $controller->procesa();
             break;
     case 'detalleCatalogos':
                 $catalogo = null;
                 if (isset($uri[2])) {
-                    $catalogo =  $uri[2];
+                    $catalogo =  $uri[2];   
                 }
                 $requestMethod = $_SERVER["REQUEST_METHOD"];
-                $controller = new CnsltCatalogoCtrl($dbConnection, $requestMethod, $catalogo);
+                $controller = new CnsltCatalogoCtrl($dbNNH, $requestMethod, $catalogo);
                 $controller->procesaDetalle();
                 break;
+    case 'narrativas':
+        $catalogo = null;
+        if (isset($uri[2])) {
+            $catalogo =  $uri[2];
+        }
+
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $controller = new CnsltNarrativaCtrl($dbNNH, $requestMethod, $catalogo);
+        $controller->procesa();
+        break;
     case 'sermones':
+        error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $controller = new CnsltSermonesCtrl($dbConnection, $requestMethod);
+        $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);
         $controller->procesa();
         break;
     default:
