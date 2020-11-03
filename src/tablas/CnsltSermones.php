@@ -141,6 +141,50 @@ class CnsltSermones {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
+
+        $statement4 = "SELECT 
+                    cs.catalogo_nombre as catalogo, cs.numeracion, c.catalogo_nombre
+            FROM 
+                sermones_catalogos AS cs,
+                catalogos AS C	
+            WHERE 
+                cs.Catalogo_nombre=c.ID_Catalogo
+                AND c.id_catalogo IN (1,5,3,4,6)
+                and cs.id_sermon=:id_sermon;";
+        try {
+            $statement4 = $this->db->prepare($statement4);
+            $statement4->execute(array('id_sermon' => $parametros->id_sermon));
+            $resultado->catalogos = $statement4->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        $statement5 = "select id_grabado, grabado_descripcion as grabado
+        FROM grabados WHERE id_sermon=:id_sermon;";
+        try {
+            $statement5 = $this->db->prepare($statement5);
+            $statement5->execute(array('id_sermon' => $parametros->id_sermon));
+            $resultado->grabados = $statement5->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        $statement6 = "SELECT 
+                sr.clasificacion, sr.enlace_digitalizacion, r.repositorio_tipo 
+            FROM 
+                sermones_repositorios AS sr,
+                repositorios r
+            WHERE 
+                sr.Repositorio_tipo = r.ID_Repositorio
+                and sr.ID_Sermon=:id_sermon;";
+        try {
+            $statement6 = $this->db->prepare($statement6);
+            $statement6->execute(array('id_sermon' => $parametros->id_sermon));
+            $resultado->repositorios = $statement6->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
         return $resultado;
     }
 
