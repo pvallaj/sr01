@@ -111,7 +111,7 @@ class CnsltNarrativa {
     public function consultaDetalleNarrativa($parametros)
     {
         $resultado= (object)null;
-
+        //error_log("cnarrativas.".$parametros->id_texto.'----'.PHP_EOL, 3, "/Users/paulinovj/proyectos/unam/sr01/log/log.txt");
         $statement = "select
         autor, obra,  
         CONCAT('Ed. ',editor) as editor, 
@@ -134,15 +134,43 @@ class CnsltNarrativa {
 
         try {
             $statement = $this->db->prepare($statement);
-            
             $statement->execute(array('id_texto' => $parametros->id_texto));
-            
             $resultado->bibliograficos  = $statement->fetchAll(\PDO::FETCH_ASSOC);
             
         } catch (\PDOException $e) {
             return $e->getMessage();
         }
         
+        //--------detalle de princeps
+
+        $statement = "select 
+        p.autor, 
+        p.obra_tomo, 
+        CONCAT('Librero: ', p.librero_casa) as librero, 
+        p.ciudad, 
+        p.a_costa_de, 
+        p.ano as anio, 
+        p.obra_tomo, 
+        CONCAT('PP.', b.`pp princeps`) as princeps
+    from 
+        cat_bibliografia AS b,
+        texto AS t,
+        cat_princep as p
+    where
+        b.id_ed_princeps=p.id_princep
+        and t.id_bibliografia=b.id_bibliografia
+        and t.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->princeps  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+
         return $resultado;
     }
 

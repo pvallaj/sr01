@@ -24,7 +24,7 @@ class CnsltNarrativaCtrl {
         $this->accion='';
         try {
             $this->parametros = (array)json_decode(file_get_contents('php://input'));
-            //$resultado['accion']=$ptrms['cn']->accion;
+            $resultado['accion']=$ptrms['cn']->accion;
             if(strpos($this->parametros['cn']->accion, ':')){
                 $this->parametros=explode(':',$this->parametros['cn']->accion);
                 $this->accion=$datos[0];
@@ -49,7 +49,7 @@ class CnsltNarrativaCtrl {
     public function procesa()
     {
         if ($this->requestMethod =='POST'  ){
-
+            error_log("ctrl narrativas.".$this->accion.'----'.PHP_EOL, 3, "/Users/paulinovj/proyectos/unam/sr01/log/log.txt");
             switch ($this->accion ) {
                 case 'consulta catalogo base':
                     $response = $this->consultaCatalogoBase();
