@@ -57,6 +57,9 @@ class CnsltNarrativaCtrl {
                 case 'consulta narrativas':
                         $response = $this->consultaNarrativas();
                         break;
+                case 'consulta detalle narrativa':
+                    $response = $this->consultaDetalleNarrativa();
+                    break;
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -99,6 +102,16 @@ class CnsltNarrativaCtrl {
     private function consultaNarrativas()
     {
         $result = $this->ConsultaCats->consultaNarrativas($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+    private function consultaDetalleNarrativa()
+    {
+        $result = $this->ConsultaCats->consultaDetalleNarrativa($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';

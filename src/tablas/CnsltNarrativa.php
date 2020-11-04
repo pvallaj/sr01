@@ -108,6 +108,44 @@ class CnsltNarrativa {
         }
     }
 
+    public function consultaDetalleNarrativa($parametros)
+    {
+        $resultado= (object)null;
+
+        $statement = "select
+        autor, obra,  
+        CONCAT('Ed. ',editor) as editor, 
+        CONCAT('Ed. Paleográfica', b.`ed paleográfica` ) AS ed_paleo, 
+        CONCAT('Coor. ', b.director_coord) AS director_cor,
+        CONCAT('Trad. ', b.traductor) AS director_cor,
+        b.editor,
+        b.ciudad,
+        b.`año` as anio,
+        CONCAT('en ', b.obra_anfitrion) AS obra_anfitrion,
+        CONCAT('t. ', b.tomo) AS tomo,
+        CONCAT('col. ', b.coleccion) AS coleccion,
+        CONCAT('pp. ', b.`pp princeps`) AS pp
+    FROM 
+        cat_bibliografia AS b,
+        texto AS t
+    WHERE
+        b.Id_bibliografia=t.Id_bibliografia
+        AND t.Id_Texto=:id_texto	; ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            
+            $resultado->bibliograficos  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+        
+        return $resultado;
+    }
+
     public function consultaDetalleCatalogo($parametros)
     {
         switch ($parametros->catalogo) {
