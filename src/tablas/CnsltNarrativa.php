@@ -130,7 +130,7 @@ class CnsltNarrativa {
         texto AS t
     WHERE
         b.Id_bibliografia=t.Id_bibliografia
-        AND t.Id_Texto=:id_texto	; ";
+        AND t.Id_Texto=:id_texto    ; ";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -165,6 +165,210 @@ class CnsltNarrativa {
             $statement = $this->db->prepare($statement);
             $statement->execute(array('id_texto' => $parametros->id_texto));
             $resultado->princeps  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------detalle de CONTEXTO y Descripción Discursiva
+
+        $statement = "  SELECT 
+            t.argumento, 
+            CONCAT('Nombre de la acción  dramatica: ', t.Accion_dramatica) as accion_dramatica,
+            CONCAT('Nombre del discurso: ', t.denom_discurso) as nombre_discurso,
+            'Contexto dramático: ' as contexto_dramatico,
+            CONCAT('Marco anterior: ', t.Marco_anterior) as marco_anterior,
+            CONCAT('Marco Posterior: ', t.Marco_posterior)  as marco_posterior,
+            CONCAT('Formula de apertura: ', t.Formula_apertura) as formula_apertura,
+            CONCAT('Formula de cierre: ', t.Formula_cierre) as formula_cierre,
+            CONCAT('Ubicación: ', t.Ubicacion) as ubicacion,
+
+            IF((t.dstrcn_discurso=1 and t.dstrcn_d_Prosa=0), 'Verso', 'Prosa') AS descripcion_discursiva,
+            CONCAT('Personaje Receptor: ', t.prsnj_receptor) as receptor,
+            CONCAT('Personaje Transmisor: ', t.prsnj_transmisor) as trasmisor,
+            CONCAT('Personaje Emisor: ', t.prsnj_emisor) as emisor,
+            CONCAT('Espacio abierto desde el que se cuenta: ', t.esp_dram_abierto) as ed_abierto,
+            CONCAT('Espacio Cerrado desde el que se cuenta: ', t.esp_dram_cerrado) as ed_cerrado,
+            CONCAT('Espacio Abierto referido: ', t.esp_dieg_abierto) as er_abierto,
+            CONCAT('Espacio Cerrado referido: ', t.esp_dieg_cerrado) as er_cerrado,
+            IF( (t.accion_diurna=0 and t.accion_nocturna=0 OR t.accion_diurna=1 and t.accion_nocturna=1), 'No especificado', IF((t.accion_diurna=1 and t.accion_nocturna=0), 'Diurna', 'Nocturna')) AS diurna_nocturna,
+            CONCAT('Temporalidad dramática: ', t.`Tiempo dramatico`) as t_dramatico,
+            'Momento Referido: ' as m_referido
+        FROM texto AS t WHERE id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->contexto  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------tipo de accion
+
+        $statement = "SELECT 
+            cta.Id_tipo_accion, cta.tipo_accion, cta.descripcion
+        FROM 
+            tx_tipaccion AS tta,
+            cat_tipoaccion AS cta
+        where
+            cta.Id_tipo_accion=tta.Id_tipo_accion
+            AND tta.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->tipoAccion  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------clasificación
+
+        $statement = "  SELECT 
+            cc.Id_clasificacion, cc.categoria, cc.`descripción` AS descripcion
+        FROM 
+            tx_clasificacion AS tc,
+            cat_clasificacion AS cc
+        where
+            tc.Id_Clasificacion=cc.Id_clasificacion
+            AND tc.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->clasificacion  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------motivos
+
+        $statement = "  SELECT 
+            cm.id_motivo, cm.motivo
+        FROM 
+            tx_motivo AS tm,
+            cat_motivos AS cm
+        where
+            tm.Id_motivo=cm.Id_motivo
+            AND tm.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->motivos  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------temas
+
+        $statement = "  SELECT 
+            cp.idpalabra, cp.palabra, cp.descrip AS descripcion
+        FROM 
+            tx_palabras2 AS tp,
+            cat_palabras2 AS cp
+        where
+            tp.idPalabras=cp.idPalabra
+            AND tp.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->temas  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------Versificación
+        $statement = "  SELECT 
+            cc.Id_clasificacion, cc.categoria, cc.`descripción` as descripcion
+        FROM 
+            tx_clasificacion AS tc,
+            cat_clasificacion AS cc
+        where
+            tc.Id_Clasificacion=cc.Id_clasificacion
+            AND tc.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->versificacion  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------soporte
+        $statement = "SELECT 
+            cs.id_soporte, cs.tipo_material
+        FROM 
+            tx_soporte AS ts,
+            cat_soporte AS cs
+        where
+            ts.Id_soporte=cs.Id_soporte
+            AND ts.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->soporte  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------signos actor
+        $statement = "SELECT 
+            CONCAT('Gestos explícitos de los actores:', sa.gesto_dram_) AS gestos_dramaticos,
+            CONCAT('Movimientos explícitos corporales de los actores:', sa.mov_dra_) AS movimientos_dramaticos,
+            CONCAT('Modulaciones de Voz explícitas de los actores:', sa.mov_dra_) AS voz_dramaticos,
+            CONCAT('Movimientos explícitos en la mirada de los actores:', sa.vista_dram) AS vista_dramaticos,
+            CONCAT('Gestos implícitos de los actores:', sa.gesto_dram_no) AS gestos_dramaticos_no,
+            CONCAT('Movimientos corporales implícitos de los actores:', sa.mov_dram_no) AS movimientos_dramaticos_no,
+            CONCAT('Modulaciones implícitas en la voz de los actores:', sa.voz_dram_no) AS voz_dramaticos_no,
+            CONCAT('Movimientos implícitos en la mirada de los actores:', sa.vista_dram_no) AS vista_dramaticos_no,
+            CONCAT('Gestos dramáticos de los personajes referidos:', sa.gesto_dieg) AS gestos_dieg,
+            CONCAT('Movimientos corporales de los personajes referidos:', sa.mov_dieg) AS movimientos_dieg,
+            CONCAT('Modulaciones de voz de los personajes referidos:', sa.voz_dieg) AS voz_dieg,
+            CONCAT('Movimientos en la mirada de los personajes referidos:', sa.vista_dieg) AS vista_dieg,
+            CONCAT_WS('Signos actorales implícitos de los personajes referidos:', sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
+        FROM 
+            signos_actor sa
+        where
+            sa.Id_Texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->signos  = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+
+        //--------vinculos
+        $statement = "SELECT 
+        CONCAT('Vínculos visuales: ', v.visuales) as visuales,
+        CONCAT('Vínculos auditivos: ', v.auditivos) as visuales,
+        CONCAT('Vínculos con el presente de la acción dramática: ', v.presente_accion) as presente,
+        CONCAT('Vínculos mediante referencias metadiscursivos: ', v.ref_discurso) as presente,
+        CONCAT('Vínculos mediante apelativos al receptor de la relación: ', v.apltvo_recep) as receptor,
+        CONCAT('Vínculos mediante apelativos al espectador: ', v.apltvo_espect) as espectador
+       from 
+       vinculos as v
+       where
+        v.id_texto=:id_texto;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id_texto' => $parametros->id_texto));
+            $resultado->vinculos  = $statement->fetchAll(\PDO::FETCH_ASSOC);
             
         } catch (\PDOException $e) {
             return $e->getMessage();
