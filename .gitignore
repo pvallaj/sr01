@@ -1,3 +1,4 @@
 vendor/
+public/api/logs.txt
 .env
 .env_respaldo

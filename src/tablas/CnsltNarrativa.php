@@ -38,7 +38,8 @@ class CnsltNarrativa {
     public function consultaCatalogosBase()
     {
         $resultado= (object)null;
-
+        //------------------------------------------------------------------
+        //autor
         $statement = "select distinct autor from cat_bibliografia;";
         try {
             $statement = $this->db->prepare($statement);
@@ -47,7 +48,8 @@ class CnsltNarrativa {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
-
+        //------------------------------------------------------------------
+        //obra
         $statement = "select distinct autor, obra from cat_bibliografia;";
         try {
             $statement = $this->db->prepare($statement);
@@ -56,12 +58,68 @@ class CnsltNarrativa {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
+        //------------------------------------------------------------------
+        //tema o palabra clave.
+        $statement = "SELECT idpalabra, palabra FROM cat_palabras2;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->tema = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
 
+        //------------------------------------------------------------------
+        //clasificacion 
         $statement = "SELECT id_clasificacion AS id, concat(categoria,' - ', descripción) categoria FROM cat_clasificacion;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $resultado->clasificacion = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //------------------------------------------------------------------
+        //motivos 
+        $statement = "SELECT id_motivo, motivo FROM cat_motivos;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->motivos = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //------------------------------------------------------------------
+        //tipo de versificacion 
+        $statement = "SELECT id_versificacion, tipo_verso FROM cat_versificacion;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->versificacion = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //------------------------------------------------------------------
+        //tipo de accion 
+        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->tipoaccion = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //------------------------------------------------------------------
+        //soporte 
+        $statement = "	SELECT id_soporte, tipo_material FROM cat_soporte;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->soporte = $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
@@ -182,7 +240,6 @@ class CnsltNarrativa {
             CONCAT('Formula de apertura: ', t.Formula_apertura) as formula_apertura,
             CONCAT('Formula de cierre: ', t.Formula_cierre) as formula_cierre,
             CONCAT('Ubicación: ', t.Ubicacion) as ubicacion,
-
             IF((t.dstrcn_discurso=1 and t.dstrcn_d_Prosa=0), 'Verso', 'Prosa') AS descripcion_discursiva,
             CONCAT('Personaje Receptor: ', t.prsnj_receptor) as receptor,
             CONCAT('Personaje Transmisor: ', t.prsnj_transmisor) as trasmisor,
@@ -355,9 +412,9 @@ class CnsltNarrativa {
         //--------vinculos
         $statement = "SELECT 
         CONCAT('Vínculos visuales: ', v.visuales) as visuales,
-        CONCAT('Vínculos auditivos: ', v.auditivos) as visuales,
+        CONCAT('Vínculos auditivos: ', v.auditivos) as auditivos,
         CONCAT('Vínculos con el presente de la acción dramática: ', v.presente_accion) as presente,
-        CONCAT('Vínculos mediante referencias metadiscursivos: ', v.ref_discurso) as presente,
+        CONCAT('Vínculos mediante referencias metadiscursivos: ', v.ref_discurso) as discurso,
         CONCAT('Vínculos mediante apelativos al receptor de la relación: ', v.apltvo_recep) as receptor,
         CONCAT('Vínculos mediante apelativos al espectador: ', v.apltvo_espect) as espectador
        from 

@@ -10,27 +10,107 @@ class CnsltSermones {
         $this->db = $db;
     }
     
-    public function obtenerAutores()
+    public function obtenerCatalogosBase()
     {
-        $statement = "
-        SELECT id_autor, concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido) as autor 
-        FROM autores 
-        where autor_nombre is not null order by Autor_nombre;";
+        $resultado= (object)null;
+        //autores-----
+        $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
+        FROM 
+            autores AS a,
+            sermones AS s
+        WHERE 
+            s.id_autor=a.id_autor
+            AND a.autor_nombre is not null order BY a.Autor_nombre;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
-            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $res;
+            $resultado->autores = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
+        //impresores ----------
+        $statement = "SELECT id_impresor, impresor_nombre FROM impresores;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->impresores = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //Autor de preliminares ----------
+        $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
+        FROM 
+            autores AS a,
+            sermones_preliminares AS s
+        WHERE 
+            s.id_autor=a.id_autor
+            AND a.autor_nombre is not null order BY a.Autor_nombre;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->preliminares = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //Dedicatarios ----------
+        $statement = "SELECT d.id_dedicatario, CONCAT_WS(' ', d.dedicatario_nombre, d.dedicatario_particula, d.dedicatario_apellido) AS autor
+        FROM dedicatiarios AS d
+        WHERE d.dedicatario_nombre IS NOT null;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->dedicatarios = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //CIUDAD ----------
+        $statement = "SELECT DISTINCT ciudad FROM sermones WHERE ciudad IS NOT NULL;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->ciudad = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //obra ----------
+        $statement = "SELECT id_libro,  libro_titulo FROM libros ORDER BY id_libro;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->obra = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        //orden religiosa ----------
+        $statement = "SELECT distinct autor_orden FROM autores where autor_orden IS NOT null;";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->orden = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+
+        return $resultado;
     }
 
     public function obtenerSermones($parametros)
     {
         if($parametros->id_autor > 0){
            
-            error_log("csermones 0".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+            //error_log("csermones 0".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
             $statement ="Select
                 s.id_sermon,
                 a.autor_apellido, a.autor_nombre,  a.autor_particula, 
@@ -55,7 +135,7 @@ class CnsltSermones {
             }
 
         }else{
-            error_log("csermones 1".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+            //error_log("csermones 1".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
         $statement = "Select
                 s.id_sermon,
                 a.autor_apellido, a.autor_nombre,  a.autor_particula, 
@@ -79,7 +159,7 @@ class CnsltSermones {
                 return $res;
             } catch (\PDOException $e) {
                 exit($e->getMessage());
-                error_log("csermones 1 - Error: ".$e->getMessage()." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+                //error_log("csermones 1 - Error: ".$e->getMessage()." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
             }
         }
         

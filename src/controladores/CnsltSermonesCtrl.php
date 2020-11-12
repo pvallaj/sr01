@@ -48,8 +48,8 @@ class CnsltSermonesCtrl {
                 case 'consulta detalle sermon':
                     $response = $this->consultaDetalleSermon();
                     break;
-                case 'consulta autores':
-                        $response = $this->consultaAutores();
+                case 'consulta catalogos base':
+                        $response = $this->consultaCatalogosBase();
                         break;
                 default:
                     $response = $this->notFoundResponse();
@@ -64,9 +64,9 @@ class CnsltSermonesCtrl {
             echo $response['body'];
         }
     }
-    private function consultaAutores()
+    private function consultaCatalogosBase()
     {
-        $result = $this->ConsultaSermones->obtenerAutores();
+        $result = $this->ConsultaSermones->obtenerCatalogosBase();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';
