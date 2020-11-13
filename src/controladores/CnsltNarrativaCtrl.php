@@ -49,7 +49,7 @@ class CnsltNarrativaCtrl {
     public function procesa()
     {
         if ($this->requestMethod =='POST'  ){
-            error_log("ctrl narrativas.".$this->accion.'----'.PHP_EOL, 3, "c:\\log\\log.txt");
+            //error_log("ctrl narrativas.".$this->accion.'----'.PHP_EOL, 3, "c:\\log\\log.txt");
             switch ($this->accion ) {
                 case 'consulta catalogo base':
                     $response = $this->consultaCatalogoBase();

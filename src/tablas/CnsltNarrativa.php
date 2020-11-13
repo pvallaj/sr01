@@ -129,24 +129,48 @@ class CnsltNarrativa {
 
     public function consultaNarrativas($parametros)
     {
+        $select=" SELECT t.id_texto,
+        t.nombre, t.narratio, t.ubicacion,
+        cb.autor, cb.obra 
+        ";
+
+        $from=" FROM 
+        Texto t,
+        cat_bibliografia cb 
+        ";
         
-        $statement = "select t.id_texto,
-            t.nombre, t.narratio, t.ubicacion,
-            cb.autor, cb.obra
-        from 
-            Texto t,
-            cat_bibliografia cb
-        where
-            t.Id_bibliografia=cb.Id_bibliografia ";
+        $where="WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia
+        ";
+        
+
         if($parametros->autor != null){
-            $statement= $statement.' and cb.autor=:autor ';
+            $where= $where." and cb.autor=:autor 
+            ";
         }
         if($parametros->obra != null ){
-            $statement= $statement.' and cb.obra=:obra ';
+            $where= $where." and cb.obra=:obra 
+            ";
         }
 
+        if($parametros->clasificacion != null){
+            $from=$from.",cat_clasificacion cc, tx_clasificacion tc 
+            ";
+            $where=$where." and t.id_texto=tc.id_texto and tc.id_clasificacion=cc.id_clasificacion and tc.id_clasificacion=:clasificacion 
+            ";
+        }
+
+        if($parametros->tema != null){
+            $from=$from.",cat_palabras2 cp, tx_palabras2 tp 
+            ";
+            $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
+            ";
+        }
+        $statement = $select.$from.$where;
+
         try {
-            $statement = $this->db->prepare($statement);
+            //v1
+            /*$statement = $this->db->prepare($statement);
             if($parametros->autor==null and $parametros->obra==null){
                 $statement->execute();
             }
@@ -158,7 +182,22 @@ class CnsltNarrativa {
                     'autor' => $parametros->autor,
                     'obra' => $parametros->obra
                 ));
-            }
+            }*/
+            //v2
+            //error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
+            $arr_parametros = array();
+            if($parametros->autor!=null) $arr_parametros['autor']= $parametros->autor;
+            if($parametros->obra!=null) $arr_parametros['obra']= $parametros->obra;
+            if($parametros->clasificacion!=null) $arr_parametros['clasificacion']= $parametros->clasificacion;
+            if($parametros->tema!=null) $arr_parametros['tema']= $parametros->tema;
+
+
+            //error_log("Cnsltnarrativas. ----".$arr_parametros['clasificacion'].'----'.PHP_EOL, 3, "logs.txt");
+            $statement = $this->db->prepare($statement);
+            if(count($arr_parametros)>0)
+                $statement->execute($arr_parametros);
+            else
+                $statement->execute();
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {

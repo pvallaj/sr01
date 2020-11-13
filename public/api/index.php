@@ -19,7 +19,7 @@ $uri = explode( '/', $uri );
 $parametros = (array)json_decode(file_get_contents('php://input'));
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata, true);
-
+/*
 error_log("index 9 -----.".json_encode($request).PHP_EOL, 3, "logs.txt");
 error_log("index 10 -----.".PHP_EOL, 3, "logs.txt");
 error_log("index 11 ".json_encode($_POST).PHP_EOL, 3, "logs.txt");
@@ -27,7 +27,7 @@ error_log("index 12 -----.".PHP_EOL, 3, "logs.txt");
 error_log("index 13 ".json_encode($_REQUEST).PHP_EOL, 3, "logs.txt");
 error_log("index 14 -----.".PHP_EOL, 3, "logs.txt");
 error_log("index 13 ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
-
+*/
 switch ($parametros['cn']->seccion) {
     case 'acceso':
             $userId = null;

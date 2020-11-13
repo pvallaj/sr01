@@ -108,6 +108,19 @@ class CnsltSermones {
 
     public function obtenerSermones($parametros)
     {
+        $select=" SELECT t.id_texto,
+        t.nombre, t.narratio, t.ubicacion,
+        cb.autor, cb.obra 
+        ";
+
+        $from=" FROM 
+        Texto t,
+        cat_bibliografia cb 
+        ";
+        
+        $where="WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia
+        ";
         if($parametros->id_autor > 0){
            
             //error_log("csermones 0".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
