@@ -108,74 +108,60 @@ class CnsltSermones {
 
     public function obtenerSermones($parametros)
     {
-        $select=" SELECT t.id_texto,
-        t.nombre, t.narratio, t.ubicacion,
-        cb.autor, cb.obra 
+        $select=" SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, 
+        s.titulo, s.ciudad, s.`Año` as anio
         ";
 
-        $from=" FROM 
-        Texto t,
-        cat_bibliografia cb 
+        $from="FROM
+         autores as a,
+         sermones as s 
         ";
         
         $where="WHERE 
-        t.Id_bibliografia=cb.Id_bibliografia
+        a.id_autor=s.id_autor
         ";
         if($parametros->id_autor > 0){
-           
-            //error_log("csermones 0".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
-            $statement ="Select
-                s.id_sermon,
-                a.autor_apellido, a.autor_nombre,  a.autor_particula, 
-                s.titulo, s.ciudad, s.`Año` as anio
-            from
-                autores as a,
-                sermones as s
-            where
-                a.id_autor=s.id_autor
-                and a.id_autor=:id_autor;";
-            try {
-                $statement = $this->db->prepare($statement);
-                $statement->execute(
-                    array('id_autor' => $parametros->id_autor/*,
-                          'lmt'      => $parametros->pagtam,
-                          'desde'    => $parametros->desde*/)
-                );
-                $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-                return $res;
-            } catch (\PDOException $e) {
-                exit($e->getMessage());
-            }
+                $where=$where." and a.id_autor=:id_autor 
+                ";
+                $arr_parametros['id_autor']= $parametros->id_autor;
 
-        }else{
-            //error_log("csermones 1".$parametros->autor." - ".$parametros->pagtam." - ".$parametros->desde." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
-        $statement = "Select
-                s.id_sermon,
-                a.autor_apellido, a.autor_nombre,  a.autor_particula, 
-                s.titulo, s.ciudad, s.`Año` as anio
-            from
-                autores as a,
-                sermones as s
-            where
-                a.id_autor=s.id_autor
-                and upper(concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido)) like upper(:autor)
-            order by a.autor_apellido
-            ;";
-            try {
-                $statement = $this->db->prepare($statement);
-                $statement->execute(
-                    array('autor' => '%'.$parametros->autor.'%')
-                    /*    'pagina'      => $parametros->pagtam,
-                        'desde'    => $parametros->desde)*/
-                );
-                $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-                return $res;
-            } catch (\PDOException $e) {
-                exit($e->getMessage());
-                //error_log("csermones 1 - Error: ".$e->getMessage()." - ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
-            }
         }
         
+        if($parametros->autor!=null){
+            $where=$where." and upper(concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido)) like upper(:autor) 
+                ";
+                $arr_parametros['autor']='%'.$parametros->autor.'%';
+        }
+
+        if($parametros->titulo!=null){
+            $where=$where." and upper(titulo) like upper(:titulo) 
+                ";
+                $arr_parametros['titulo']='%'.$parametros->titulo.'%';
+        }
+        if($parametros->anio_ini!=null && $parametros->anio_fin){
+            $where=$where." and s.`Año` between :inicio and :fin 
+                ";
+            $arr_parametros['inicio']=$parametros->anio_ini;
+            $arr_parametros['fin']=$parametros->anio_fin;
+        }
+        $statement = $select.$from.$where;
+        try {
+            
+            error_log("CnslSermones. ----
+            ".$statement.'
+            ----'.PHP_EOL, 3, "logs.txt");
+            $statement = $this->db->prepare($statement);
+            if(count($arr_parametros)>0)
+                $statement->execute($arr_parametros);
+            else
+                $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
     }
 
     public function consultaDetalleSermon($parametros)

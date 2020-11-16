@@ -129,6 +129,8 @@ class CnsltNarrativa {
 
     public function consultaNarrativas($parametros)
     {
+        $arr_parametros = array();
+
         $select=" SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion,
         cb.autor, cb.obra 
@@ -147,10 +149,12 @@ class CnsltNarrativa {
         if($parametros->autor != null){
             $where= $where." and cb.autor=:autor 
             ";
+            $arr_parametros['autor']= $parametros->autor;
         }
         if($parametros->obra != null ){
             $where= $where." and cb.obra=:obra 
             ";
+            $arr_parametros['obra']= $parametros->obra;
         }
 
         if($parametros->clasificacion != null){
@@ -158,6 +162,7 @@ class CnsltNarrativa {
             ";
             $where=$where." and t.id_texto=tc.id_texto and tc.id_clasificacion=cc.id_clasificacion and tc.id_clasificacion=:clasificacion 
             ";
+            $arr_parametros['clasificacion']= $parametros->clasificacion;
         }
 
         if($parametros->tema != null){
@@ -165,33 +170,45 @@ class CnsltNarrativa {
             ";
             $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
             ";
+            $arr_parametros['tema']= $parametros->tema;
+        }
+
+        if($parametros->motivo != null){
+            $from=$from.", tx_motivo tm 
+            ";
+            $where=$where." and t.id_texto=tm.id_texto and tm.id_motivo=:motivo 
+            ";
+            $arr_parametros['motivo']= $parametros->motivo;
+        }
+
+        if($parametros->tipoVerso != null){
+            $from=$from.", tx_versificacion tv 
+            ";
+            $where=$where." and t.id_texto=tv.id_texto and tv.id_versificacion=:tipoVerso 
+            ";
+            $arr_parametros['tipoVerso']= $parametros->tipoVerso;
+        }
+        if($parametros->tipoAccion!= null){
+            $from=$from.", tx_tipaccion tt 
+            ";
+            $where=$where." and t.id_texto=tt.id_texto and tt.id_tipo_accion=:tipoAccion 
+            ";
+            $arr_parametros['tipoAccion']= $parametros->tipoAccion;
+        }
+        if($parametros->soporte!= null){
+            $from=$from.", tx_soporte ts 
+            ";
+            $where=$where." and t.id_texto=ts.id_texto and ts.id_soporte=:soporte 
+            ";
+            $arr_parametros['soporte']= $parametros->soporte;
         }
         $statement = $select.$from.$where;
 
         try {
-            //v1
-            /*$statement = $this->db->prepare($statement);
-            if($parametros->autor==null and $parametros->obra==null){
-                $statement->execute();
-            }
-            if($parametros->autor!=null and $parametros->obra==null){
-                $statement->execute(array('autor' => $parametros->autor));
-            }
-            if($parametros->autor!=null and $parametros->obra!=null){
-                $statement->execute(array(
-                    'autor' => $parametros->autor,
-                    'obra' => $parametros->obra
-                ));
-            }*/
-            //v2
+            
             //error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
-            $arr_parametros = array();
-            if($parametros->autor!=null) $arr_parametros['autor']= $parametros->autor;
-            if($parametros->obra!=null) $arr_parametros['obra']= $parametros->obra;
-            if($parametros->clasificacion!=null) $arr_parametros['clasificacion']= $parametros->clasificacion;
-            if($parametros->tema!=null) $arr_parametros['tema']= $parametros->tema;
-
-
+            
+ 
             //error_log("Cnsltnarrativas. ----".$arr_parametros['clasificacion'].'----'.PHP_EOL, 3, "logs.txt");
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
@@ -383,13 +400,13 @@ class CnsltNarrativa {
 
         //--------Versificación
         $statement = "  SELECT 
-            cc.Id_clasificacion, cc.categoria, cc.`descripción` as descripcion
-        FROM 
-            tx_clasificacion AS tc,
-            cat_clasificacion AS cc
-        where
-            tc.Id_Clasificacion=cc.Id_clasificacion
-            AND tc.id_texto=:id_texto;";
+        cv.id_versificacion, cv.tipo_verso
+    FROM 
+        tx_versificacion AS tv,
+        cat_versificacion AS cv
+    where
+        tv.id_versificacion=cv.id_versificacion
+        AND tv.id_texto=:id_texto;";
 
         try {
             $statement = $this->db->prepare($statement);
