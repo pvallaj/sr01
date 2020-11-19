@@ -116,8 +116,7 @@ class CnsltSermones {
 
         $from="FROM
          autores as a,
-         sermones as s 
-        ";
+         sermones as s ";
         
         $where="WHERE 
         a.id_autor=s.id_autor
@@ -140,18 +139,51 @@ class CnsltSermones {
                 ";
                 $arr_parametros['titulo']='%'.$parametros->titulo.'%';
         }
-        if($parametros->anio_ini!=null && $parametros->anio_fin){
+        if($parametros->anio_ini!=null && $parametros->anio_fin!=null){
             $where=$where." and s.`Año` between :inicio and :fin 
                 ";
             $arr_parametros['inicio']=$parametros->anio_ini;
             $arr_parametros['fin']=$parametros->anio_fin;
         }
+
+        if($parametros->impresor!=null ){
+            $where=$where." and s.impresor = :impresor 
+                ";
+            $arr_parametros['impresor']=$parametros->impresor;
+        }
+
+        if($parametros->id_preliminar > 0){
+            $from=$from.",
+            (SELECT s.id_sermon, a.id_autor as id_preliminar 
+        FROM 
+            autores AS a,
+            sermones_preliminares AS s
+        WHERE 
+            s.id_autor=a.id_autor
+        ) sp ";
+            $where=$where." and sp.id_sermon=s.id_sermon
+                            and sp.id_preliminar=:id_preliminar 
+            ";
+            $arr_parametros['id_preliminar']= $parametros->id_preliminar;
+
+        }
+
+        if($parametros->id_dedicatario > 0){
+            $from=$from.",
+                dedicatiarios d
+            ";
+            $where=$where." and d.id_sermon =s.id_sermon
+                            and d.id_dedicatario=:id_dedicatario 
+                ";
+            $arr_parametros['id_dedicatario']=$parametros->id_dedicatario;
+        }
+
         $statement = $select.$from.$where;
         try {
             
-            error_log("CnslSermones. ----
+           /* error_log("CnslSermones. ----
             ".$statement.'
-            ----'.PHP_EOL, 3, "logs.txt");
+            ----'.PHP_EOL, 3, "logs.txt");*/
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
                 $statement->execute($arr_parametros);
@@ -166,7 +198,7 @@ class CnsltSermones {
 
     public function consultaDetalleSermon($parametros)
     {
-        //error_log("csermones 2".$parametros->id_sermon.PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+        
         $resultado= (object)null;
 
         $statement = "select 
@@ -202,10 +234,10 @@ class CnsltSermones {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
-
+        //Preliminares
         $statement3 = "SELECT 
         p.preliminar_tipo, p.preliminar_titulo, p.orden_dentro_sermon,
-        CONCAT_WS(' ', a.autor_apellido, a.autor_nombre, a.autor_particula) autor
+        CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) autor
     FROM 
         sermones_preliminares AS p,
         autores AS a
