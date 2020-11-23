@@ -110,7 +110,7 @@ class CnsltSermones {
     {
         $select=" SELECT
         s.id_sermon,
-        a.autor_apellido, a.autor_nombre,  a.autor_particula, 
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
         s.titulo, s.ciudad, s.`Año` as anio
         ";
 
@@ -176,6 +176,31 @@ class CnsltSermones {
                             and d.id_dedicatario=:id_dedicatario 
                 ";
             $arr_parametros['id_dedicatario']=$parametros->id_dedicatario;
+        }
+
+        if($parametros->orden !=null){
+
+            $where=$where." and a.autor_orden=:orden 
+                ";
+            $arr_parametros['orden']=$parametros->orden;
+        }
+
+        if($parametros->tituloObra !=null){
+            $from=$from.",
+            sermones_libros sm
+            ";
+            $where=$where." and sm.id_sermon= s.id_sermon 
+                            and sm.id_libro=:tituloObra 
+                ";
+            $arr_parametros['tituloObra']=$parametros->tituloObra;
+        }
+
+        if($parametros->ciudad !=null){
+
+            $where=$where."  
+                            and s.ciudad=:ciudad 
+                ";
+            $arr_parametros['ciudad']=$parametros->ciudad;
         }
 
         $statement = $select.$from.$where;

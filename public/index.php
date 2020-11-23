@@ -10,17 +10,20 @@ use Src\controladores\CnsltSermonesCtrl;
 //ini_set('display_errors', 'off');
 
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Request-Headers: *');
+header("Access-Control-Allow-Headers: Origin, Content, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,X-Auth-Token, content-type");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
-error_log("csermones 10.".'URL:'.$uri[1].'----'.PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+//error_log("csermones 10.".'URL:'.$uri[1].'----'.PHP_EOL, 3, "logs.txt");
 switch ($uri[1]) {
     case 'acceso':
             $userId = null;
@@ -65,7 +68,7 @@ switch ($uri[1]) {
         $controller->procesa();
         break;
     case 'sermones':
-        error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "C:\\proyectos\\UNAM\\codigo\\Servidor\\log\\log.txt");
+        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);

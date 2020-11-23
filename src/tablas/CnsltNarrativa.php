@@ -158,7 +158,7 @@ class CnsltNarrativa {
         }
 
         if($parametros->clasificacion != null){
-            $from=$from.",cat_clasificacion cc, tx_clasificacion tc 
+            $from=$from.",cat_clasificacion cc, Tx_clasificacion tc 
             ";
             $where=$where." and t.id_texto=tc.id_texto and tc.id_clasificacion=cc.id_clasificacion and tc.id_clasificacion=:clasificacion 
             ";
@@ -166,7 +166,7 @@ class CnsltNarrativa {
         }
 
         if($parametros->tema != null){
-            $from=$from.",cat_palabras2 cp, tx_palabras2 tp 
+            $from=$from.",cat_palabras2 cp, Tx_Palabras2 tp 
             ";
             $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
             ";
@@ -174,7 +174,7 @@ class CnsltNarrativa {
         }
 
         if($parametros->motivo != null){
-            $from=$from.", tx_motivo tm 
+            $from=$from.", Tx_motivo tm 
             ";
             $where=$where." and t.id_texto=tm.id_texto and tm.id_motivo=:motivo 
             ";
@@ -182,21 +182,21 @@ class CnsltNarrativa {
         }
 
         if($parametros->tipoVerso != null){
-            $from=$from.", tx_versificacion tv 
+            $from=$from.", Tx_versificacion tv 
             ";
             $where=$where." and t.id_texto=tv.id_texto and tv.id_versificacion=:tipoVerso 
             ";
             $arr_parametros['tipoVerso']= $parametros->tipoVerso;
         }
         if($parametros->tipoAccion!= null){
-            $from=$from.", tx_tipaccion tt 
+            $from=$from.", Tx_tipaccion tt 
             ";
             $where=$where." and t.id_texto=tt.id_texto and tt.id_tipo_accion=:tipoAccion 
             ";
             $arr_parametros['tipoAccion']= $parametros->tipoAccion;
         }
         if($parametros->soporte!= null){
-            $from=$from.", tx_soporte ts 
+            $from=$from.", Tx_soporte ts 
             ";
             $where=$where." and t.id_texto=ts.id_texto and ts.id_soporte=:soporte 
             ";
@@ -241,7 +241,7 @@ class CnsltNarrativa {
         CONCAT('pp. ', b.`pp princeps`) AS pp
     FROM 
         cat_bibliografia AS b,
-        texto AS t
+        Texto AS t
     WHERE
         b.Id_bibliografia=t.Id_bibliografia
         AND t.Id_Texto=:id_texto    ; ";
@@ -268,8 +268,8 @@ class CnsltNarrativa {
         CONCAT('PP.', b.`pp princeps`) as princeps
     from 
         cat_bibliografia AS b,
-        texto AS t,
-        cat_princep as p
+        Texto AS t,
+        cat_Princep as p
     where
         b.id_ed_princeps=p.id_princep
         and t.id_bibliografia=b.id_bibliografia
@@ -307,7 +307,7 @@ class CnsltNarrativa {
             IF( (t.accion_diurna=0 and t.accion_nocturna=0 OR t.accion_diurna=1 and t.accion_nocturna=1), 'No especificado', IF((t.accion_diurna=1 and t.accion_nocturna=0), 'Diurna', 'Nocturna')) AS diurna_nocturna,
             CONCAT('Temporalidad dramática: ', t.`Tiempo dramatico`) as t_dramatico,
             'Momento Referido: ' as m_referido
-        FROM texto AS t WHERE id_texto=:id_texto;";
+        FROM Texto AS t WHERE id_texto=:id_texto;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -323,8 +323,8 @@ class CnsltNarrativa {
         $statement = "SELECT 
             cta.Id_tipo_accion, cta.tipo_accion, cta.descripcion
         FROM 
-            tx_tipaccion AS tta,
-            cat_tipoaccion AS cta
+            Tx_TipAccion AS tta,
+            cat_tipoAccion AS cta
         where
             cta.Id_tipo_accion=tta.Id_tipo_accion
             AND tta.id_texto=:id_texto;";
@@ -343,7 +343,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cc.Id_clasificacion, cc.categoria, cc.`descripción` AS descripcion
         FROM 
-            tx_clasificacion AS tc,
+            Tx_clasificacion AS tc,
             cat_clasificacion AS cc
         where
             tc.Id_Clasificacion=cc.Id_clasificacion
@@ -363,7 +363,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cm.id_motivo, cm.motivo
         FROM 
-            tx_motivo AS tm,
+            Tx_motivo AS tm,
             cat_motivos AS cm
         where
             tm.Id_motivo=cm.Id_motivo
@@ -383,7 +383,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cp.idpalabra, cp.palabra, cp.descrip AS descripcion
         FROM 
-            tx_palabras2 AS tp,
+            Tx_Palabras2 AS tp,
             cat_palabras2 AS cp
         where
             tp.idPalabras=cp.idPalabra
@@ -402,7 +402,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
         cv.id_versificacion, cv.tipo_verso
     FROM 
-        tx_versificacion AS tv,
+        Tx_versificacion AS tv,
         cat_versificacion AS cv
     where
         tv.id_versificacion=cv.id_versificacion
@@ -421,7 +421,7 @@ class CnsltNarrativa {
         $statement = "SELECT 
             cs.id_soporte, cs.tipo_material
         FROM 
-            tx_soporte AS ts,
+            Tx_soporte AS ts,
             cat_soporte AS cs
         where
             ts.Id_soporte=cs.Id_soporte
@@ -452,7 +452,7 @@ class CnsltNarrativa {
             CONCAT('Movimientos en la mirada de los personajes referidos:', sa.vista_dieg) AS vista_dieg,
             CONCAT_WS('Signos actorales implícitos de los personajes referidos:', sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
         FROM 
-            signos_actor sa
+            Signos_actor sa
         where
             sa.Id_Texto=:id_texto;";
 
@@ -501,8 +501,8 @@ class CnsltNarrativa {
             case 'categoria':
                     $statement = "select t.id_texto as id, t.nombre, t.narratio 
                     from 
-                        texto t, 
-                        tx_clasificacion tx
+                        Texto t, 
+                        Tx_clasificacion tx
                     where
                         t.id_texto=tx.id_texto
                         and id_clasificacion= :cid ;";

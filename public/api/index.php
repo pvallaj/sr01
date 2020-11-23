@@ -1,18 +1,25 @@
 <?php
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Request-Headers: *');
+header("Access-Control-Allow-Headers: Content, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
+
+
 ini_set('log_error', 'off');
 ini_set('display_errors', 'off');
 error_reporting(E_ALL);
 
-require "../../bootstrap.php";
+require "../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
 use Src\controladores\CnsltNarrativaCtrl;
 use Src\controladores\CnsltSermonesCtrl;
 //ini_set('display_errors', 'off');
-
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: X-Requested-With');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
