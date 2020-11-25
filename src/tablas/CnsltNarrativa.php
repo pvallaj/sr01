@@ -202,11 +202,32 @@ class CnsltNarrativa {
             ";
             $arr_parametros['soporte']= $parametros->soporte;
         }
+        if($parametros->textos!= null){
+            list($t1, $t2, $t3)=\explode("+",$parametros->textos);
+            $t1=trim($t1);
+            $t2=trim($t2);
+            $t3=trim($t3);
+            if($t1!=null){
+                $where=$where." and upper(narratio) like upper(:t1)
+            ";
+                $arr_parametros['t1']= '%'.$t1.'%';
+            }
+            if($t2!=null){
+                $where=$where." and upper(narratio) like upper(:t2)
+            ";
+                $arr_parametros['t2']= '%'.$t2.'%';
+            }
+            if($t3!=null){
+                $where=$where." and upper(narratio) like upper(:t3)
+            ";
+                $arr_parametros['t3']= '%'.$t3.'%';
+            }
+        }
         $statement = $select.$from.$where;
 
         try {
             
-            //error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
+            error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
             
  
             //error_log("Cnsltnarrativas. ----".$arr_parametros['clasificacion'].'----'.PHP_EOL, 3, "logs.txt");
@@ -228,17 +249,17 @@ class CnsltNarrativa {
         //error_log("cnarrativas.".$parametros->id_texto.'----'.PHP_EOL, 3, "/Users/paulinovj/proyectos/unam/sr01/log/log.txt");
         $statement = "select
         autor, obra,  
-        CONCAT('Ed. ',editor) as editor, 
-        CONCAT('Ed. Paleográfica', b.`ed paleográfica` ) AS ed_paleo, 
-        CONCAT('Coor. ', b.director_coord) AS director_cor,
-        CONCAT('Trad. ', b.traductor) AS director_cor,
+        editor, 
+        b.`ed paleográfica` AS ed_paleo, 
+        b.director_coord AS director_cor,
+        b.traductor AS director_cor,
         b.editor,
         b.ciudad,
         b.`año` as anio,
-        CONCAT('en ', b.obra_anfitrion) AS obra_anfitrion,
-        CONCAT('t. ', b.tomo) AS tomo,
-        CONCAT('col. ', b.coleccion) AS coleccion,
-        CONCAT('pp. ', b.`pp princeps`) AS pp
+        b.obra_anfitrion AS obra_anfitrion,
+        b.tomo AS tomo,
+        b.coleccion AS coleccion,
+        b.`pp princeps` AS pp
     FROM 
         cat_bibliografia AS b,
         Texto AS t
@@ -257,15 +278,15 @@ class CnsltNarrativa {
         
         //--------detalle de princeps
 
-        $statement = "select 
+        $statement = "SELECT 
         p.autor, 
         p.obra_tomo, 
-        CONCAT('Librero: ', p.librero_casa) as librero, 
+        p.librero_casa as librero, 
         p.ciudad, 
         p.a_costa_de, 
         p.ano as anio, 
         p.obra_tomo, 
-        CONCAT('PP.', b.`pp princeps`) as princeps
+        b.`pp princeps` as princeps
     from 
         cat_bibliografia AS b,
         Texto AS t,
@@ -286,28 +307,27 @@ class CnsltNarrativa {
 
         //--------detalle de CONTEXTO y Descripción Discursiva
 
-        $statement = "  SELECT 
-            t.argumento, 
-            CONCAT('Nombre de la acción  dramatica: ', t.Accion_dramatica) as accion_dramatica,
-            CONCAT('Nombre del discurso: ', t.denom_discurso) as nombre_discurso,
-            'Contexto dramático: ' as contexto_dramatico,
-            CONCAT('Marco anterior: ', t.Marco_anterior) as marco_anterior,
-            CONCAT('Marco Posterior: ', t.Marco_posterior)  as marco_posterior,
-            CONCAT('Formula de apertura: ', t.Formula_apertura) as formula_apertura,
-            CONCAT('Formula de cierre: ', t.Formula_cierre) as formula_cierre,
-            CONCAT('Ubicación: ', t.Ubicacion) as ubicacion,
-            IF((t.dstrcn_discurso=1 and t.dstrcn_d_Prosa=0), 'Verso', 'Prosa') AS descripcion_discursiva,
-            CONCAT('Personaje Receptor: ', t.prsnj_receptor) as receptor,
-            CONCAT('Personaje Transmisor: ', t.prsnj_transmisor) as trasmisor,
-            CONCAT('Personaje Emisor: ', t.prsnj_emisor) as emisor,
-            CONCAT('Espacio abierto desde el que se cuenta: ', t.esp_dram_abierto) as ed_abierto,
-            CONCAT('Espacio Cerrado desde el que se cuenta: ', t.esp_dram_cerrado) as ed_cerrado,
-            CONCAT('Espacio Abierto referido: ', t.esp_dieg_abierto) as er_abierto,
-            CONCAT('Espacio Cerrado referido: ', t.esp_dieg_cerrado) as er_cerrado,
-            IF( (t.accion_diurna=0 and t.accion_nocturna=0 OR t.accion_diurna=1 and t.accion_nocturna=1), 'No especificado', IF((t.accion_diurna=1 and t.accion_nocturna=0), 'Diurna', 'Nocturna')) AS diurna_nocturna,
-            CONCAT('Temporalidad dramática: ', t.`Tiempo dramatico`) as t_dramatico,
-            'Momento Referido: ' as m_referido
-        FROM Texto AS t WHERE id_texto=:id_texto;";
+        $statement = "SELECT 
+        t.argumento, 
+        t.Accion_dramatica as accion_dramatica,
+        t.denom_discurso as nombre_discurso,
+        'Contexto dramático: ' as contexto_dramatico,
+        t.Marco_anterior as marco_anterior,
+        t.Marco_posterior  as marco_posterior,
+        t.Formula_apertura as formula_apertura,
+        t.Formula_cierre as formula_cierre,
+        t.Ubicacion as ubicacion,
+        IF((t.dstrcn_discurso=1 and t.dstrcn_d_Prosa=0), 'Verso', 'Prosa') AS descripcion_discursiva,
+        t.prsnj_receptor as receptor,
+        t.prsnj_transmisor as trasmisor,
+        t.prsnj_emisor as emisor,
+        t.esp_dram_abierto as ed_abierto,
+        t.esp_dram_cerrado as ed_cerrado,
+        t.esp_dieg_abierto as er_abierto,
+        t.esp_dieg_cerrado as er_cerrado,
+        IF( (t.accion_diurna=0 and t.accion_nocturna=0 OR t.accion_diurna=1 and t.accion_nocturna=1), 'No especificado', IF((t.accion_diurna=1 and t.accion_nocturna=0), 'Diurna', 'Nocturna')) AS diurna_nocturna,            t.`Tiempo dramatico` as t_dramatico,
+        'Momento Referido: ' as m_referido
+    FROM Texto AS t WHERE id_texto=:id_texto;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -438,23 +458,23 @@ class CnsltNarrativa {
 
         //--------signos actor
         $statement = "SELECT 
-            CONCAT('Gestos explícitos de los actores:', sa.gesto_dram_) AS gestos_dramaticos,
-            CONCAT('Movimientos explícitos corporales de los actores:', sa.mov_dra_) AS movimientos_dramaticos,
-            CONCAT('Modulaciones de Voz explícitas de los actores:', sa.mov_dra_) AS voz_dramaticos,
-            CONCAT('Movimientos explícitos en la mirada de los actores:', sa.vista_dram) AS vista_dramaticos,
-            CONCAT('Gestos implícitos de los actores:', sa.gesto_dram_no) AS gestos_dramaticos_no,
-            CONCAT('Movimientos corporales implícitos de los actores:', sa.mov_dram_no) AS movimientos_dramaticos_no,
-            CONCAT('Modulaciones implícitas en la voz de los actores:', sa.voz_dram_no) AS voz_dramaticos_no,
-            CONCAT('Movimientos implícitos en la mirada de los actores:', sa.vista_dram_no) AS vista_dramaticos_no,
-            CONCAT('Gestos dramáticos de los personajes referidos:', sa.gesto_dieg) AS gestos_dieg,
-            CONCAT('Movimientos corporales de los personajes referidos:', sa.mov_dieg) AS movimientos_dieg,
-            CONCAT('Modulaciones de voz de los personajes referidos:', sa.voz_dieg) AS voz_dieg,
-            CONCAT('Movimientos en la mirada de los personajes referidos:', sa.vista_dieg) AS vista_dieg,
-            CONCAT_WS('Signos actorales implícitos de los personajes referidos:', sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
-        FROM 
-            Signos_actor sa
-        where
-            sa.Id_Texto=:id_texto;";
+        sa.gesto_dram_ AS gestos_dramaticos,
+        sa.mov_dra_ AS movimientos_dramaticos,
+        sa.mov_dra_ AS voz_dramaticos,
+        sa.vista_dram AS vista_dramaticos,
+        sa.gesto_dram_no AS gestos_dramaticos_no,
+        sa.mov_dram_no AS movimientos_dramaticos_no,
+        sa.voz_dram_no AS voz_dramaticos_no,
+        sa.vista_dram_no AS vista_dramaticos_no,
+        sa.gesto_dieg AS gestos_dieg,
+        sa.mov_dieg AS movimientos_dieg,
+        sa.voz_dieg AS voz_dieg,
+        sa.vista_dieg AS vista_dieg,
+        concat_ws(sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
+    FROM 
+        Signos_actor sa
+    where
+        sa.Id_Texto=:id_texto;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -467,12 +487,12 @@ class CnsltNarrativa {
 
         //--------vinculos
         $statement = "SELECT 
-        CONCAT('Vínculos visuales: ', v.visuales) as visuales,
-        CONCAT('Vínculos auditivos: ', v.auditivos) as auditivos,
-        CONCAT('Vínculos con el presente de la acción dramática: ', v.presente_accion) as presente,
-        CONCAT('Vínculos mediante referencias metadiscursivos: ', v.ref_discurso) as discurso,
-        CONCAT('Vínculos mediante apelativos al receptor de la relación: ', v.apltvo_recep) as receptor,
-        CONCAT('Vínculos mediante apelativos al espectador: ', v.apltvo_espect) as espectador
+        v.visuales as visuales,
+        v.auditivos as auditivos,
+        v.presente_accion as presente,
+        v.ref_discurso as discurso,
+        v.apltvo_recep as receptor,
+        v.apltvo_espect as espectador
        from 
        vinculos as v
        where

@@ -15,7 +15,7 @@ ini_set('log_error', 'off');
 ini_set('display_errors', 'off');
 error_reporting(E_ALL);
 
-require "../bootstrap.php";
+require "../../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
 use Src\controladores\CnsltNarrativaCtrl;
 use Src\controladores\CnsltSermonesCtrl;
