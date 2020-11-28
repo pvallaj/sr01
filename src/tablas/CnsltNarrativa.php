@@ -205,8 +205,11 @@ class CnsltNarrativa {
         if($parametros->textos!= null){
             list($t1, $t2, $t3)=\explode("+",$parametros->textos);
             $t1=trim($t1);
+            $t1=\str_replace('"','',$t1);
             $t2=trim($t2);
+            $t2=\str_replace('"','',$t2);
             $t3=trim($t3);
+            $t3=\str_replace('"','',$t3);
             if($t1!=null){
                 $where=$where." and upper(narratio) like upper(:t1)
             ";
