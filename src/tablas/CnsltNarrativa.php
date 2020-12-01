@@ -147,14 +147,24 @@ class CnsltNarrativa {
         
 
         if($parametros->autor != null){
-            $where= $where." and cb.autor=:autor 
-            ";
-            $arr_parametros['autor']= $parametros->autor;
+            if(strpos($parametros->autor, ",")){
+                $where= $where." and cb.autor in (".$parametros->autor.") 
+                ";
+            }else{
+                $where= $where." and cb.autor=:autor 
+                ";
+                $arr_parametros['autor']= $parametros->autor;
+            }
         }
         if($parametros->obra != null ){
-            $where= $where." and cb.obra=:obra 
+            if(strpos($parametros->obra, ",")){
+                $where= $where." and cb.obra in (".$parametros->obra.") 
+                ";
+            }else{
+                $where= $where." and cb.obra=:obra 
             ";
-            $arr_parametros['obra']= $parametros->obra;
+                $arr_parametros['obra']= $parametros->obra; 
+            }
         }
 
         if($parametros->clasificacion != null){
@@ -232,8 +242,6 @@ class CnsltNarrativa {
             
             error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
             
- 
-            //error_log("Cnsltnarrativas. ----".$arr_parametros['clasificacion'].'----'.PHP_EOL, 3, "logs.txt");
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
                 $statement->execute($arr_parametros);
