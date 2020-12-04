@@ -147,7 +147,7 @@ class CnsltNarrativa {
         
 
         if($parametros->autor != null){
-            if(strpos($parametros->autor, ",")){
+            if(strpos($parametros->autor, "','")){
                 $where= $where." and cb.autor in (".$parametros->autor.") 
                 ";
             }else{
@@ -265,6 +265,7 @@ class CnsltNarrativa {
         b.director_coord AS director_cor,
         b.traductor AS director_cor,
         b.editor,
+        b.editorial,
         b.ciudad,
         b.`año` as anio,
         b.obra_anfitrion AS obra_anfitrion,
