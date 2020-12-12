@@ -240,7 +240,7 @@ class CnsltNarrativa {
 
         try {
             
-            error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
+            //error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
             
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)

@@ -7,6 +7,7 @@ require "../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
 use Src\controladores\CnsltNarrativaCtrl;
 use Src\controladores\CnsltSermonesCtrl;
+use Src\controladores\CnsltNovohispCtrl;
 //ini_set('display_errors', 'off');
 
 
@@ -23,7 +24,7 @@ if($method == "OPTIONS") {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
-//error_log("csermones 10.".'URL:'.$uri[1].'----'.PHP_EOL, 3, "logs.txt");
+error_log("csermones 10.".'URL:'.$uri[1].'----'.PHP_EOL, 3, "logs.txt");
 switch ($uri[1]) {
     case 'acceso':
             $userId = null;
@@ -71,9 +72,10 @@ switch ($uri[1]) {
         //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);
+        $controller = new CnsltNovohispCtrl($dbSNH, $requestMethod);
         $controller->procesa();
         break;
+    
     default:
         header("HTTP/1.1 404 Not Found");
         exit();

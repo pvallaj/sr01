@@ -19,6 +19,7 @@ require "../../bootstrap.php";
 use Src\controladores\UsuarioCtrl;
 use Src\controladores\CnsltNarrativaCtrl;
 use Src\controladores\CnsltSermonesCtrl;
+use Src\controladores\CnsltNovohispCtrl;
 //ini_set('display_errors', 'off');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -83,6 +84,13 @@ switch ($parametros['cn']->seccion) {
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);
+        $controller->procesa();
+        break;
+    case 'novohisp':
+        //error_log("cnovohisp 11. Recibiendo peticion de novohisp ".PHP_EOL, 3, "logs.txt");
+        $catalogo = null;
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $controller = new CnsltNovohispCtrl($dbSys, $requestMethod);
         $controller->procesa();
         break;
     default:
