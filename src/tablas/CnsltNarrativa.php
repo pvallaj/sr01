@@ -104,7 +104,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //tipo de accion 
-        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion;";
+        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoAccion;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -199,7 +199,7 @@ class CnsltNarrativa {
             $arr_parametros['tipoVerso']= $parametros->tipoVerso;
         }
         if($parametros->tipoAccion!= null){
-            $from=$from.", Tx_tipaccion tt 
+            $from=$from.", Tx_TipAccion tt 
             ";
             $where=$where." and t.id_texto=tt.id_texto and tt.id_tipo_accion=:tipoAccion 
             ";
@@ -553,7 +553,35 @@ class CnsltNarrativa {
         }
     }
 
-
+    public function buscar($parametros)
+    {
+        
+        $statement = "SELECT 
+        t.id_texto,
+      t.nombre, t.narratio, t.ubicacion,
+      cb.autor, cb.obra 
+    FROM  
+        cat_bibliografia as cb,
+        Texto as t
+    WHERE 
+        cb.Id_bibliografia=t.Id_bibliografia
+        AND (
+            MATCH (autor, obra, `año`) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+            or
+            MATCH (narratio) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+        );";
+        //error_log("VVH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(':terminos' => $parametros->terminos));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
 
   
 }

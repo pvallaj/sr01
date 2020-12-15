@@ -354,5 +354,34 @@ class CnsltSermones {
         }
     }
 
+    public function buscar($parametros)
+    {
+        
+        $statement = "select 
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+    from
+        autores a,
+        sermones s
+    where
+        a.id_autor=s.id_autor
+		  AND (
+				MATCH (Autor_apellido, Autor_nombre, Autor_particula) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+				or
+				MATCH (titulo) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+			);";
+        //error_log("SVH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(':terminos' => $parametros->terminos));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
    
 }

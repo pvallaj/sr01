@@ -2,6 +2,8 @@
 namespace Src\controladores;
 
 use Src\tablas\CnsltNovohisp;
+use Src\tablas\CnsltNarrativa;
+use Src\tablas\CnsltSermones;
 use Src\controladores\Respuesta;
 
 class CnsltNovohispCtrl {
@@ -10,14 +12,18 @@ class CnsltNovohispCtrl {
     private $requestMethod;
     private $resp;
     private $Consulta;
+    private $Narrativas;
+    private $Sermones;
     private $accion;
     private $parametros;
-    public function __construct($db, $requestMethod)
+    public function __construct($db, $dbN, $dbS,  $requestMethod)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
         $this->resp=new Respuesta();
         $this->Consulta=new CnsltNovohisp($db);
+        $this->Narrativas=new CnsltNarrativa($dbN);
+        $this->Sermones=new CnsltSermones($dbS);
 
         $this->accion='';
         try {
@@ -82,14 +88,21 @@ class CnsltNovohispCtrl {
     }
     private function buscar()
     {
-        $result = $this->Consulta->buscar($this->parametros->parametros);
+        $rOE = $this->Consulta->buscar($this->parametros->parametros);
+        $rNNH = $this->Narrativas->buscar($this->parametros->parametros);
+        $rSNH = $this->Sermones->buscar($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';
-        $this->resp->resultado=$result;
+        $this->resp->resultado=array(
+            'obraescrita' => $rOE,
+            'narrativas'=> $rNNH,
+            'sermones'=> $rSNH,
+        );
         $response['body'] = json_encode($this->resp);
         return $response;
     }
+
     private function notFoundResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';

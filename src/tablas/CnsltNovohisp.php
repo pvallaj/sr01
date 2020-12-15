@@ -32,7 +32,7 @@ class CnsltNovohisp {
     {
         
         $statement = "SELECT * FROM info_oe WHERE MATCH (etiquetas, descripcion) AGAINST (:terminos IN NATURAL LANGUAGE MODE);;";
-        error_log("NH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
+        //error_log("NH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => $parametros->terminos));

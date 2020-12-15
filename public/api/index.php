@@ -90,7 +90,7 @@ switch ($parametros['cn']->seccion) {
         //error_log("cnovohisp 11. Recibiendo peticion de novohisp ".PHP_EOL, 3, "logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $controller = new CnsltNovohispCtrl($dbSys, $requestMethod);
+        $controller = new CnsltNovohispCtrl($dbSys,$dbNNH, $dbSNH, $requestMethod);
         $controller->procesa();
         break;
     default:
