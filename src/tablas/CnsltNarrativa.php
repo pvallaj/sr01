@@ -570,7 +570,7 @@ class CnsltNarrativa {
             or
             MATCH (narratio) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
         );";
-        //error_log("VVH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
+        error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => $parametros->terminos));
