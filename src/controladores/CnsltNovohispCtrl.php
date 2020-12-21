@@ -58,6 +58,9 @@ class CnsltNovohispCtrl {
                 case 'consulta estructura':
                     $response = $this->consultaEstrucutra();
                     break;
+                case 'consulta obra escrita':
+                    $response = $this->consultaObraEscrita();
+                    break;
                 case 'buscar terminos':
                     $response = $this->buscar();
                     break;
@@ -78,7 +81,17 @@ class CnsltNovohispCtrl {
 
     private function consultaEstrucutra()
     {
-        $result = $this->Consulta->consultaEstructura();;
+        $result = $this->Consulta->consultaEstructura();
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+    private function consultaObraEscrita()
+    {
+        $result = $this->Consulta->consultaInformacionOE($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';

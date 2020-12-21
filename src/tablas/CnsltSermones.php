@@ -139,11 +139,17 @@ class CnsltSermones {
                 ";
                 $arr_parametros['titulo']='%'.$parametros->titulo.'%';
         }
-        if($parametros->anio_ini!=null && $parametros->anio_fin!=null){
-            $where=$where." and s.`Año` between :inicio and :fin 
-                ";
-            $arr_parametros['inicio']=$parametros->anio_ini;
-            $arr_parametros['fin']=$parametros->anio_fin;
+        if($parametros->anio!=0){
+            $where=$where." and s.`Año`=:anio
+                    ";
+                $arr_parametros['anio']=$parametros->anio;
+        }else{
+            if($parametros->anio_ini!=null && $parametros->anio_fin!=null){
+                $where=$where." and s.`Año` between :inicio and :fin 
+                    ";
+                $arr_parametros['inicio']=$parametros->anio_ini;
+                $arr_parametros['fin']=$parametros->anio_fin;
+            }
         }
 
         if($parametros->impresor!=null ){

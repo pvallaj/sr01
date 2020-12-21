@@ -28,6 +28,28 @@ class CnsltNovohisp {
         return  $res;
     }
 
+    public function consultaInformacionOE($parametros)
+    {
+        
+        $statement = "SELECT * 
+        FROM info_oe 
+        WHERE 
+        MATCH (etiquetas, descripcion) 
+        AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+        ORDER BY id;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(':terminos' => $parametros->terminos));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
+
     public function buscar($parametros)
     {
         
