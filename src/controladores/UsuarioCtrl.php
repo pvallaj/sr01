@@ -73,16 +73,7 @@ class UsuarioCtrl {
         }
     }
 
-    private function getAllUsers()
-    {
-        $result = $this->UsuarioIF->findAll();
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $this->resp->ok='true';
-        $this->resp->message='correcto';
-        $this->resp->resultado=$result;
-        $response['body'] = json_encode($this->resp);
-        return $response;
-    }
+    
 
     private function getUser($id)
     {
@@ -98,105 +89,9 @@ class UsuarioCtrl {
         return $response;
     }
 
-    private function createUserFromRequest($datos)
-    {
+    
 
-        if (! $this->validatePerson($datos)) {
-            return $this->unprocessableEntityResponse();
-        }
-        if(count($this->UsuarioIF->buscarUsuario($datos['correo']))>=1){
-            $this->resp->ok='false';
-            $this->resp->message='El correo que desea registrar ya existe.';
-            $response['body'] = json_encode($this->resp);
-            return $response; 
-        } 
-        $insertados=$this->UsuarioIF->insert($datos);
-        $regs=$response['status_code_header'] = 'HTTP/1.1 201 Created';
-
-        $this->resp->ok='true';
-        if($insertados>0){
-            $this->resp->message='Registro insertado exitosamente';
-        }else{
-            $this->resp->message='No se inserto registro';
-        }
-        $response['body'] = json_encode($this->resp);
-        return $response;
-    }
-
-    private function updateUserFromRequest($id)
-    {
-        $result = $this->UsuarioIF->find($id);
-        if (! $result) {
-            return $this->notFoundResponse();
-        }
-
-        if (! $this->validatePerson($_POST)) {
-            return $this->unprocessableEntityResponse();
-        }
-        $regs_act=$this->UsuarioIF->update($id, $_POST);
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $this->resp->ok='true';
-        if($regs_act>0){
-            $this->resp->message='Actualización exitosa';
-        }else{
-            $this->resp->message='No se encontraron coincidencias';
-        }
-        
-        $this->resp->resultado=null;
-        $response['body'] = json_encode($this->resp);
-        return $response;
-    }
-
-    private function deleteUser($id)
-    {
-        $result = $this->UsuarioIF->find($id);
-        if (! $result) {
-            return $this->notFoundResponse();
-        }
-        $this->UsuarioIF->delete($id);
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $this->resp->ok='true';
-        $this->resp->message='eliminación exitosa';
-        $this->resp->resultado=null;
-        $response['body'] = json_encode($this->resp);
-        return $response;
-    }
-
-    private function validatePerson($input)
-    {
-        if (! isset($input['nombre'])) {
-            return false;
-        }
-        if (! isset($input['paterno'])) {
-            return false;
-        }
-        if (! isset($input['materno'])) {
-            return false;
-        }
-        if (! isset($input['correo'])) {
-            return false;
-        }
-        if (! isset($input['role'])) {
-            return false;
-        }
-        if (! isset($input['telefono'])) {
-            return false;
-        }
-        if (! isset($input['contrasena'])) {
-            return false;
-        }
-        return true;
-    }
-
-    private function unprocessableEntityResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-        $this->resp->ok='false';
-        $this->resp->message='información NO VALIDA';
-        $this->resp->resultado=null;
-        $response['body'] = json_encode($this->resp);
-        return $response;
-    }
+    
 
     private function notFoundResponse()
     {
@@ -204,17 +99,17 @@ class UsuarioCtrl {
     
         $this->resp->ok='false';
         $this->resp->message='información NO encontrada';
-        $this->resp->resultado=$result;
         $response['body'] = json_encode($this->resp);
         return $response;
     }
 
+    //----------------------------------------------------------------------------------------------
 
     //Registro 
     public function registrarAcceso()
     {
         
-        $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
+        $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn']['parametros'];
         $usuario = $this->UsuarioIF->buscarUsuario($input['usuario']);
         //var_dump($input);
         if ( !$usuario) {
@@ -255,28 +150,173 @@ class UsuarioCtrl {
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($this->resp);
         $this->resp->resultado=null;
-        header($response['status_code_header']);
-        echo $response['body'];
         return $response;
     }
     //Usuario
     public function usuario(){
         $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
+        
+       
+        switch ($input['accion'] ) {
+            case 'crear':
+                $response = $this->crearUsuario($input['parametros']);
+                break;
+            case 'actualizar':
+                $response = $this->actualizarUsuario($input['parametros']);
+                break;
+            case 'eliminar':
+                $response = $this->eliminarUsuario($input['parametros']['id']);
+                break;
+            case 'cambiar perfil':
+                $response = $this->cambiarRole($input['parametros']['id'], $input['parametros']['role']);
+                 break;
+            case 'acceso':
+                $response = $this->registrarAcceso();
+                break;
 
-        if ($input['accion']=='actualizar'){
-            $response = $this->updateUserFromRequest($this->userId);
+            case 'obtener usuarios':
+                $response = $this->obtenerUsuarios();
+                break;
+            
+            default:
+                $response = $this->notFoundResponse();
+                break;
         }
-        if ($input['accion']=='crear'){
-            $response = $this->createUserFromRequest($input);    
-        }
-        if ($input['accion']=='eliminar'){
-            $response = $this->createUserFromRequest();    
-        }
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode($this->resp);
-        //$this->resp->resultado=null;
+       
         header($response['status_code_header']);
-        echo $response['body'];
+        if ($response['body']) {
+            echo $response['body'];
+        }
+
+        
+        return $response;
+    }
+
+    private function obtenerUsuarios()
+    {
+        $result = $this->UsuarioIF->obtenerUsuarios();
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function crearUsuario($datos)
+    {
+
+        if (! $this->validatePersona($datos)) {
+            return $this->noProcesable();
+        }
+        if(count($this->UsuarioIF->buscarUsuario($datos['correo']))>=1){
+            $this->resp->ok='false';
+            $this->resp->message='El correo que desea registrar ya existe.';
+            $response['body'] = json_encode($this->resp);
+            return $response; 
+        } 
+        $insertados=$this->UsuarioIF->crearUsuario($datos);
+        $regs=$response['status_code_header'] = 'HTTP/1.1 201 Created';
+
+        if($insertados>0){
+            $this->resp->ok='true';
+            $this->resp->message='Registro insertado exitosamente';
+        }else{
+            $this->resp->ok='false';
+            $this->resp->message='No se inserto registro.';
+        }
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function actualizarUsuario($parametros)
+    {
+        $result = $this->UsuarioIF->find($parametros['id']);
+        if (! $result) {
+            return $this->notFoundResponse();
+        }
+
+        if (! $this->validatePersona($parametros)) {
+            return $this->noProcesable();
+        }
+        $regs_act=$this->UsuarioIF->actualizar($parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        if($regs_act>0){
+            $this->resp->message='Actualización exitosa';
+        }else{
+            $this->resp->message='No se encontraron coincidencias';
+        }
+        
+        $this->resp->resultado=null;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function eliminarUsuario($id)
+    {
+        $result = $this->UsuarioIF->find($id);
+        if (! $result) {
+            return $this->notFoundResponse();
+        }
+        $this->UsuarioIF->eliminar($id);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='eliminación exitosa';
+        $this->resp->resultado=null;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function cambiarRole($id, $role)
+    {
+        $result = $this->UsuarioIF->find($id);
+        if (! $result) {
+            return $this->notFoundResponse();
+        }
+        $this->UsuarioIF->cambiarRole($id, $role);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='eliminación exitosa';
+        $this->resp->resultado=null;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function validatePersona($input)
+    {
+        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "logs.txt");
+        if (! isset($input['nombre'])) {
+            return false;
+        }
+        if (! isset($input['paterno'])) {
+            return false;
+        }
+        if (! isset($input['materno'])) {
+            return false;
+        }
+        if (! isset($input['correo'])) {
+            return false;
+        }
+        if (! isset($input['role'])) {
+            return false;
+        }
+        if (! isset($input['telefono'])) {
+            return false;
+        }
+        if (! isset($input['contrasena'])) {
+            return false;
+        }
+        return true;
+    }
+
+    private function noProcesable()
+    {
+        $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
+        $this->resp->ok='false';
+        $this->resp->message='información NO VALIDA';
+        $this->resp->resultado=null;
+        $response['body'] = json_encode($this->resp);
         return $response;
     }
 

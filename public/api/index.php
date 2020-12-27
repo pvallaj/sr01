@@ -37,16 +37,7 @@ error_log("index 14 -----.".PHP_EOL, 3, "logs.txt");
 error_log("index 13 ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
 */
 switch ($parametros['cn']->seccion) {
-    case 'acceso':
-            $userId = null;
-            if (isset($uri[2])) {
-                $userId = (int) $uri[2];
-            }
-
-            $controller = new UsuarioCtrl($dbSys, null, null);
-            $controller->registrarAcceso();
-            break;
-    case 'usuario':
+    case 'usuarios':
                 $controller = new UsuarioCtrl($dbSys, null, null);
                 $controller->usuario();
                 break;

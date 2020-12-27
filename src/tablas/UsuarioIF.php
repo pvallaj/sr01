@@ -10,11 +10,11 @@ class UsuarioIF {
         $this->db = $db;
     }
 
-    public function findAll()
+    public function obtenerUsuarios()
     {
         $statement = "
             SELECT 
-                id, nombre, paterno, materno, correo, role
+                id, nombre, paterno, materno, correo, role, telefono
             FROM
                 usuarios;
         ";
@@ -59,7 +59,7 @@ class UsuarioIF {
                 usuarios
             WHERE correo = ?;
         ";
-
+        //error_log("USUARIOS: ".$usuario.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array($usuario));
@@ -71,7 +71,7 @@ class UsuarioIF {
     }
     
 
-    public function insert(Array $input)
+    public function crearUsuario(Array $input)
     {
 
         $statement = "
@@ -81,7 +81,7 @@ class UsuarioIF {
                 (:nombre, :paterno, :materno, :correo, :role, :contrasena, :telefono);
         ";
         $hash = password_hash($input['contrasena'], PASSWORD_DEFAULT, [15]);
-
+        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
@@ -99,38 +99,65 @@ class UsuarioIF {
         }    
     }
 
-    public function update($id, Array $input)
+    public function actualizar($datos)
     {
-        $statement = "
-            UPDATE usuarios
-            SET 
-                nombre = :nombre,
-                paterno  = :paterno,
-                materno = :materno,
-                correo = :correo,
-                role = :role,
-                contrasena = :contrasena
-            WHERE id = :id;
-        ";
-        $hash = password_hash($input['contrasena'], PASSWORD_DEFAULT, [15]);
+        if($datos['contrasena']==''){
+            $statement = "
+                UPDATE usuarios
+                SET 
+                    nombre = :nombre,
+                    paterno  = :paterno,
+                    materno = :materno,
+                    correo = :correo,
+                    role = :role
+                WHERE id = :id;
+            ";
+        }else{
+            $statement = "
+                UPDATE usuarios
+                SET 
+                    nombre = :nombre,
+                    paterno  = :paterno,
+                    materno = :materno,
+                    correo = :correo,
+                    role = :role,
+                    contrasena = :contrasena
+                WHERE id = :id;
+            ";
+            $hash = password_hash($datos['contrasena'], PASSWORD_DEFAULT, [15]);
+        }
+        
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(
-                'id' => (int) $id,
-                'nombre' => $input['nombre'],
-                'paterno'  => $input['paterno'],
-                'materno' => $input['materno'] ,
-                'correo' => $input['correo'] ,
-                'role' => $input['role'] ,
-                'contrasena' => $hash ,
-            ));
+            if($datos['contrasena']==''){
+                $statement->execute(array(
+                    'id' => (int) $datos['id'],
+                    'nombre' => $datos['nombre'],
+                    'paterno'  => $datos['paterno'],
+                    'materno' => $datos['materno'] ,
+                    'correo' => $datos['correo'] ,
+                    'role' => $datos['role']
+                ));
+                error_log("USUARIOS: Sin contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+            }else{
+                $statement->execute(array(
+                    'id' => (int) $datos['id'],
+                    'nombre' => $datos['nombre'],
+                    'paterno'  => $datos['paterno'],
+                    'materno' => $datos['materno'] ,
+                    'correo' => $datos['correo'] ,
+                    'role' => $datos['role'] ,
+                    'contrasena' => $hash ,
+                ));
+                error_log("USUARIOS: CON contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+            }
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
     }
 
-    public function delete($id)
+    public function eliminar($id)
     {
         $statement = "
             DELETE FROM usuarios
@@ -140,6 +167,19 @@ class UsuarioIF {
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array('id' => $id));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    public function cambiarRole($id, $role)
+    {
+        $statement = "UPDATE usuarios SET role=:role WHERE id = :id;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('id' => $id, 'role' => $role));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

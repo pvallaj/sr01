@@ -31,12 +31,12 @@ class CnsltNovohisp {
     public function consultaInformacionOE($parametros)
     {
         
-        $statement = "SELECT * 
+        $statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion, RAND() as orden  
         FROM info_oe 
         WHERE 
         MATCH (etiquetas, descripcion) 
         AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-        ORDER BY id;";
+        ORDER BY orden;";
 
         try {
             $statement = $this->db->prepare($statement);
