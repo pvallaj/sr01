@@ -22,7 +22,7 @@ use Src\controladores\CnsltSermonesCtrl;
 use Src\controladores\CnsltNovohispCtrl;
 use Src\controladores\NoticiasCtrl;
 use Src\controladores\util;
-//ini_set('display_errors', 'off');
+ini_set('display_errors', 'true');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );

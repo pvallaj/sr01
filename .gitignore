@@ -1,4 +1,5 @@
 vendor/
 public/api/logs.txt
+public/api/img_noticias
 .env
 .env_respaldo

@@ -43,10 +43,6 @@ class NoticiasCtrl {
                 break;
             case 'crear Noticia':
                 $this->resultado(1, $this->Noticias->crearNoticia($this->parametros->parametros));
-                if($_FILES){
-                    $directorio = "../../public_html/img_noticias/"; 
-                    move_uploaded_file($_FILES['file']['tmp_name'], $directorio. $this->resp->resultado->id.'_'.$_FILES['file']['name']);
-                }
                 break;
             case 'actualizar Noticia':
                 $this->resultado(1, $this->Noticias->actualizarNoticia($this->parametros->parametros));
@@ -72,7 +68,7 @@ class NoticiasCtrl {
             if($resultado->ok===false){
                 $this->resp->message='Error interno. Revise el registro de eventos.';
             }
-            $this->resp->resultado=$resultado;
+            $this->resp->resultado=$resultado->resultado;
             $this->response['body'] = json_encode($this->resp);
         }else{
             $this->response['status_code_header'] = 'HTTP/1.1 404 Not Found';
