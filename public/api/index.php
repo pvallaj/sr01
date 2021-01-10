@@ -24,6 +24,22 @@ use Src\controladores\NoticiasCtrl;
 use Src\controladores\util;
 ini_set('display_errors', 'true');
 
+set_error_handler('exceptions_error_handler');
+
+function exceptions_error_handler($severity, $message, $filename, $lineno) {
+  if (error_reporting() == 0) {
+    return;
+  }
+  if (error_reporting() & $severity) {
+    //throw new ErrorException($message, 0, $severity, $filename, $lineno);
+    error_log(
+        "ERROR: ".PHP_EOL.
+        $message.PHP_EOL.
+        $filename.PHP_EOL.
+        $lineno.PHP_EOL, 3, "c:\\log\\log.txt");
+  }
+}
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 $parametros = (array)json_decode(file_get_contents('php://input'));
@@ -32,18 +48,7 @@ if($parametros==null){
     $parametros = array('cn'=> json_decode($_POST['cn']));
 }
 
-/*$postdata = file_get_contents("php://input");
-$request = json_decode($postdata, true);
-error_log("index 9 -----.".$_POST['cn'].PHP_EOL, 3, "logs.txt");
 
-error_log("index 9 -----.".json_encode($request).PHP_EOL, 3, "logs.txt");
-error_log("index 10 -----.".PHP_EOL, 3, "logs.txt");
-error_log("index 11 ".json_encode($_POST).PHP_EOL, 3, "logs.txt");
-error_log("index 12 -----.".PHP_EOL, 3, "logs.txt");
-error_log("index 13 ".json_encode($_REQUEST).PHP_EOL, 3, "logs.txt");
-error_log("index 14 -----.".PHP_EOL, 3, "logs.txt");
-error_log("index 13 ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
-*/ 
 $Util = new Util($dbSys);
 $Util->regEvento($parametros['cn']);
 switch ($parametros['cn']->seccion) {

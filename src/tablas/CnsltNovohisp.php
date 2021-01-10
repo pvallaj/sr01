@@ -34,7 +34,7 @@ class CnsltNovohisp {
         $statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion, RAND() as orden  
         FROM info_oe 
         WHERE 
-        MATCH (etiquetas, descripcion) 
+        MATCH (etiquetas, descripcion, texto, capitulo) 
         AGAINST (:terminos IN NATURAL LANGUAGE MODE)
         ORDER BY orden;";
 
@@ -53,7 +53,12 @@ class CnsltNovohisp {
     public function buscar($parametros)
     {
         
-        $statement = "SELECT * FROM info_oe WHERE MATCH (etiquetas, descripcion) AGAINST (:terminos IN NATURAL LANGUAGE MODE);;";
+        $statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion 
+        FROM info_oe 
+        WHERE 
+        MATCH (etiquetas, descripcion, texto, capitulo) 
+        AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+        ORDER BY tipo";
         //error_log("NH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);

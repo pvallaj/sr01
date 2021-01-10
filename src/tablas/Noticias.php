@@ -16,7 +16,7 @@ class Noticias {
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
         $statement = "SELECT id, titulo, texto, imagen, ligaExterna, DATE_FORMAT(inicio, '%d/%m/%Y') as inicio, DATE_FORMAT(termino, '%d/%m/%Y') as termino
-        FROM noticias WHERE estado=1 and now() between inicio and termino order by id desc;";
+         FROM noticias WHERE  now() between inicio and termino order by id desc;";
 
         try {
             $statement = $this->db->prepare($statement);

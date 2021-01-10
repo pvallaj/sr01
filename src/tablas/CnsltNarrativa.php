@@ -213,7 +213,15 @@ class CnsltNarrativa {
             $arr_parametros['soporte']= $parametros->soporte;
         }
         if($parametros->textos!= null){
-            list($t1, $t2, $t3)=\explode("+",$parametros->textos);
+            $t1="";
+            $t2="";
+            $t3="";
+            try {
+                list($t1, $t2, $t3)=\explode("$",urldecode ( $parametros->textos ) );
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            
             $t1=trim($t1);
             $t1=\str_replace('"','',$t1);
             $t2=trim($t2);
@@ -259,8 +267,9 @@ class CnsltNarrativa {
         $resultado= (object)null;
         //error_log("cnarrativas.".$parametros->id_texto.'----'.PHP_EOL, 3, "/Users/paulinovj/proyectos/unam/sr01/log/log.txt");
         $statement = "select
-        autor, obra,  
-        editor, 
+        t.nombre, t.narratio, t.ubicacion,
+        b.autor, b.obra,  
+        b.editor, 
         b.`ed paleográfica` AS ed_paleo, 
         b.director_coord AS director_cor,
         b.traductor AS director_cor,
@@ -328,6 +337,7 @@ class CnsltNarrativa {
         t.Marco_posterior  as marco_posterior,
         t.Formula_apertura as formula_apertura,
         t.Formula_cierre as formula_cierre,
+        t.denom_accion as denominacion_accion,
         t.Ubicacion as ubicacion,
         IF((t.dstrcn_discurso=1 and t.dstrcn_d_Prosa=0), 'Verso', 'Prosa') AS descripcion_discursiva,
         t.prsnj_receptor as receptor,
