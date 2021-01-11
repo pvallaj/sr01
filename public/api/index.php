@@ -28,7 +28,11 @@ set_error_handler('exceptions_error_handler');
 
 function exceptions_error_handler($severity, $message, $filename, $lineno) {
   if (error_reporting() == 0) {
-    return;
+    error_log(
+        "PRECAUCION: ".PHP_EOL.
+        $message.PHP_EOL.
+        $filename.PHP_EOL.
+        $lineno.PHP_EOL, 3, "c:\\log\\log.txt");
   }
   if (error_reporting() & $severity) {
     //throw new ErrorException($message, 0, $severity, $filename, $lineno);
