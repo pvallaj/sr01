@@ -301,12 +301,15 @@ class CnsltNarrativa {
 
         $statement = "SELECT 
         p.autor, 
-        p.obra_tomo, 
+        p.titulo, 
         p.librero_casa as librero, 
         p.ciudad, 
         p.a_costa_de, 
         p.ano as anio, 
         p.obra_tomo, 
+        p.Biblioteca as biblioteca,
+        p.`clasificación` as clasificacion,
+        p.Archivo_Dig as archivo_dig,
         b.`pp princeps` as princeps
     from 
         cat_bibliografia AS b,
@@ -409,7 +412,8 @@ class CnsltNarrativa {
             cat_motivos AS cm
         where
             tm.Id_motivo=cm.Id_motivo
-            AND tm.id_texto=:id_texto;";
+            AND tm.id_texto=:id_texto
+        ORDER BY cm.motivo;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -580,7 +584,7 @@ class CnsltNarrativa {
             or
             MATCH (narratio) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
         );";
-        error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => $parametros->terminos));

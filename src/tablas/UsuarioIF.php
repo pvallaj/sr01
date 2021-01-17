@@ -138,7 +138,7 @@ class UsuarioIF {
                     'correo' => $datos['correo'] ,
                     'role' => $datos['role']
                 ));
-                error_log("USUARIOS: Sin contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+                //error_log("USUARIOS: Sin contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
             }else{
                 $statement->execute(array(
                     'id' => (int) $datos['id'],
@@ -149,7 +149,7 @@ class UsuarioIF {
                     'role' => $datos['role'] ,
                     'contrasena' => $hash ,
                 ));
-                error_log("USUARIOS: CON contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+                //error_log("USUARIOS: CON contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
             }
             return $statement->rowCount();
         } catch (\PDOException $e) {

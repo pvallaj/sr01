@@ -285,13 +285,13 @@ class CnsltSermones {
         }
 
         $statement4 = "SELECT 
-                    cs.catalogo_nombre as catalogo, cs.numeracion, c.catalogo_nombre
-            FROM 
-                sermones_catalogos AS cs,
-                catalogos AS C	
-            WHERE 
-                cs.Catalogo_nombre=c.ID_Catalogo
-                AND c.id_catalogo IN (1,5,3,4,6)
+                cs.Catalogo_nombre as catalogo, cs.numeracion, cg.catalogo_nombre
+        FROM 
+            sermones_catalogos AS cs,
+            catalogos AS cg	
+        WHERE 
+            cs.Catalogo_nombre=cg.ID_Catalogo
+            AND cg.id_catalogo IN (1,5,3,4,6)
                 and cs.id_sermon=:id_sermon;";
         try {
             $statement4 = $this->db->prepare($statement4);
@@ -377,7 +377,7 @@ class CnsltSermones {
 				or
 				MATCH (titulo) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
 			);";
-            error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+            //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => $parametros->terminos));
