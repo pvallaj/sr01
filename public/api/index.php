@@ -11,8 +11,8 @@ if($method == "OPTIONS") {
 }
 
 
-ini_set('log_error', 'off');
-ini_set('display_errors', 'off');
+ini_set('log_error', 'false');
+ini_set('display_errors', 'false');
 error_reporting(E_ALL);
 
 require "../../bootstrap.php";
@@ -55,6 +55,7 @@ if($parametros==null){
 
 $Util = new Util($dbSys);
 $Util->regEvento($parametros['cn']);
+//error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "logs.txt");
 switch ($parametros['cn']->seccion) {
     case 'usuarios':
         $controller = new UsuarioCtrl($dbSys, null, null);

@@ -1,4 +1,13 @@
 <?php
+/*****************************************************************************************
+ Descripción: Permite las consultas sobre la base de datos de "relaciones" o "narrativas".
+ Autor: Paulino Valladares Justo.
+ Fecha creación: 18/01/2020
+ Historial de correcciones:
+ -----------------------------------------------------------------------------------------
+ Fecha:
+ Descripción:
+******************************************************************************************/
 namespace Src\tablas;
 
 class CnsltNarrativa {
@@ -10,36 +19,28 @@ class CnsltNarrativa {
         $this->db = $db;
     }
 
-    public function obtenerCatalogo($catalogo)
-    {
-
-        switch ($catalogo) {
-            case 'Palabras':
-                $statement = "SELECT idPalabra as id, palabra, descrip as descripcion FROM cat_palabras2;";
-                break;
-
-            case 'Categorias':
-                    $statement = "SELECT id_clasificacion as id, categoria, `descripción` as descripcion FROM cat_clasificacion;";
-                    break;
-            default:
-                return null;
-        }
-
-        try {
-            $statement = $this->db->query($statement);
-            $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
 
     public function consultaCatalogosBase()
     {
+        /*****************************************************************************************
+        Descripción: Obtiene todos los catálogos que el usuario puede usar como filtros en la consulta
+                    de las relaciones existentes. 
+        Parametros:
+            ninguno
+        Resultado:
+            una estructura con los siguientes catalogos
+             * autores.
+             * obras
+             * Palabras clave
+             * Clasificaciones
+             * motivos
+             * tipos de versos
+             * tipos de accion
+             * soportes
+        ******************************************************************************************/
+
         $resultado= (object)null;
-        //------------------------------------------------------------------
-        //autor
+        
         $statement = "select distinct autor from cat_bibliografia;";
         try {
             $statement = $this->db->prepare($statement);
@@ -104,7 +105,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //tipo de accion 
-        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoAccion;";
+        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -129,6 +130,18 @@ class CnsltNarrativa {
 
     public function consultaNarrativas($parametros)
     {
+        /*****************************************************************************************
+            Descripción:
+                obtiene las RELACIONES/NARRATIVAS que cumplen con los criterios especificados
+                por el usuario. 
+            Parametros:
+                autor. Si existe, es el nombre del autor.
+                obra. Si existe, es el nombre de la obra.
+                clasificacion: Si existe, es el ID de la clasificación.
+
+            Resultado:
+                Una estrucutra con la lista de las narrativas 
+        ******************************************************************************************/
         $arr_parametros = array();
 
         $select=" SELECT t.id_texto,
@@ -137,7 +150,7 @@ class CnsltNarrativa {
         ";
 
         $from=" FROM 
-        Texto t,
+        texto t,
         cat_bibliografia cb 
         ";
         
@@ -176,7 +189,7 @@ class CnsltNarrativa {
         }
 
         if($parametros->tema != null){
-            $from=$from.",cat_palabras2 cp, Tx_Palabras2 tp 
+            $from=$from.",cat_palabras2 cp, tx_Palabras2 tp 
             ";
             $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
             ";
@@ -184,7 +197,7 @@ class CnsltNarrativa {
         }
 
         if($parametros->motivo != null){
-            $from=$from.", Tx_motivo tm 
+            $from=$from.", tx_motivo tm 
             ";
             $where=$where." and t.id_texto=tm.id_texto and tm.id_motivo=:motivo 
             ";
@@ -192,21 +205,21 @@ class CnsltNarrativa {
         }
 
         if($parametros->tipoVerso != null){
-            $from=$from.", Tx_versificacion tv 
+            $from=$from.", tx_versificacion tv 
             ";
             $where=$where." and t.id_texto=tv.id_texto and tv.id_versificacion=:tipoVerso 
             ";
             $arr_parametros['tipoVerso']= $parametros->tipoVerso;
         }
         if($parametros->tipoAccion!= null){
-            $from=$from.", Tx_TipAccion tt 
+            $from=$from.", tx_tipaccion tt 
             ";
             $where=$where." and t.id_texto=tt.id_texto and tt.id_tipo_accion=:tipoAccion 
             ";
             $arr_parametros['tipoAccion']= $parametros->tipoAccion;
         }
         if($parametros->soporte!= null){
-            $from=$from.", Tx_soporte ts 
+            $from=$from.", tx_soporte ts 
             ";
             $where=$where." and t.id_texto=ts.id_texto and ts.id_soporte=:soporte 
             ";
@@ -283,7 +296,7 @@ class CnsltNarrativa {
         b.`pp princeps` AS pp
     FROM 
         cat_bibliografia AS b,
-        Texto AS t
+        texto AS t
     WHERE
         b.Id_bibliografia=t.Id_bibliografia
         AND t.Id_Texto=:id_texto    ; ";
@@ -313,8 +326,8 @@ class CnsltNarrativa {
         b.`pp princeps` as princeps
     from 
         cat_bibliografia AS b,
-        Texto AS t,
-        cat_Princep as p
+        texto AS t,
+        cat_princep as p
     where
         b.id_ed_princeps=p.id_princep
         and t.id_bibliografia=b.id_bibliografia
@@ -351,8 +364,8 @@ class CnsltNarrativa {
         t.esp_dieg_abierto as er_abierto,
         t.esp_dieg_cerrado as er_cerrado,
         IF( (t.accion_diurna=0 and t.accion_nocturna=0 OR t.accion_diurna=1 and t.accion_nocturna=1), 'No especificado', IF((t.accion_diurna=1 and t.accion_nocturna=0), 'Diurna', 'Nocturna')) AS diurna_nocturna,            t.`Tiempo dramatico` as t_dramatico,
-        'Momento Referido: ' as m_referido
-    FROM Texto AS t WHERE id_texto=:id_texto;";
+        t.tiempo_dieg as m_referido
+    FROM texto AS t WHERE id_texto=:id_texto;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -368,8 +381,8 @@ class CnsltNarrativa {
         $statement = "SELECT 
             cta.Id_tipo_accion, cta.tipo_accion, cta.descripcion
         FROM 
-            Tx_TipAccion AS tta,
-            cat_tipoAccion AS cta
+            tx_tipaccion AS tta,
+            cat_tipoaccion AS cta
         where
             cta.Id_tipo_accion=tta.Id_tipo_accion
             AND tta.id_texto=:id_texto;";
@@ -388,7 +401,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cc.Id_clasificacion, cc.categoria, cc.`descripción` AS descripcion
         FROM 
-            Tx_clasificacion AS tc,
+            tx_clasificacion AS tc,
             cat_clasificacion AS cc
         where
             tc.Id_Clasificacion=cc.Id_clasificacion
@@ -408,7 +421,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cm.id_motivo, cm.motivo
         FROM 
-            Tx_motivo AS tm,
+            tx_motivo AS tm,
             cat_motivos AS cm
         where
             tm.Id_motivo=cm.Id_motivo
@@ -429,7 +442,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
             cp.idpalabra, cp.palabra, cp.descrip AS descripcion
         FROM 
-            Tx_Palabras2 AS tp,
+            tx_palabras2 AS tp,
             cat_palabras2 AS cp
         where
             tp.idPalabras=cp.idPalabra
@@ -448,7 +461,7 @@ class CnsltNarrativa {
         $statement = "  SELECT 
         cv.id_versificacion, cv.tipo_verso
     FROM 
-        Tx_versificacion AS tv,
+        tx_versificacion AS tv,
         cat_versificacion AS cv
     where
         tv.id_versificacion=cv.id_versificacion
@@ -467,7 +480,7 @@ class CnsltNarrativa {
         $statement = "SELECT 
             cs.id_soporte, cs.tipo_material
         FROM 
-            Tx_soporte AS ts,
+            tx_soporte AS ts,
             cat_soporte AS cs
         where
             ts.Id_soporte=cs.Id_soporte
@@ -498,7 +511,7 @@ class CnsltNarrativa {
         sa.vista_dieg AS vista_dieg,
         concat_ws(sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
     FROM 
-        Signos_actor sa
+        signos_actor sa
     where
         sa.Id_Texto=:id_texto;";
 
@@ -537,6 +550,45 @@ class CnsltNarrativa {
         return $resultado;
     }
 
+    public function consultaSignos()
+    {
+        
+        $statement = "SELECT t.id_texto,
+        t.nombre, t.narratio, t.ubicacion,
+        cb.autor, cb.obra,
+        sa.gesto_dram_ AS gestos_dramaticos,
+        sa.mov_dra_ AS movimientos_dramaticos,
+        sa.mov_dra_ AS voz_dramaticos,
+        sa.vista_dram AS vista_dramaticos,
+        sa.gesto_dram_no AS gestos_dramaticos_no,
+        sa.mov_dram_no AS movimientos_dramaticos_no,
+        sa.voz_dram_no AS voz_dramaticos_no,
+        sa.vista_dram_no AS vista_dramaticos_no,
+        sa.gesto_dieg AS gestos_dieg,
+        sa.mov_dieg AS movimientos_dieg,
+        sa.voz_dieg AS voz_dieg,
+        sa.vista_dieg AS vista_dieg,
+        concat_ws(sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
+FROM 
+        texto t,
+        cat_bibliografia cb,
+        signos_actor sa
+WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia
+        AND t.id_texto=sa.id_texto";
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
+
     public function consultaDetalleCatalogo($parametros)
     {
         switch ($parametros->catalogo) {
@@ -547,8 +599,8 @@ class CnsltNarrativa {
             case 'categoria':
                     $statement = "select t.id_texto as id, t.nombre, t.narratio 
                     from 
-                        Texto t, 
-                        Tx_clasificacion tx
+                        texto t, 
+                        tx_clasificacion tx
                     where
                         t.id_texto=tx.id_texto
                         and id_clasificacion= :cid ;";
@@ -576,7 +628,7 @@ class CnsltNarrativa {
       cb.autor, cb.obra 
     FROM  
         cat_bibliografia as cb,
-        Texto as t
+        texto as t
     WHERE 
         cb.Id_bibliografia=t.Id_bibliografia
         AND (

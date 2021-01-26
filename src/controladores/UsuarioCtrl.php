@@ -155,7 +155,15 @@ class UsuarioCtrl {
     //Usuario
     public function usuario(){
         $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
-        
+        if(!$this->validarToken() && $input['accion']!= 'acceso'){
+            $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->resp->ok='false';
+            $this->resp->message='Sesion no valida';
+            $this->resp->resultado=null;
+            $response['body'] = json_encode($this->resp);
+            echo $response['body'];
+            return $response; 
+        }
        
         switch ($input['accion'] ) {
             case 'crear':
@@ -322,10 +330,9 @@ class UsuarioCtrl {
 
     public function validarToken()
     {
-        if(!array_key_exists('token', getallheaders())) return null;   
-        
-        $token = getallheaders()['token'];
-        
+        //if(!array_key_exists('Authorization', getallheaders())) return false;   
+        $token = getallheaders()['authorization'];
+        //error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
         if(is_null($token)) return false;
 
         $key=getenv('llave');

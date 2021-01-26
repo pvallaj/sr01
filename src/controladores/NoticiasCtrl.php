@@ -1,6 +1,7 @@
 <?php
 namespace Src\controladores;
 
+use Firebase\JWT\JWT;
 use Src\tablas\Noticias;
 use Src\controladores\Respuesta;
 
@@ -30,7 +31,22 @@ class NoticiasCtrl {
 
     public function procesa()
     {
-        
+        if(
+            $this->parametros->accion!='obtener todas las noticias activas' &&
+            $this->parametros->accion!='obtener Noticia'
+        ){
+            //validar autorización
+            if(!$this->validarToken()){
+                $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
+                $this->resp->ok='false';
+                $this->resp->message='Sesion no valida';
+                $this->resp->resultado=null;
+                $response['body'] = json_encode($this->resp);
+                echo $response['body'];
+                return;
+            }
+        }
+        //error_log("Se valido el token: ".$this->parametros->accion.PHP_EOL, 3, "logs.txt");
         switch ($this->parametros->accion ) {
             case 'obtener todas las noticias':
                 $this->resultado(1, $this->Noticias->obtenerTodasNoticias());
@@ -77,7 +93,32 @@ class NoticiasCtrl {
         return null;
     }
   
-    
+    public function validarToken()
+    {
+        //if(!array_key_exists('Authorization', getallheaders())) return false;   
+        $token = getallheaders()['authorization'];
+        error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
+        if(is_null($token)){
+            error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "logs.txt");
+            return false;
+        } 
+
+        $key=getenv('llave');
+        try {
+            $jwt = JWT::decode($token, $key,array('HS256'));
+        } catch (\Throwable $th) {
+            error_log("headers AUTH: token no valido: ".$th.'--'.PHP_EOL, 3, "logs.txt");
+            return false;
+        }
+
+        if($jwt->exp < time()){
+            error_log("headers AUTH: El token expiro".PHP_EOL, 3, "logs.txt");
+            return false;
+        } 
+        $this->userId=$jwt->data->diusr;
+
+        return true;
+    }
 
    
 }

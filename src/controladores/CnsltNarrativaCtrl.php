@@ -60,6 +60,9 @@ class CnsltNarrativaCtrl {
                 case 'consulta detalle narrativa':
                     $response = $this->consultaDetalleNarrativa();
                     break;
+                case 'consulta signos actorales':
+                        $response = $this->consultaSignos();
+                        break;
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -129,7 +132,18 @@ class CnsltNarrativaCtrl {
         $response['body'] = json_encode($this->resp);
         return $response;
     }
- 
+    
+    private function consultaSignos()
+    {
+        $result = $this->ConsultaCats->consultaSignos();;
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
     private function notFoundResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';

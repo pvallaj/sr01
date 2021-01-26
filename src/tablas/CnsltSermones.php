@@ -202,11 +202,17 @@ class CnsltSermones {
         }
 
         if($parametros->ciudad !=null){
-
             $where=$where."  
                             and s.ciudad=:ciudad 
                 ";
             $arr_parametros['ciudad']=$parametros->ciudad;
+        }
+
+        if($parametros->thema !=null){
+            $where=$where."  
+                    and MATCH (thema, thema_referencia) AGAINST (:thema IN NATURAL LANGUAGE MODE) 
+                ";
+            $arr_parametros['thema']=$parametros->thema ;
         }
 
         $statement = $select.$from.$where;
@@ -234,7 +240,9 @@ class CnsltSermones {
 
         $statement = "select 
         concat_ws(' ', Autor_apellido, Autor_nombre, Autor_particula) nombre, a.autor_orden,
-        s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, s.impresor, s.Año as anio, s.thema, s.protesta_fe
+        s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, s.impresor, s.Año as anio, 
+        concat_ws(s.thema,', ', s.thema_referencia) thema, 
+        s.protesta_fe
     from
         autores a,
         sermones s
