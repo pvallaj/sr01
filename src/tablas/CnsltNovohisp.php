@@ -28,6 +28,68 @@ class CnsltNovohisp {
         return  $res;
     }
 
+    public function consultaEstructuraXTomo($parametros)
+    {
+        $resultado= (object)null;
+
+        $statement = "SELECT *
+        FROM info_oe
+        WHERE	
+            etiquetas LIKE 'Tomo".$parametros->tomo.", capitulo%, estructura' 
+        OR  etiquetas LIKE 'Tomo".$parametros->tomo.", seccion%, estructura';";
+        
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->estructura = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+
+        $statement = "select *
+        from info_oe
+        WHERE	
+        etiquetas LIKE 'Tomo".$parametros->tomo.", portadaTomo'";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->imagenes = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+
+        return  $resultado;
+    }
+
+    public function consultaCapituloTomo($parametros)
+    {
+        $resultado= (object)null;
+
+        $statement = "SELECT 0 id, tipo, referencia, texto, capitulo, etiquetas, descripcion
+        FROM info_oe
+        WHERE	
+            etiquetas LIKE '".$parametros->capitulo.", portada'
+UNION            
+SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion
+        FROM info_oe
+        WHERE	
+            etiquetas LIKE '".$parametros->capitulo.", contenido';";
+        
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->capitulo = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+
+        return  $resultado;
+    }
+
     public function consultaInformacionOE($parametros)
     {
         

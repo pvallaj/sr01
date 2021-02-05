@@ -55,14 +55,20 @@ class CnsltNarrativaCtrl {
                     $response = $this->consultaCatalogoBase();
                     break;
                 case 'consulta narrativas':
-                        $response = $this->consultaNarrativas();
-                        break;
+                    $response = $this->consultaNarrativas();
+                    break;
                 case 'consulta detalle narrativa':
                     $response = $this->consultaDetalleNarrativa();
                     break;
+                case 'consulta vinculos':
+                    $response = $this->consultaVinculos();
+                    break;
+                case 'consulta contexto':
+                    $response = $this->consultaContexto();
+                    break;
                 case 'consulta signos actorales':
-                        $response = $this->consultaSignos();
-                        break;
+                    $response = $this->consultaSignos();
+                    break;
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -136,6 +142,28 @@ class CnsltNarrativaCtrl {
     private function consultaSignos()
     {
         $result = $this->ConsultaCats->consultaSignos();;
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function consultaVinculos()
+    {
+        $result = $this->ConsultaCats->consultaVinculos();
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function consultaContexto()
+    {
+        $result = $this->ConsultaCats->consultaContexto();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';

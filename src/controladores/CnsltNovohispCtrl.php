@@ -53,10 +53,16 @@ class CnsltNovohispCtrl {
     public function procesa()
     {
         if ($this->requestMethod =='POST'  ){
-            //error_log("ctrl novohisp.".$this->accion.'----'.PHP_EOL, 3, "logs.txt");
+            
             switch ($this->accion ) {
                 case 'consulta estructura':
                     $response = $this->consultaEstrucutra();
+                    break;
+                case 'consulta estructura x tomo':
+                    $response = $this->consultaEstrucutraXTomo();
+                    break;
+                case 'consulta capitulo tomo':
+                    $response = $this->consultaCapituloTomo();
                     break;
                 case 'consulta obra escrita':
                     $response = $this->consultaObraEscrita();
@@ -89,6 +95,28 @@ class CnsltNovohispCtrl {
         $response['body'] = json_encode($this->resp);
         return $response;
     }
+    private function consultaEstrucutraXTomo()
+    {
+        $result = $this->Consulta->consultaEstructuraXTomo($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function consultaCapituloTomo()
+    {
+        $result = $this->Consulta->consultaCapituloTomo($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
     private function consultaObraEscrita()
     {
         $result = $this->Consulta->consultaInformacionOE($this->parametros->parametros);

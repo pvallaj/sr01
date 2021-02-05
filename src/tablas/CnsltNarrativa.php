@@ -589,6 +589,62 @@ WHERE
         return  $res;
     }
 
+    public function consultaVinculos()
+    {
+        
+        $statement = "SELECT t.id_texto,
+        t.nombre, t.narratio, t.ubicacion,
+        cb.autor, cb.obra,
+        v.visuales, v.auditivos, v.presente_accion, v.ref_discurso, v.apltvo_recep, v.apltvo_espect
+FROM 
+        texto t,
+        cat_bibliografia cb,
+        vinculos v
+WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia
+        AND t.id_texto=v.id_texto";
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
+
+    public function consultaContexto()
+    {
+        
+        $statement = "SELECT 
+        t.id_texto,
+        t.nombre, t.narratio, t.ubicacion,
+        cb.autor, cb.obra,
+        t.Argumento, t.accion_dramatica, t.Marco_anterior, t.Marco_posterior,t.Formula_apertura, 
+        t.Formula_cierre,
+        concat_ws(t.esp_dram_abierto,'\n ', t.esp_dram_cerrado) AS tiempo, 
+        concat_ws(t.esp_dieg_abierto,'\n ', t.esp_dieg_cerrado) AS tiempo_refedido
+FROM 
+        texto t,
+        cat_bibliografia cb
+WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia";
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
+
     public function consultaDetalleCatalogo($parametros)
     {
         switch ($parametros->catalogo) {
