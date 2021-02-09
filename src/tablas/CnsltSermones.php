@@ -215,6 +215,17 @@ class CnsltSermones {
             $arr_parametros['thema']=$parametros->thema ;
         }
 
+        if($parametros->grabado !=null){
+            $from=$from.",
+                grabados gr
+            ";
+            $where=$where."  
+                    and s.id_sermon=gr.id_sermon
+                    and upper(gr.grabado_descripcion) like upper(:grabado)  
+                ";
+            $arr_parametros['grabado']='%'.$parametros->grabado.'%' ;
+        }
+
         $statement = $select.$from.$where;
         try {
             
