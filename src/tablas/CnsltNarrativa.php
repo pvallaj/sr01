@@ -623,10 +623,10 @@ WHERE
         t.id_texto,
         t.nombre, t.narratio, t.ubicacion,
         cb.autor, cb.obra,
-        t.Argumento, t.accion_dramatica, t.Marco_anterior, t.Marco_posterior,t.Formula_apertura, 
-        t.Formula_cierre,
+        t.argumento, t.accion_dramatica, t.marco_anterior, t.marco_posterior,t.formula_apertura, 
+        t.formula_cierre,
         concat_ws(t.esp_dram_abierto,'\n ', t.esp_dram_cerrado) AS tiempo, 
-        concat_ws(t.esp_dieg_abierto,'\n ', t.esp_dieg_cerrado) AS tiempo_refedido
+        concat_ws(t.esp_dieg_abierto,'\n ', t.esp_dieg_cerrado) AS tiempo_referido
 FROM 
         texto t,
         cat_bibliografia cb
