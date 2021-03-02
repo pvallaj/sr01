@@ -41,7 +41,7 @@ class CnsltNarrativa {
 
         $resultado= (object)null;
         
-        $statement = "select distinct autor from cat_bibliografia;";
+        $statement = "SELECT distinct autor from cat_bibliografia order by autor;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -51,7 +51,7 @@ class CnsltNarrativa {
         }
         //------------------------------------------------------------------
         //obra
-        $statement = "select distinct autor, obra from cat_bibliografia;";
+        $statement = "SELECT distinct autor, obra from cat_bibliografia;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -61,7 +61,7 @@ class CnsltNarrativa {
         }
         //------------------------------------------------------------------
         //tema o palabra clave.
-        $statement = "SELECT idpalabra, palabra FROM cat_palabras2;";
+        $statement = "SELECT idpalabra, palabra FROM cat_palabras2 order by palabra;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -72,7 +72,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //clasificacion 
-        $statement = "SELECT id_clasificacion AS id, concat(categoria,' - ', descripción) categoria FROM cat_clasificacion;";
+        $statement = "SELECT id_clasificacion AS id, concat(categoria,' - ', descripción) categoria FROM cat_clasificacion order by concat(categoria,' - ', descripción) ;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -83,7 +83,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //motivos 
-        $statement = "SELECT id_motivo, motivo FROM cat_motivos;";
+        $statement = "SELECT id_motivo, motivo FROM cat_motivos order by motivo;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -94,7 +94,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //tipo de versificacion 
-        $statement = "SELECT id_versificacion, tipo_verso FROM cat_versificacion;";
+        $statement = "SELECT id_versificacion, tipo_verso FROM cat_versificacion order by tipo_verso;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -105,7 +105,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //tipo de accion 
-        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion;";
+        $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion order by descripcion;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -116,7 +116,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //soporte 
-        $statement = "	SELECT id_soporte, tipo_material FROM cat_soporte;";
+        $statement = "	SELECT id_soporte, tipo_material FROM cat_soporte order by tipo_material;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -424,7 +424,7 @@ class CnsltNarrativa {
             tx_motivo AS tm,
             cat_motivos AS cm
         where
-            tm.Id_motivo=cm.Id_motivo
+            tm.Id_motivo=cm.Id_motivo 
             AND tm.id_texto=:id_texto
         ORDER BY cm.motivo;";
 
@@ -554,7 +554,7 @@ class CnsltNarrativa {
     {
         
         $statement = "SELECT t.id_texto,
-        t.nombre, t.narratio, t.ubicacion,
+        t.nombre, t.narratio, t.ubicacion, t.ubicacion,
         cb.autor, cb.obra,
         sa.gesto_dram_ AS gestos_dramaticos,
         sa.mov_dra_ AS movimientos_dramaticos,
@@ -593,7 +593,7 @@ WHERE
     {
         
         $statement = "SELECT t.id_texto,
-        t.nombre, t.narratio, t.ubicacion,
+        t.nombre, t.narratio, t.ubicacion, t.ubicacion,
         cb.autor, cb.obra,
         v.visuales, v.auditivos, v.presente_accion, v.ref_discurso, v.apltvo_recep, v.apltvo_espect
 FROM 
@@ -621,7 +621,7 @@ WHERE
         
         $statement = "SELECT 
         t.id_texto,
-        t.nombre, t.narratio, t.ubicacion,
+        t.nombre, t.narratio, t.ubicacion, t.ubicacion,
         cb.autor, cb.obra,
         t.argumento, t.accion_dramatica, t.marco_anterior, t.marco_posterior,t.formula_apertura, 
         t.formula_cierre,

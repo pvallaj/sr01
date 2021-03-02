@@ -121,10 +121,16 @@ SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion
         MATCH (etiquetas, descripcion, texto, capitulo) 
         AGAINST (:terminos IN NATURAL LANGUAGE MODE)
         ORDER BY tipo";
+        /*$statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion, concat_ws(etiquetas,'', descripcion, texto, capitulo) unido
+        FROM info_oe 
+        WHERE 
+        lower(concat_ws(etiquetas,'', descripcion, texto, capitulo)) LIKE LOWER(:terminos)
+        ORDER BY tipo";*/
+
         //error_log("NH : ".json_encode($parametros).PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => $parametros->terminos));
+            $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {

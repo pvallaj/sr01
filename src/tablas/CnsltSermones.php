@@ -15,11 +15,28 @@ class CnsltSermones {
 
     public function __construct($db)
     {
+        /*****************************************************************************************
+            Descripción:
+                constructr 
+            Parametros:
+                ninguno 
+            Resultado:
+                ninguno 
+        ******************************************************************************************/
         $this->db = $db;
     }
     
     public function obtenerCatalogosBase()
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene todos los datos necesarios para el formulario de consulta. 
+            Parametros:
+                 ninguno
+            Resultado:
+                un arreglo con las listas de:
+                    autores, impresores, autores de preliminares, dedicatarios, ciudad, titulo de libro (obra), ordern religiosa
+        ******************************************************************************************/
         $resultado= (object)null;
         //autores-----
         $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
@@ -38,7 +55,7 @@ class CnsltSermones {
             exit($e->getMessage());
         }
         //impresores ----------
-        $statement = "SELECT id_impresor, impresor_nombre FROM impresores;";
+        $statement = "SELECT id_impresor, impresor_nombre FROM impresores order by impresor_nombre;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -66,9 +83,10 @@ class CnsltSermones {
         }
 
         //Dedicatarios ----------
-        $statement = "SELECT d.id_dedicatario, CONCAT_WS(' ', d.dedicatario_nombre, d.dedicatario_particula, d.dedicatario_apellido) AS autor
+        $statement = "SELECT d.id_dedicatario, CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido) AS autor
         FROM dedicatiarios AS d
-        WHERE d.dedicatario_nombre IS NOT null;";
+        WHERE d.dedicatario_nombre IS NOT null
+        ORDER BY CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido);";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -79,7 +97,7 @@ class CnsltSermones {
         }
 
         //CIUDAD ----------
-        $statement = "SELECT DISTINCT ciudad FROM sermones WHERE ciudad IS NOT NULL;";
+        $statement = "SELECT DISTINCT ciudad FROM sermones WHERE ciudad IS NOT NULL order by ciudad;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -90,7 +108,7 @@ class CnsltSermones {
         }
 
         //obra ----------
-        $statement = "SELECT id_libro,  libro_titulo FROM libros ORDER BY id_libro;";
+        $statement = "SELECT id_libro,  libro_titulo FROM libros ORDER BY libro_titulo;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -101,7 +119,7 @@ class CnsltSermones {
         }
 
         //orden religiosa ----------
-        $statement = "SELECT distinct autor_orden FROM autores where autor_orden IS NOT null;";
+        $statement = "SELECT distinct autor_orden FROM autores where autor_orden IS NOT null order by autor_orden;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -116,6 +134,23 @@ class CnsltSermones {
 
     public function obtenerSermones($parametros)
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene la lista de sermones coincidentes con los prorametros especificados por el usuario 
+            Parametros:
+                 Parametros de consulta: 
+                    id_autor. es el identificador del autor seleccionado por el usuario.
+                    autor. es el nombre o parte del nombre escrito del autor, escrito por el usuario.
+                    titulo. Es el titulo de la obra seleccionada por el usuario
+                    ano_ini. Es el año de inicio de consulta seleccionado por el usuario. Si no selecciona un  año el valor es 1610.
+                    ano_fin . Es el año de fin de consulta seleccionado por el usario
+                    id_preliminar
+                    id_dedicatario
+                    orden
+                    tituloObra
+            Resultado:
+                 
+        ******************************************************************************************/
         $select=" SELECT
         s.id_sermon,
         a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
@@ -259,14 +294,16 @@ class CnsltSermones {
 
         $statement = "select 
         concat_ws(' ', Autor_apellido, Autor_nombre, Autor_particula) nombre, a.autor_orden,
-        s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, s.impresor, s.Año as anio, 
+        s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, i.impresor_nombre as impresor, s.Año as anio, 
         concat_ws(s.thema,', ', s.thema_referencia) thema, 
         s.protesta_fe
     from
         autores a,
-        sermones s
+        sermones s,
+        impresores i
     where
         a.id_autor=s.id_autor
+        and s.impresor=i.id_impresor
         and s.id_sermon=:id_sermon;";
         try {
             $statement = $this->db->prepare($statement);
