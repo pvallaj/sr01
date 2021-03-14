@@ -40,7 +40,8 @@ class CnsltNarrativa {
         ******************************************************************************************/
 
         $resultado= (object)null;
-        
+        //------------------------------------------------------------------
+        //Obtiene la lista de los autores disponibles en la base de datos.
         $statement = "SELECT distinct autor from cat_bibliografia order by autor;";
         try {
             $statement = $this->db->prepare($statement);
@@ -50,7 +51,7 @@ class CnsltNarrativa {
             exit($e->getMessage());
         }
         //------------------------------------------------------------------
-        //obra
+        //Obtiene la lista de las obras existentes en la base de datos.
         $statement = "SELECT distinct autor, obra from cat_bibliografia;";
         try {
             $statement = $this->db->prepare($statement);
@@ -60,7 +61,7 @@ class CnsltNarrativa {
             exit($e->getMessage());
         }
         //------------------------------------------------------------------
-        //tema o palabra clave.
+        //obtiene la lista de temas o palabras claves.
         $statement = "SELECT idpalabra, palabra FROM cat_palabras2 order by palabra;";
         try {
             $statement = $this->db->prepare($statement);
@@ -71,8 +72,11 @@ class CnsltNarrativa {
         }
 
         //------------------------------------------------------------------
-        //clasificacion 
-        $statement = "SELECT id_clasificacion AS id, concat(categoria,' - ', descripción) categoria FROM cat_clasificacion order by concat(categoria,' - ', descripción) ;";
+        //Obtiene las clasificaciones existentes en la DB.
+        $statement = "SELECT id_clasificacion AS id, concat(categoria,' - ', `descripción`) categoria 
+        FROM cat_clasificacion 
+        WHERE trim(categoria) is not NULL AND `descripción` IS NOT NULL 
+        order by concat(categoria,' - ', `descripción`) ";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -82,7 +86,7 @@ class CnsltNarrativa {
         }
 
         //------------------------------------------------------------------
-        //motivos 
+        //Obtiene la lista de motivos existentes en la BD.
         $statement = "SELECT id_motivo, motivo FROM cat_motivos order by motivo;";
         try {
             $statement = $this->db->prepare($statement);
@@ -93,7 +97,7 @@ class CnsltNarrativa {
         }
 
         //------------------------------------------------------------------
-        //tipo de versificacion 
+        //Obtiene la lista de los tipos de verso o versificaciones existentes en la BD 
         $statement = "SELECT id_versificacion, tipo_verso FROM cat_versificacion order by tipo_verso;";
         try {
             $statement = $this->db->prepare($statement);
@@ -104,7 +108,7 @@ class CnsltNarrativa {
         }
 
         //------------------------------------------------------------------
-        //tipo de accion 
+        //Obtiene la lista de los tipos de acción 
         $statement = "SELECT id_tipo_accion, tipo_accion, descripcion FROM cat_tipoaccion order by descripcion;";
         try {
             $statement = $this->db->prepare($statement);
@@ -115,7 +119,8 @@ class CnsltNarrativa {
         }
 
         //------------------------------------------------------------------
-        //soporte 
+        //Obtiene la lista de los tipos de soporte 
+        //**No se utiliza.**
         $statement = "	SELECT id_soporte, tipo_material FROM cat_soporte order by tipo_material;";
         try {
             $statement = $this->db->prepare($statement);
@@ -144,6 +149,9 @@ class CnsltNarrativa {
         ******************************************************************************************/
         $arr_parametros = array();
 
+        /*****************************************************************************************
+         * Se construye la base de la consulta
+        ******************************************************************************************/
         $select=" SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion,
         cb.autor, cb.obra 
@@ -160,6 +168,9 @@ class CnsltNarrativa {
         
 
         if($parametros->autor != null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de autor, se agrega la parte correpondiente en la consulta.
+            ******************************************************************************************/
             if(strpos($parametros->autor, "','")){
                 $where= $where." and cb.autor in (".$parametros->autor.") 
                 ";
@@ -170,6 +181,9 @@ class CnsltNarrativa {
             }
         }
         if($parametros->obra != null ){
+            /*****************************************************************************************
+            * Cuando existe el filtro de obra, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             if(strpos($parametros->obra, ",")){
                 $where= $where." and cb.obra in (".$parametros->obra.") 
                 ";
@@ -181,7 +195,10 @@ class CnsltNarrativa {
         }
 
         if($parametros->clasificacion != null){
-            $from=$from.",cat_clasificacion cc, Tx_clasificacion tc 
+            /*****************************************************************************************
+            * Cuando existe el filtro de clasificación, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
+            $from=$from.",cat_clasificacion cc, tx_clasificacion tc 
             ";
             $where=$where." and t.id_texto=tc.id_texto and tc.id_clasificacion=cc.id_clasificacion and tc.id_clasificacion=:clasificacion 
             ";
@@ -189,6 +206,9 @@ class CnsltNarrativa {
         }
 
         if($parametros->tema != null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de tema, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             $from=$from.",cat_palabras2 cp, tx_Palabras2 tp 
             ";
             $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
@@ -197,6 +217,9 @@ class CnsltNarrativa {
         }
 
         if($parametros->motivo != null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de motivo, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             $from=$from.", tx_motivo tm 
             ";
             $where=$where." and t.id_texto=tm.id_texto and tm.id_motivo=:motivo 
@@ -205,6 +228,9 @@ class CnsltNarrativa {
         }
 
         if($parametros->tipoVerso != null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de tipo de verso, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             $from=$from.", tx_versificacion tv 
             ";
             $where=$where." and t.id_texto=tv.id_texto and tv.id_versificacion=:tipoVerso 
@@ -212,6 +238,9 @@ class CnsltNarrativa {
             $arr_parametros['tipoVerso']= $parametros->tipoVerso;
         }
         if($parametros->tipoAccion!= null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de tipo de acción, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             $from=$from.", tx_tipaccion tt 
             ";
             $where=$where." and t.id_texto=tt.id_texto and tt.id_tipo_accion=:tipoAccion 
@@ -219,6 +248,9 @@ class CnsltNarrativa {
             $arr_parametros['tipoAccion']= $parametros->tipoAccion;
         }
         if($parametros->soporte!= null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de tipo de soporte, se agrega la parte correspondiente en la consulta
+            ******************************************************************************************/
             $from=$from.", tx_soporte ts 
             ";
             $where=$where." and t.id_texto=ts.id_texto and ts.id_soporte=:soporte 
@@ -226,6 +258,11 @@ class CnsltNarrativa {
             $arr_parametros['soporte']= $parametros->soporte;
         }
         if($parametros->textos!= null){
+            /*****************************************************************************************
+            * Cuando existe el filtro de palabra clave, se agrega la parte correspondiente en la consulta
+            * se considera una frace completa o hasta tres partes separadas por el simbolo $
+            * Por compatibilidad, no se uso el simbolo + ya que angular lo quita.
+            ******************************************************************************************/
             $t1="";
             $t2="";
             $t3="";
@@ -260,9 +297,9 @@ class CnsltNarrativa {
         $statement = $select.$from.$where;
 
         try {
-            
-            //error_log("Cnsltnarrativas. ----".$statement.'----'.PHP_EOL, 3, "logs.txt");
-            
+            /*****************************************************************************************
+            * Se ejecuta la consulta resultante y se regresan los registros obtenidos.
+            ******************************************************************************************/            
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
                 $statement->execute($arr_parametros);
@@ -277,8 +314,29 @@ class CnsltNarrativa {
 
     public function consultaDetalleNarrativa($parametros)
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene todos los datos relacionados a una RELACIÓN. 
+            Parametros:
+                id_texto. Es el identificador de la RELACIÓN.
+            Resultado:
+                Detalle bibliograficos de la relación.
+                Detalle princeps de la relación.
+                Detalle de contexto y descripción discursiva.
+                Detalle de tipo de acción 
+                Detalle de clasificación.
+                Detalle de motivos.
+                Detalle de temas.
+                Detalle de versificación
+                Detalle de Soporte.
+                Detalla de signos actorales.
+                Detalle de vinculos.
+        ******************************************************************************************/
+       
+        /*****************************************************************************************
+        * Consulta para obtener los detalles bibliograficos
+        ******************************************************************************************/
         $resultado= (object)null;
-        //error_log("cnarrativas.".$parametros->id_texto.'----'.PHP_EOL, 3, "/Users/paulinovj/proyectos/unam/sr01/log/log.txt");
         $statement = "select
         t.nombre, t.narratio, t.ubicacion,
         b.autor, b.obra,  
@@ -310,7 +368,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
         
-        //--------detalle de princeps
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de princep
+        ******************************************************************************************/
 
         $statement = "SELECT 
         p.autor, 
@@ -342,7 +402,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------detalle de CONTEXTO y Descripción Discursiva
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de Contexto y Descripción Discursiva
+        ******************************************************************************************/
 
         $statement = "SELECT 
         t.argumento, 
@@ -376,7 +438,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------tipo de accion
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de tipo de acción
+        ******************************************************************************************/
 
         $statement = "SELECT 
             cta.Id_tipo_accion, cta.tipo_accion, cta.descripcion
@@ -396,7 +460,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------clasificación
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de clasificación
+        ******************************************************************************************/
 
         $statement = "  SELECT 
             cc.Id_clasificacion, cc.categoria, cc.`descripción` AS descripcion
@@ -416,7 +482,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------motivos
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de motivos
+        ******************************************************************************************/
 
         $statement = "  SELECT 
             cm.id_motivo, cm.motivo
@@ -437,7 +505,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------temas
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de tema o palabra clave
+        ******************************************************************************************/
 
         $statement = "  SELECT 
             cp.idpalabra, cp.palabra, cp.descrip AS descripcion
@@ -457,7 +527,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------Versificación
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de Tipos de Verso o Versificación
+        ******************************************************************************************/
         $statement = "  SELECT 
         cv.id_versificacion, cv.tipo_verso
     FROM 
@@ -476,7 +548,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------soporte
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de Tipos de Soporte
+        ******************************************************************************************/
         $statement = "SELECT 
             cs.id_soporte, cs.tipo_material
         FROM 
@@ -495,7 +569,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------signos actor
+       /*****************************************************************************************
+        * Consulta para obtener los detalle de Signos Actorales
+        ******************************************************************************************/
         $statement = "SELECT 
         sa.gesto_dram_ AS gestos_dramaticos,
         sa.mov_dra_ AS movimientos_dramaticos,
@@ -524,7 +600,9 @@ class CnsltNarrativa {
             return $e->getMessage();
         }
 
-        //--------vinculos
+        /*****************************************************************************************
+        * Consulta para obtener los detalle de vinculos
+        ******************************************************************************************/
         $statement = "SELECT 
         v.visuales as visuales,
         v.auditivos as auditivos,
@@ -552,7 +630,14 @@ class CnsltNarrativa {
 
     public function consultaSignos()
     {
-        
+        /*****************************************************************************************
+            Descripción:
+                Obtiene la información relacionada a los signos actorales para mostrar el "mapa de signos actorales" 
+            Parametros:
+                Ninguno
+            Resultado:
+                Los signos actorales de todas la relaciones en la base de datos. 
+        ******************************************************************************************/
         $statement = "SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
         cb.autor, cb.obra,
@@ -591,16 +676,23 @@ WHERE
 
     public function consultaVinculos()
     {
-        
+        /*****************************************************************************************
+            Descripción:
+                Obtiene todos los datos relacionados a los vinculos de las relaciones, para ser mostrado en el "mapa de vinculos". 
+            Parametros:
+                ninguno.
+            Resultado:
+                 Los vinculos de las relaciones existentes.
+        ******************************************************************************************/
         $statement = "SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
         cb.autor, cb.obra,
         v.visuales, v.auditivos, v.presente_accion, v.ref_discurso, v.apltvo_recep, v.apltvo_espect
-FROM 
+        FROM 
         texto t,
         cat_bibliografia cb,
         vinculos v
-WHERE 
+        WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
         AND t.id_texto=v.id_texto";
         //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
@@ -618,7 +710,14 @@ WHERE
 
     public function consultaContexto()
     {
-        
+        /*****************************************************************************************
+            Descripción:
+                Obtiene todos los datos de contexto de todas las relaciones existentes, para ser mostrado en el "mapa de contexto". 
+            Parametros:
+                Ninguno.                 
+            Resultado:
+                El contexto de las relaciones existentes 
+        ******************************************************************************************/
         $statement = "SELECT 
         t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
@@ -627,10 +726,10 @@ WHERE
         t.formula_cierre,
         concat_ws(t.esp_dram_abierto,'\n ', t.esp_dram_cerrado) AS tiempo, 
         concat_ws(t.esp_dieg_abierto,'\n ', t.esp_dieg_cerrado) AS tiempo_referido
-FROM 
+        FROM 
         texto t,
         cat_bibliografia cb
-WHERE 
+        WHERE 
         t.Id_bibliografia=cb.Id_bibliografia";
         //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
@@ -677,9 +776,19 @@ WHERE
 
     public function buscar($parametros)
     {
-        
-        $statement = "SELECT 
-        t.id_texto,
+     /*****************************************************************************************
+         Descripción:
+             Consulta general. Se ejecita cuando un usuario busca información en la opción de "buscar" 
+             en la parte superior de la pagina.
+             Esta función obtiene las RELACIONES que contienen el termino buscado.
+             Solo busca en los campos narrativa, autor, obra y año. 
+         Parametros:
+             terminos. Son las palabras buscadas.
+         Resultado:
+             Una lista de las narrativas que contienen los terminos buscados. 
+     ******************************************************************************************/   
+    $statement = "SELECT 
+      t.id_texto,
       t.nombre, t.narratio, t.ubicacion,
       cb.autor, cb.obra 
     FROM  
@@ -692,7 +801,6 @@ WHERE
             or
             MATCH (narratio) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
         );";
-        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => $parametros->terminos));

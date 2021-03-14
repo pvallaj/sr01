@@ -1,11 +1,13 @@
 <?php
 /*****************************************************************************************
     Descripción:
-         
-    Parametros:
-         
-    Resultado:
-         
+        Obtiene la información de la base de datos para la sección de SERMONES.
+    Autor: Paulino Valladares Justo.
+    Fecha creación: 18/01/2020
+    Historial de correcciones:
+    -----------------------------------------------------------------------------------------
+    Fecha:
+    Descripción:
 ******************************************************************************************/
 namespace Src\tablas;
 
@@ -32,13 +34,15 @@ class CnsltSermones {
             Descripción:
                 Obtiene todos los datos necesarios para el formulario de consulta. 
             Parametros:
-                 ninguno
+                ninguno
             Resultado:
                 un arreglo con las listas de:
-                    autores, impresores, autores de preliminares, dedicatarios, ciudad, titulo de libro (obra), ordern religiosa
+                autores, impresores, autores de preliminares, dedicatarios, ciudad, titulo de libro (obra), ordern religiosa
         ******************************************************************************************/
         $resultado= (object)null;
-        //autores-----
+        /*****************************************************************************************
+        * Obtiene la lista de autores
+        ******************************************************************************************/
         $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
         FROM 
             autores AS a,
@@ -54,7 +58,9 @@ class CnsltSermones {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
-        //impresores ----------
+        /*****************************************************************************************
+        * Obtiene la lista de impresores
+        ******************************************************************************************/
         $statement = "SELECT id_impresor, impresor_nombre FROM impresores order by impresor_nombre;";
         try {
             $statement = $this->db->prepare($statement);
@@ -65,7 +71,9 @@ class CnsltSermones {
             exit($e->getMessage());
         }
 
-        //Autor de preliminares ----------
+        /*****************************************************************************************
+        * Obtiene la lista de autores de preliminares
+        ******************************************************************************************/
         $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
         FROM 
             autores AS a,
@@ -82,7 +90,9 @@ class CnsltSermones {
             exit($e->getMessage());
         }
 
-        //Dedicatarios ----------
+        /*****************************************************************************************
+        * obtiene la lista de dedicatarios.
+        ******************************************************************************************/
         $statement = "SELECT d.id_dedicatario, CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido) AS autor
         FROM dedicatiarios AS d
         WHERE d.dedicatario_nombre IS NOT null
@@ -96,7 +106,9 @@ class CnsltSermones {
             exit($e->getMessage());
         }
 
-        //CIUDAD ----------
+        /*****************************************************************************************
+        * obtiene la lista de ciudades
+        ******************************************************************************************/
         $statement = "SELECT DISTINCT ciudad FROM sermones WHERE ciudad IS NOT NULL order by ciudad;";
         try {
             $statement = $this->db->prepare($statement);
@@ -107,7 +119,9 @@ class CnsltSermones {
             exit($e->getMessage());
         }
 
-        //obra ----------
+        /*****************************************************************************************
+        * Obtiene la lista de obras 
+        ******************************************************************************************/
         $statement = "SELECT id_libro,  libro_titulo FROM libros ORDER BY libro_titulo;";
         try {
             $statement = $this->db->prepare($statement);
@@ -118,7 +132,9 @@ class CnsltSermones {
             exit($e->getMessage());
         }
 
-        //orden religiosa ----------
+        /*****************************************************************************************
+        * Obtiene la lista de ordenes religiosas
+        ******************************************************************************************/
         $statement = "SELECT distinct autor_orden FROM autores where autor_orden IS NOT null order by autor_orden;";
         try {
             $statement = $this->db->prepare($statement);
@@ -136,7 +152,9 @@ class CnsltSermones {
     {
         /*****************************************************************************************
             Descripción:
-                Obtiene la lista de sermones coincidentes con los prorametros especificados por el usuario 
+                Obtiene la lista de sermones coincidentes con los prorametros especificados por el usuario.
+                Cada uno de los parametros pueden contener información o no, en caso de que no tengan información 
+                se ignoran en creación del filtro.
             Parametros:
                  Parametros de consulta: 
                     id_autor. es el identificador del autor seleccionado por el usuario.
@@ -144,12 +162,12 @@ class CnsltSermones {
                     titulo. Es el titulo de la obra seleccionada por el usuario
                     ano_ini. Es el año de inicio de consulta seleccionado por el usuario. Si no selecciona un  año el valor es 1610.
                     ano_fin . Es el año de fin de consulta seleccionado por el usario
-                    id_preliminar
-                    id_dedicatario
-                    orden
-                    tituloObra
+                    id_preliminar. Es el identificador del autor de los preliminares.
+                    id_dedicatario. Es el identificador del dedicatario.
+                    orden. Es la orden religiosa.
+                    tituloObra. Es el titulo de la obra.
             Resultado:
-                 
+                 Una lista con los registros coincidentes.
         ******************************************************************************************/
         $select=" SELECT
         s.id_sermon,
@@ -164,7 +182,11 @@ class CnsltSermones {
         $where="WHERE 
         a.id_autor=s.id_autor
         ";
+        
         if($parametros->id_autor > 0){
+        /*****************************************************************************************
+        *   Se agrega el filtro del autor cuando viene con ID
+        ******************************************************************************************/
                 $where=$where." and a.id_autor=:id_autor 
                 ";
                 $arr_parametros['id_autor']= $parametros->id_autor;
@@ -172,22 +194,34 @@ class CnsltSermones {
         }
         
         if($parametros->autor!=null){
+            /*****************************************************************************************
+            *   Se agrega el filtro del autor cuando viene coomo nombre.
+            ******************************************************************************************/
             $where=$where." and upper(concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido)) like upper(:autor) 
                 ";
                 $arr_parametros['autor']='%'.$parametros->autor.'%';
         }
 
         if($parametros->titulo!=null){
+            /*****************************************************************************************
+            *   Se agrega el filtro de titulo de la obra
+            ******************************************************************************************/
             $where=$where." and upper(titulo) like upper(:titulo) 
                 ";
                 $arr_parametros['titulo']='%'.$parametros->titulo.'%';
         }
         if($parametros->anio!=0){
+            /*****************************************************************************************
+            *  Se agrega el filtro del año de publicación
+            ******************************************************************************************/
             $where=$where." and s.`Año`=:anio
                     ";
                 $arr_parametros['anio']=$parametros->anio;
         }else{
             if($parametros->anio_ini!=null && $parametros->anio_fin!=null){
+                /*****************************************************************************************
+                * Se agrega el filtro de rango de años
+                ******************************************************************************************/
                 $where=$where." and s.`Año` between :inicio and :fin 
                     ";
                 $arr_parametros['inicio']=$parametros->anio_ini;
@@ -196,12 +230,18 @@ class CnsltSermones {
         }
 
         if($parametros->impresor!=null ){
+            /*****************************************************************************************
+            *   Se agrega el filtro de impresor
+            ******************************************************************************************/
             $where=$where." and s.impresor = :impresor 
                 ";
             $arr_parametros['impresor']=$parametros->impresor;
         }
 
         if($parametros->id_preliminar > 0){
+            /*****************************************************************************************
+            * Se agrega el filtro de identificador del preliminar.
+            ******************************************************************************************/
             $from=$from.",
             (SELECT s.id_sermon, a.id_autor as id_preliminar 
         FROM 
@@ -218,6 +258,9 @@ class CnsltSermones {
         }
 
         if($parametros->id_dedicatario > 0){
+            /*****************************************************************************************
+            *   Se agrega el filtro de dedicatarios.
+            ******************************************************************************************/
             $from=$from.",
                 dedicatiarios d
             ";
@@ -228,13 +271,18 @@ class CnsltSermones {
         }
 
         if($parametros->orden !=null){
-
+            /*****************************************************************************************
+            *   Se agrega el filtro de orden religiosa
+            ******************************************************************************************/
             $where=$where." and a.autor_orden=:orden 
                 ";
             $arr_parametros['orden']=$parametros->orden;
         }
 
         if($parametros->tituloObra !=null){
+            /*****************************************************************************************
+            * Se agrega el filtro de titulo de la obra
+            ******************************************************************************************/
             $from=$from.",
             sermones_libros sm
             ";
@@ -245,6 +293,9 @@ class CnsltSermones {
         }
 
         if($parametros->ciudad !=null){
+            /*****************************************************************************************
+            * Se agrega el filtro de ciudad
+            ******************************************************************************************/
             $where=$where."  
                             and s.ciudad=:ciudad 
                 ";
@@ -252,6 +303,9 @@ class CnsltSermones {
         }
 
         if($parametros->thema !=null){
+            /*****************************************************************************************
+            * Se agrega el filtro de termino (palabra o palabras)
+            ******************************************************************************************/
             $where=$where."  
                     and MATCH (thema, thema_referencia) AGAINST (:thema IN NATURAL LANGUAGE MODE) 
                 ";
@@ -259,6 +313,9 @@ class CnsltSermones {
         }
 
         if($parametros->grabado !=null){
+            /*****************************************************************************************
+            *   Se agrega el filtro de grabados
+            ******************************************************************************************/
             $from=$from.",
                 grabados gr
             ";
@@ -289,7 +346,21 @@ class CnsltSermones {
 
     public function consultaDetalleSermon($parametros)
     {
-        
+        /*****************************************************************************************
+            Descripción:
+                Obtiene toda la información relacionada a un sermón 
+            Parametros:
+                id_sermon. identificador del sermón seleccionado por el usuario.
+            Resultado:
+                detalle bibliografico del sermón.
+                detalle del libro relacionado al sermón.
+                detalle de los preliminares del sermón.
+                detalle del catálogo.
+                detalle del grabado.
+                detalle de los preliminares.
+                detalle de los repositorios.
+
+        ******************************************************************************************/
         $resultado= (object)null;
 
         $statement = "select 
@@ -394,7 +465,7 @@ class CnsltSermones {
         return $resultado;
     }
 
-    public function consultaDetalleCatalogo($parametros)
+    /*public function consultaDetalleCatalogo($parametros)
     {
         switch ($parametros->catalogo) {
             case 'palabras':
@@ -422,11 +493,22 @@ class CnsltSermones {
         } catch (\PDOException $e) {
             return $e->getMessage();
         }
-    }
+    }*/
 
     public function buscar($parametros)
     {
-        
+        /*****************************************************************************************
+            Descripción:
+                Realiza la busqueda basada en palabras, se activa cuando el usuario utiliza la 
+                herramienta de "buscar", en la parte superior de la pantalla.
+                La consulta se realiza en forma de "Lenguaje natural", lo que implica que se tomará
+                como coincidente cada palabra de la frace proporcionada, sin considerar mayusculas y minusculas, 
+                ni acentos.
+            Parametros:
+                 terminos. son las palabras a buscar.
+            Resultado:
+                 Una lista con los sermones encontrados.
+        ******************************************************************************************/
         $statement = "select 
         s.id_sermon,
         a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
