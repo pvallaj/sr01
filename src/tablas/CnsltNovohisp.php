@@ -100,16 +100,19 @@ class CnsltNovohisp {
         ******************************************************************************************/
         $resultado= (object)null;
 
+        //$correccion=explode(',',$parametros->capitulo);
+        //$correccion=implode("%,%",$correccion);
+        $parametros2=\str_replace(", ",",%",$parametros->capitulo);
         $statement = "SELECT 0 id, tipo, referencia, texto, capitulo, etiquetas, descripcion
         FROM info_oe
         WHERE	
-            etiquetas LIKE '".$parametros->capitulo.", portada'
+            etiquetas = '".$parametros->capitulo.", portada'
 UNION            
 SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion
         FROM info_oe
         WHERE	
-            etiquetas LIKE '".$parametros->capitulo.", contenido';";
-        
+            etiquetas like '".$parametros2.",%contenido%';";
+        error_log("Sentencia: ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
