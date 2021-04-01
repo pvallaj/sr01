@@ -93,7 +93,7 @@ class CnsltSermones {
         /*****************************************************************************************
         * obtiene la lista de dedicatarios.
         ******************************************************************************************/
-        $statement = "SELECT d.id_dedicatario, CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido) AS autor
+        $statement = "SELECT distinct CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido) AS autor
         FROM dedicatiarios AS d
         WHERE d.dedicatario_nombre IS NOT null
         ORDER BY CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido);";
@@ -257,7 +257,7 @@ class CnsltSermones {
 
         }
 
-        if($parametros->id_dedicatario > 0){
+        if($parametros->dedicatario != null){
             /*****************************************************************************************
             *   Se agrega el filtro de dedicatarios.
             ******************************************************************************************/
@@ -265,9 +265,9 @@ class CnsltSermones {
                 dedicatiarios d
             ";
             $where=$where." and d.id_sermon =s.id_sermon
-                            and d.id_dedicatario=:id_dedicatario 
+                            and upper(CONCAT_WS(' ', trim(d.dedicatario_nombre), d.dedicatario_particula, d.dedicatario_apellido))=upper(:dedicatario) 
                 ";
-            $arr_parametros['id_dedicatario']=$parametros->id_dedicatario;
+            $arr_parametros['dedicatario']=$parametros->dedicatario;
         }
 
         if($parametros->orden !=null){
@@ -329,14 +329,37 @@ class CnsltSermones {
         $statement = $select.$from.$where;
         try {
             
-           /* error_log("CnslSermones. ----
+            error_log("CnslSermones. ----
             ".$statement.'
-            ----'.PHP_EOL, 3, "logs.txt");*/
+            ----'.PHP_EOL, 3, "logs.txt");
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
                 $statement->execute($arr_parametros);
             else
                 $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function obtenerTotalSermones()
+    {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene el total de registros de sermones existentes.
+            Parametros:
+                Ninguno
+            Resultado:
+                El total de registros de sermones de la base de datos.
+        ******************************************************************************************/
+        $statement=" SELECT COUNT(*) as total FROM autores as a, sermones as s WHERE a.id_autor=s.id_autor;";
+
+        try {
+
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
@@ -364,10 +387,10 @@ class CnsltSermones {
         $resultado= (object)null;
 
         $statement = "select 
-        concat_ws(' ', Autor_apellido, Autor_nombre, Autor_particula) nombre, a.autor_orden,
+        concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido) nombre, a.autor_orden,
         s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, i.impresor_nombre as impresor, s.Año as anio, 
-        concat_ws(s.thema,', ', s.thema_referencia) thema, 
-        s.protesta_fe
+        concat_ws(', ', s.thema,s.thema_referencia) thema, 
+        s.protesta_fe, s.digitalizado_en1, s.digitalizado_en2, s.digitalizado_en3
     from
         autores a,
         sermones s,
@@ -385,7 +408,7 @@ class CnsltSermones {
         }
 
         $statement2 = "SELECT 
-         concat_ws(' ', l.Libro_autor_apellido, l.libro_autor_nombre, l.Libro_autor_particula) as autor,
+         concat_ws(' ', l.libro_autor_nombre, l.Libro_autor_particula, l.Libro_autor_apellido) as autor,
         l.libro_titulo, l.libro_ciudad, l.`libro _impresor` as libro_impresor, l.`Libro_año` as libro_anio
     FROM
         libros as l,
@@ -420,7 +443,7 @@ class CnsltSermones {
         }
 
         $statement4 = "SELECT 
-                cs.Catalogo_nombre as catalogo, cs.numeracion, cg.catalogo_nombre
+                cs.Catalogo_nombre as catalogo, cs.numeracion, cs.cat_nombre_completo as catalogo_nombre
         FROM 
             sermones_catalogos AS cs,
             catalogos AS cg	
@@ -531,7 +554,7 @@ class CnsltSermones {
             return $res;
         } catch (\PDOException $e) {
             error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
-            return $e->getMessage();
+            return null;
         }
         return  $res;
     }

@@ -111,10 +111,12 @@ class CnsltNarrativaCtrl {
     private function consultaNarrativas()
     {
         $result = $this->ConsultaCats->consultaNarrativas($this->parametros->parametros);
+        $total = $this->ConsultaCats->consultaTotalNarrativas();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';
-        $this->resp->resultado=$result;
+        $this->resp->resultado->registros=$result;
+        $this->resp->resultado->conteo=$total;
         $response['body'] = json_encode($this->resp);
         return $response;
     }

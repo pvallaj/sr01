@@ -312,6 +312,40 @@ class CnsltNarrativa {
         }
     }
 
+    public function consultaTotalNarrativas()
+    {
+        /*****************************************************************************************
+            Descripción:
+                obtiene total de narrativas existentes. 
+            Parametros:
+                ninguno
+
+            Resultado:
+                total de registros de relaciones existentes en la bas de datos. 
+        ******************************************************************************************/
+
+        $statement=" SELECT COUNT(*) total
+         FROM 
+        texto t,
+        cat_bibliografia cb 
+        WHERE 
+        t.Id_bibliografia=cb.Id_bibliografia
+        ";
+        
+
+        try {
+            /*****************************************************************************************
+            * Se ejecuta la consulta resultante y se regresan los registros obtenidos.
+            ******************************************************************************************/            
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function consultaDetalleNarrativa($parametros)
     {
         /*****************************************************************************************
