@@ -103,12 +103,12 @@ class CnsltNovohisp {
         //$correccion=explode(',',$parametros->capitulo);
         //$correccion=implode("%,%",$correccion);
         $parametros2=\str_replace(", ",",%",$parametros->capitulo);
-        $statement = "SELECT 0 id, tipo, referencia, texto, capitulo, etiquetas, descripcion
+        $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
         FROM info_oe
         WHERE	
             etiquetas = '".$parametros->capitulo.", portada'
 UNION            
-SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion
+SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
         FROM info_oe
         WHERE	
             etiquetas like '".$parametros2.",%contenido%';";
@@ -195,7 +195,30 @@ SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion
         return  $res;
     }
 
+    public function imagenesAleatorias($parametros)
+    {
+        
+        /*****************************************************************************************
+            Descripción:
+                obtine la referencia a N imagenes de forma aleatoria
+            Parametros:
+                cantidad. número de imagenes a obtener.
+            Resultado:
+                 Una lista de N imagenes.
+        ******************************************************************************************/
+        $statement = "SELECT referencia, descripcion FROM info_oe WHERE tipo=2 ORDER BY RAND() LIMIT 5;";
 
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(':cantidad' => $parametros->cantidad));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
 
   
 }

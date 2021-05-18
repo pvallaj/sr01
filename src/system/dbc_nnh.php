@@ -12,7 +12,7 @@ class dbc_nnh {
         $db   = getenv('DB_DATABASE_NNH');
         $user = getenv('DB_USERNAME_NNH');
         $pass = getenv('DB_PASSWORD_NNH');
-        //error_log("NNH ".$host." - ".$port." - ".$db." - ".$user." - ".$pass.PHP_EOL, 3, "c:\\log\\log.txt");
+        //error_log("NNH ".$host." - ".$port." - ".$db." - ".$user." - ".$pass.PHP_EOL, 3, "c:\\log\\logs.txt");
         try {
             $this->dbConnection = new \PDO(
                 "mysql:host=$host;port=$port;charset=utf8mb4;dbname=$db",

@@ -331,7 +331,7 @@ class UsuarioCtrl {
     public function validarToken()
     {
         //if(!array_key_exists('Authorization', getallheaders())) return false;   
-        $token = getallheaders()['authorization'];
+        $token = getallheaders()['Authorization'];
         //error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
         if(is_null($token)) return false;
 

@@ -97,6 +97,8 @@ class NoticiasCtrl {
     {
         //if(!array_key_exists('Authorization', getallheaders())) return false;   
         $token = getallheaders()['authorization'];
+        if(is_null($token)) $token = getallheaders()['Authorization'];
+        
         error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
         if(is_null($token)){
             error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "logs.txt");

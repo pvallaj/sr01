@@ -255,6 +255,21 @@ class CnsltSermones {
             ";
             $arr_parametros['id_preliminar']= $parametros->id_preliminar;
 
+        }else{
+            if($parametros->preliminar!=null){
+                $from=$from.",
+            (SELECT s.id_sermon, a.id_autor as id_preliminar 
+        FROM 
+            autores AS a,
+            sermones_preliminares AS s
+        WHERE 
+            s.id_autor=a.id_autor
+            and upper(concat_ws(' ', a.autor_nombre, a.autor_particula, a.autor_apellido)) like upper(:autor_preliminar)
+        ) sp ";
+            $where=$where." and sp.id_sermon=s.id_sermon 
+            ";
+            $arr_parametros['autor_preliminar']= '%'.$parametros->preliminar.'%';
+            }
         }
 
         if($parametros->dedicatario != null){
@@ -389,7 +404,7 @@ class CnsltSermones {
         $statement = "select 
         concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido) nombre, a.autor_orden,
         s.id_sermon, s.titulo, s.inicio_sermon, s.ciudad, i.impresor_nombre as impresor, s.Año as anio, 
-        concat_ws(', ', s.thema,s.thema_referencia) thema, 
+        concat_ws(', ', s.thema_corr,s.thema_ref_corr) thema, 
         s.protesta_fe, s.digitalizado_en1, s.digitalizado_en2, s.digitalizado_en3
     from
         autores a,

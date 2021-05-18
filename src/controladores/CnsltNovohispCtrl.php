@@ -70,6 +70,9 @@ class CnsltNovohispCtrl {
                 case 'buscar terminos':
                     $response = $this->buscar();
                     break;
+                case 'imagenes aleatorias':
+                        $response = $this->imagenesAleatorias();
+                        break;
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -84,6 +87,16 @@ class CnsltNovohispCtrl {
         }
     }
 
+    private function imagenesAleatorias()
+    {
+        $result = $this->Consulta->imagenesAleatorias($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
 
     private function consultaEstrucutra()
     {

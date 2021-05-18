@@ -80,31 +80,38 @@ class Noticias {
     {
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
-        $statement = "INSERT INTO noticias(titulo, texto, imagen, ligaExterna,  inicio, termino) 
-        values(:titulo, :texto, :imagen, :ligaExterna,  :inicio, :termino);";
+
+        $s_id = $this->db->prepare('SELECT MAX(IFNULL(id,0))+1 as id FROM noticias');
+        $s_id->execute();
+        $id=$s_id->fetch()['id'];
+
+        $statement = "INSERT INTO noticias(id, titulo, texto, imagen, ligaExterna,  inicio, termino) 
+        values(:id, :titulo, :texto, :imagen, :ligaExterna,  :inicio, :termino);";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
+            ':id'     =>        $id,
             ':titulo' =>        $p->titulo,
             ':texto' =>         $p->texto,
-            ':imagen' =>        isset($p->imagen)?$p->imagen:null,
+            ':imagen' =>        $id.'.jpg',
             ':ligaExterna' =>   isset($p->ligaExterna)?$p->ligaExterna:null,
             ':inicio' =>        $p->inicio,
             ':termino' =>       $p->termino,
             ));
             
-            $rs->resultado->id=$this->db->lastInsertId();
-
-            if($_FILES){
+            if($p->nombre_archivo){
                 $directorio = "img_noticias/"; 
-                move_uploaded_file($_FILES['file']['tmp_name'], $directorio.$rs->resultado->id.'_'.$_FILES['file']['name']);
+                $data = explode(',', $p->file);
+                $contenido = base64_decode($data[1]);
+                $file=fopen($directorio.$id.'.jpg','wb');
+                fwrite($file, $contenido);
+                fclose($file);
             }
 
             $rs->ok=true;
             $rs->message="correcto";
             
-            //return {'ok':true, 'message':'correcto', 'id':$this->db->lastInsertId()};
         } catch (\Exception $e) {
             error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
             $rs->ok=false;
@@ -116,97 +123,57 @@ class Noticias {
     public function actualizarNoticia($p)
     {
         $rs=new \stdClass();
-        $rs->resultado=new \stdClass();
-        //Elimina el ar
         
-        if($_FILES){
-            //viene un archivo adjunto por lo que hay que eliminar el anterior
-            $statement = "SELECT imagen FROM noticias where id=:id;";
-            try {
-                $statement = $this->db->prepare($statement);
-                $statement->execute(array(':id' => $p->id));
-                $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-                
-            } catch (\PDOException $e) {
-                error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
-                return $e->getMessage();
-            }
-            try {
-                $ruta='./img_noticias/';
-                error_log("Imagen a borrar: ".realpath($ruta.$p->id.'_'.$res[0]['imagen']).PHP_EOL, 3, "logs.txt");
-                
-                if (file_exists(realpath($ruta.$p->id.'_'.$res[0]['imagen']))) {
-                    unlink(realpath($ruta.$p->id.'_'.$res[0]['imagen']));
-                 }
+        if($p->nombre_archivo){
+
+            $ruta_archivo="./img_noticias/".$p->id.".jpg";
+            try {   
+                if (file_exists(realpath($ruta_archivo))) {
+                    unlink(realpath($ruta_archivo));
+                }
             } catch (\Throwable $th) {
                 error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "logs.txt");
             }
-            //se carga el nuevo archivo
+
             $directorio = "img_noticias/"; 
-            move_uploaded_file($_FILES['file']['tmp_name'], $directorio. $p->id.'_'.$_FILES['file']['name']);
-
-            $statement = "UPDATE noticias SET 
-                titulo=:titulo, 
-                texto=:texto, 
-                imagen=:imagen, 
-                ligaExterna=:ligaExterna, 
-                inicio=:inicio, 
-                termino=:termino  
-            WHERE id=:id";
-
-            try {
-                $statement = $this->db->prepare($statement);
-                $statement->execute(array(
-                'id' =>            $p->id,    
-                'titulo' =>        $p->titulo,
-                'texto' =>         $p->texto,
-                'imagen' =>        isset($p->imagen)?$p->imagen:null,
-                'ligaExterna' =>   isset($p->ligaExterna)?$p->ligaExterna:null,
-                'inicio' =>        $p->inicio,
-                'termino' =>       $p->termino
-                ));
-
-                $rs->ok=true;
-                $rs->message="correcto";
-                
-
-            } catch (\PDOException $e) {
-                error_log("ERROR ACT imagen: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
-                $rs->ok=false;
-                $rs->message="Error interno. Favor de revisar el log";
-            }
-        }else{
-            $statement = "UPDATE noticias SET 
-                titulo=:titulo, 
-                texto=:texto,
-                ligaExterna=:ligaExterna, 
-                inicio=:inicio, 
-                termino=:termino  
-            WHERE id=:id";
-
-            try {
-                $statement = $this->db->prepare($statement);
-                $statement->execute(array(
-                'id' =>            $p->id,    
-                'titulo' =>        $p->titulo,
-                'texto' =>         $p->texto,
-                'ligaExterna' =>   $p->ligaExterna,
-                'inicio' =>        $p->inicio,
-                'termino' =>       $p->termino
-                ));
-
-                $rs->ok=true;
-                $rs->message="correcto";
-                
-
-            } catch (\PDOException $e) {
-                error_log("ERROR ACT NO imagen: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
-                $rs->ok=false;
-                $rs->message="Error interno. Favor de revisar el log";
-            }
+            $data = explode(',', $p->file);
+            $contenido = base64_decode($data[1]);
+            $file=fopen($directorio.$p->id.'.jpg','wb');
+            fwrite($file, $contenido);
+            fclose($file);
         }
 
-        
+        $statement = "UPDATE noticias SET 
+            titulo=:titulo, 
+            texto=:texto, 
+            imagen=:imagen, 
+            ligaExterna=:ligaExterna, 
+            inicio=:inicio, 
+            termino=:termino  
+        WHERE id=:id";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(
+            'id' =>            $p->id,    
+            'titulo' =>        $p->titulo,
+            'texto' =>         $p->texto,
+            'imagen' =>        isset($p->imagen)?$p->id.'.jpg':null,
+            'ligaExterna' =>   isset($p->ligaExterna)?$p->ligaExterna:null,
+            'inicio' =>        $p->inicio,
+            'termino' =>       $p->termino
+            ));
+
+            $rs->ok=true;
+            $rs->message="correcto";
+            
+
+        } catch (\PDOException $e) {
+            error_log("ERROR ACT imagen: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            $rs->ok=false;
+            $rs->message="Error interno. Favor de revisar el log";
+        }
+              
         
         return  $rs;
     }

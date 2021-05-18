@@ -209,7 +209,7 @@ class CnsltNarrativa {
             /*****************************************************************************************
             * Cuando existe el filtro de tema, se agrega la parte correspondiente en la consulta
             ******************************************************************************************/
-            $from=$from.",cat_palabras2 cp, tx_Palabras2 tp 
+            $from=$from.",cat_palabras2 cp, tx_palabras2 tp 
             ";
             $where=$where." and t.id_texto=tp.id_texto and tp.idpalabras=cp.idpalabra and tp.idpalabras=:tema 
             ";

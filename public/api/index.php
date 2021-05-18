@@ -1,5 +1,10 @@
 <?php
+/*
+    configuración del ini
 
+    post_max_size = 128M
+    memory_limit = 512M
+*/
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Request-Headers: *');
 header("Access-Control-Allow-Headers: Content, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
@@ -11,7 +16,7 @@ if($method == "OPTIONS") {
 }
 
 
-ini_set('log_error', 'false');
+ini_set('log_error', 'true');
 ini_set('display_errors', 'false');
 error_reporting(E_ALL);
 
@@ -22,7 +27,6 @@ use Src\controladores\CnsltSermonesCtrl;
 use Src\controladores\CnsltNovohispCtrl;
 use Src\controladores\NoticiasCtrl;
 use Src\controladores\util;
-ini_set('display_errors', 'true');
 
 set_error_handler('exceptions_error_handler');
 
@@ -32,7 +36,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         "PRECAUCION: ".PHP_EOL.
         $message.PHP_EOL.
         $filename.PHP_EOL.
-        $lineno.PHP_EOL, 3, "c:\\log\\log.txt");
+        $lineno.PHP_EOL, 3, "logs.txt");
   }
   if (error_reporting() & $severity) {
     //throw new ErrorException($message, 0, $severity, $filename, $lineno);
@@ -40,7 +44,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         "ERROR: ".PHP_EOL.
         $message.PHP_EOL.
         $filename.PHP_EOL.
-        $lineno.PHP_EOL, 3, "c:\\log\\log.txt");
+        $lineno.PHP_EOL, 3, "logs.txt");
   }
 }
 
@@ -55,7 +59,7 @@ if($parametros==null){
 
 $Util = new Util($dbSys);
 $Util->regEvento($parametros['cn']);
-//error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "logs.txt");
+error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "logs.txt");
 switch ($parametros['cn']->seccion) {
     case 'usuarios':
         $controller = new UsuarioCtrl($dbSys, null, null);
@@ -91,7 +95,7 @@ switch ($parametros['cn']->seccion) {
         $controller->procesa();
         break;
     case 'sermones':
-        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\log.txt");
+        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);
@@ -105,7 +109,7 @@ switch ($parametros['cn']->seccion) {
         $controller->procesa();
         break;
     case 'noticias':
-        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\log.txt");
+        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\logs.txt");
         $controller = new NoticiasCtrl($dbSys, $parametros['cn']);
         $controller->procesa();
         break;
