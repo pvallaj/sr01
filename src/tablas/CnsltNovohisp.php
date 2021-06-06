@@ -59,8 +59,8 @@ class CnsltNovohisp {
         $statement = "SELECT *
         FROM info_oe
         WHERE	
-            etiquetas LIKE 'Tomo".$parametros->tomo.", capitulo%, estructura' 
-        OR  etiquetas LIKE 'Tomo".$parametros->tomo.", seccion%, estructura';";
+            etiquetas LIKE '".$parametros->tomo.", capitulo%, estructura' 
+        OR  etiquetas LIKE '".$parametros->tomo.", seccion%, estructura';";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -74,7 +74,7 @@ class CnsltNovohisp {
         $statement = "select *
         from info_oe
         WHERE	
-        etiquetas LIKE 'Tomo".$parametros->tomo.", portadaTomo'";
+        etiquetas LIKE '".$parametros->tomo.", portadaTomo'";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -181,11 +181,25 @@ SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripci
         WHERE 
         MATCH (etiquetas, descripcion, texto, capitulo) 
         AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-        ORDER BY tipo";
+        union
+        SELECT id, tipo_recurso AS tipo,
+        concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
+        null as texto, capitulo, etiquetas, descripcion 
+        FROM recursos_mmd
+        WHERE 
+            UPPER(titulo) LIKE UPPER(:termino2)
+            OR UPPER(descripcion) LIKE UPPER(:termino2)
+            OR UPPER(ciudad_estado) LIKE UPPER(:termino2)
+            OR UPPER(anio_siglo) LIKE UPPER(:termino2)
+                ORDER BY tipo";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));
+            $statement->execute(array(
+                ':terminos' => '"'.$parametros->terminos.'"',
+                ':termino2' => '%'.$parametros->terminos.'%'
+            ));
+
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
@@ -206,7 +220,16 @@ SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripci
             Resultado:
                  Una lista de N imagenes.
         ******************************************************************************************/
-        $statement = "SELECT referencia, descripcion FROM info_oe WHERE tipo=2 ORDER BY RAND() LIMIT 5;";
+        $statement = "SELECT referencia, descripcion, etiquetas, tipo 
+        FROM info_oe 
+        WHERE tipo=2 
+        union
+        SELECT 
+            concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
+            CONCAT(titulo,', ',descripcion) AS descripcion,
+            etiquetas, tipo_recurso AS tipo
+        FROM recursos_mmd
+        ORDER BY RAND() LIMIT 5;";
 
         try {
             $statement = $this->db->prepare($statement);

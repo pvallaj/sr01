@@ -564,7 +564,7 @@ class CnsltSermones {
             //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => $parametros->terminos));
+            $statement->execute(array(':terminos' => '"'.$parametros->terminos.'"'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {

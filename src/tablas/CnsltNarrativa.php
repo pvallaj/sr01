@@ -837,7 +837,7 @@ WHERE
         );";
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => $parametros->terminos));
+            $statement->execute(array(':terminos' => '"'.$parametros->terminos.'"'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
