@@ -103,15 +103,23 @@ class CnsltNovohisp {
         //$correccion=explode(',',$parametros->capitulo);
         //$correccion=implode("%,%",$correccion);
         $parametros2=\str_replace(", ",",%",$parametros->capitulo);
-        $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
-        FROM info_oe
-        WHERE	
-            etiquetas = '".$parametros->capitulo.", portada'
-UNION            
-SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
-        FROM info_oe
-        WHERE	
-            etiquetas like '".$parametros2.",%contenido%';";
+            $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
+            FROM info_oe
+            WHERE	
+                etiquetas = '".$parametros->capitulo.", portada'
+            UNION            
+            SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
+                    FROM info_oe
+                    WHERE	
+                        etiquetas like '".$parametros2.",%contenido%'
+            union								
+            SELECT id, tipo_recurso as tipo,
+            concat('./assets/fotos/catalogo/',id,'.jpg') as referencia, 
+            enlace as referencia_2, null as texto, null as capitulo, etiquetas,
+            concat(ifnull(titulo,''), ifnull(CONCAT(', ', descripcion),'')) descripcion
+                    FROM recursos_mmd
+                    WHERE	
+                        etiquetas like '".$parametros2."';";
         error_log("Sentencia: ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
@@ -146,6 +154,16 @@ SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripci
         WHERE 
         MATCH (etiquetas, descripcion, texto, capitulo) 
         AGAINST (:terminos IN NATURAL LANGUAGE MODE)
+        union
+        SELECT id, tipo_recurso AS tipo,
+        concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
+        null as texto, capitulo, etiquetas, descripcion , RAND() as orden
+        FROM recursos_mmd
+        WHERE 
+            UPPER(titulo) LIKE UPPER(:termino2)
+            OR UPPER(descripcion) LIKE UPPER(:termino2)
+            OR UPPER(ciudad_estado) LIKE UPPER(:termino2)
+            OR UPPER(anio_siglo) LIKE UPPER(:termino2)
         ORDER BY orden;";
 
         try {
