@@ -43,13 +43,15 @@ class CnsltSermones {
         /*****************************************************************************************
         * Obtiene la lista de autores
         ******************************************************************************************/
-        $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
-        FROM 
-            autores AS a,
-            sermones AS s
-        WHERE 
-            s.id_autor=a.id_autor
-            AND a.autor_nombre is not null order BY a.Autor_nombre;";
+        $statement = "SELECT distinct a.id_autor, CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor, 
+        a.autor_apellido, a.autor_nombre, a.autor_particula
+                FROM 
+                    autores AS a,
+                    sermones AS s
+                WHERE 
+                    s.id_autor=a.id_autor
+                    AND a.autor_nombre is not null 
+                 order BY CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -74,13 +76,14 @@ class CnsltSermones {
         /*****************************************************************************************
         * Obtiene la lista de autores de preliminares
         ******************************************************************************************/
-        $statement = "SELECT distinct a.id_autor, CONCAT_WS(' ', a.autor_nombre, a.autor_particula, a.autor_apellido) as autor 
+        $statement = "SELECT distinct a.id_autor,  CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor 
         FROM 
             autores AS a,
             sermones_preliminares AS s
         WHERE 
             s.id_autor=a.id_autor
-            AND a.autor_nombre is not null order BY a.Autor_nombre;";
+            AND a.autor_nombre is not null 
+        order BY  CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -464,7 +467,7 @@ class CnsltSermones {
             catalogos AS cg	
         WHERE 
             cs.Catalogo_nombre=cg.ID_Catalogo
-            AND cg.id_catalogo IN (1,5,3,4,6)
+            AND cg.id_catalogo IN (1,2,3,4,5,6)
                 and cs.id_sermon=:id_sermon;";
         try {
             $statement4 = $this->db->prepare($statement4);

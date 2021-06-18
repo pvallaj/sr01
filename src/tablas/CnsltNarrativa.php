@@ -62,7 +62,8 @@ class CnsltNarrativa {
         }
         //------------------------------------------------------------------
         //obtiene la lista de temas o palabras claves.
-        $statement = "SELECT idpalabra, palabra FROM cat_palabras2 order by palabra;";
+        $statement = "SELECT idpalabra, CONCAT(UPPER(LEFT(palabra,1)),SUBSTR(palabra,2)) palabra 
+        FROM cat_palabras2 order by palabra;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -98,7 +99,7 @@ class CnsltNarrativa {
 
         //------------------------------------------------------------------
         //Obtiene la lista de los tipos de verso o versificaciones existentes en la BD 
-        $statement = "SELECT id_versificacion, tipo_verso FROM cat_versificacion order by tipo_verso;";
+        $statement = "SELECT id_versificacion, CONCAT(UPPER(LEFT(tipo_verso,1)),SUBSTR(tipo_verso,2)) tipo_verso FROM cat_versificacion order by tipo_verso;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();

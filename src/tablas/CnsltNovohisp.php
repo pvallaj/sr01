@@ -261,5 +261,37 @@ class CnsltNovohisp {
         return  $res;
     }
 
+    public function obtReferencias($parametros)
+    {
+        
+        /*****************************************************************************************
+            Descripción:
+                obtine la referencia los capitulos a los que pertenece el recurso especifico.
+            Parametros:
+                id. identificador del recurso.
+            Resultado:
+                 lista de los identificadores de capitulos y sus descripciones.
+        ******************************************************************************************/
+        $statement = " SELECT 
+                        r.id, oe.id, oe.texto AS capitulo
+                FROM 
+                    info_oe as oe,
+                    info_refs AS r
+                where
+                        r.id_ref=oe.id
+                        AND r.id=:id";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(':id' => $parametros->id));
+            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            return $res;
+        } catch (\PDOException $e) {
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            return $e->getMessage();
+        }
+        return  $res;
+    }
   
 }

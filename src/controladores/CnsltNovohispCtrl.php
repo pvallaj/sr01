@@ -73,6 +73,9 @@ class CnsltNovohispCtrl {
                 case 'imagenes aleatorias':
                         $response = $this->imagenesAleatorias();
                         break;
+                case 'referencias recurso':
+                        $response = $this->consultaReferenciasRecurso();
+                        break;
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -122,6 +125,17 @@ class CnsltNovohispCtrl {
     private function consultaCapituloTomo()
     {
         $result = $this->Consulta->consultaCapituloTomo($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
+    private function consultaReferenciasRecurso()
+    {
+        $result = $this->Consulta->obtReferencias($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
         $this->resp->message='correcto';
