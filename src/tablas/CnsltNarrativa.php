@@ -831,14 +831,11 @@ WHERE
         texto as t
     WHERE 
         cb.Id_bibliografia=t.Id_bibliografia
-        AND (
-            MATCH (autor, obra, `año`) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-            or
-            MATCH (narratio) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-        );";
+        AND CONCAT(cb.autor,' ',cb.obra,' ',cb.`año`) 
+        LIKE UPPER(:terminos);";
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => '"'.$parametros->terminos.'"'));
+            $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {

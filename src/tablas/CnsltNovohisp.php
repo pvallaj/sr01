@@ -103,23 +103,23 @@ class CnsltNovohisp {
         //$correccion=explode(',',$parametros->capitulo);
         //$correccion=implode("%,%",$correccion);
         $parametros2=\str_replace(", ",",%",$parametros->capitulo);
-            $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
+            $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion,
+            null as titulo, null as autor, null as fecha
             FROM info_oe
             WHERE	
-                etiquetas = '".$parametros->capitulo.", portada'
+                etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=".$parametros->idc."
+				)
             UNION            
-            SELECT id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion
-                    FROM info_oe
-                    WHERE	
-                        etiquetas like '".$parametros2.",%contenido%'
-            union								
-            SELECT id, tipo_recurso as tipo,
-            concat('./assets/fotos/catalogo/',id,'.jpg') as referencia, 
-            enlace as referencia_2, null as texto, null as capitulo, etiquetas,
-            concat(ifnull(titulo,''), ifnull(CONCAT(', ', descripcion),'')) descripcion
-                    FROM recursos_mmd
-                    WHERE	
-                        etiquetas like '".$parametros2."';";
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=".$parametros->idc.";";
         error_log("Sentencia: ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);

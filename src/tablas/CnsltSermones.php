@@ -559,15 +559,12 @@ class CnsltSermones {
         sermones s
     where
         a.id_autor=s.id_autor
-		  AND (
-				MATCH (Autor_apellido, Autor_nombre, Autor_particula) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-				or
-				MATCH (titulo) AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-			);";
+        AND  upper(CONCAT( a.autor_nombre,' ', ifnull(concat(a.autor_particula,' '),''),a.autor_apellido,' ', s.titulo)) 
+        LIKE UPPER(:terminos);";
             //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(':terminos' => '"'.$parametros->terminos.'"'));
+            $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
