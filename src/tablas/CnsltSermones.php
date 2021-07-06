@@ -43,7 +43,7 @@ class CnsltSermones {
         /*****************************************************************************************
         * Obtiene la lista de autores
         ******************************************************************************************/
-        $statement = "SELECT distinct a.id_autor, CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor, 
+        $statement = "SELECT distinct a.id_autor, CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor, 
         a.autor_apellido, a.autor_nombre, a.autor_particula
                 FROM 
                     autores AS a,
@@ -51,7 +51,7 @@ class CnsltSermones {
                 WHERE 
                     s.id_autor=a.id_autor
                     AND a.autor_nombre is not null 
-                 order BY CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
+                 order BY CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -76,14 +76,14 @@ class CnsltSermones {
         /*****************************************************************************************
         * Obtiene la lista de autores de preliminares
         ******************************************************************************************/
-        $statement = "SELECT distinct a.id_autor,  CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor 
+        $statement = "SELECT distinct a.id_autor,  CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,'')) as autor 
         FROM 
             autores AS a,
             sermones_preliminares AS s
         WHERE 
             s.id_autor=a.id_autor
             AND a.autor_nombre is not null 
-        order BY  CONCAT( a.autor_apellido, '; ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
+        order BY  CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,''));";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -198,9 +198,9 @@ class CnsltSermones {
         
         if($parametros->autor!=null){
             /*****************************************************************************************
-            *   Se agrega el filtro del autor cuando viene coomo nombre.
+            *   Se agrega el filtro del autor cuando viene como nombre.
             ******************************************************************************************/
-            $where=$where." and upper(concat_ws(' ', Autor_nombre, Autor_particula, Autor_apellido)) like upper(:autor) 
+            $where=$where." and upper(CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,''))) like upper(:autor) 
                 ";
                 $arr_parametros['autor']='%'.$parametros->autor.'%';
         }

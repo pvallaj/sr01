@@ -103,7 +103,7 @@ class CnsltNovohisp {
         //$correccion=explode(',',$parametros->capitulo);
         //$correccion=implode("%,%",$correccion);
         $parametros2=\str_replace(", ",",%",$parametros->capitulo);
-            $statement = "SELECT 0 id, tipo, referencia, referencia_2, texto, capitulo, etiquetas, descripcion,
+            $statement = "SELECT 0 id, tipo, referencia, referencia_2, referencia_mini, texto, capitulo, etiquetas, descripcion,
             null as titulo, null as autor, null as fecha
             FROM info_oe
             WHERE	
@@ -111,7 +111,7 @@ class CnsltNovohisp {
                 SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=".$parametros->idc."
 				)
             UNION            
-            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
 				oe.titulo, oe.autor, oe.fecha
             FROM 
 					info_oe AS oe,
@@ -149,7 +149,7 @@ class CnsltNovohisp {
             Resultado:
                  Una lista con todos los elementos que coinciden con el termino buscado.
         ******************************************************************************************/
-        $statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion, RAND() as orden  
+        $statement = "SELECT id, tipo, referencia, referencia_2, referencia_mini , texto, capitulo, etiquetas, descripcion, RAND() as orden  
         FROM info_oe 
         WHERE 
         MATCH (etiquetas, descripcion, texto, capitulo) 
@@ -157,6 +157,8 @@ class CnsltNovohisp {
         union
         SELECT id, tipo_recurso AS tipo,
         concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
+        null as referencia_2,
+        null as referencia_mini,
         null as texto, capitulo, etiquetas, descripcion , RAND() as orden
         FROM recursos_mmd
         WHERE 
@@ -194,28 +196,18 @@ class CnsltNovohisp {
             Resultado:
                  Una lista con todos los elementos que coinciden con el termino buscado.
         ******************************************************************************************/
-        $statement = "SELECT id, tipo, referencia, texto, capitulo, etiquetas, descripcion 
+        $statement = "SELECT 
+            id, tipo, referencia, referencia_2, referencia_mini, texto, capitulo, etiquetas, descripcion,
+            titulo, autor, fecha 
         FROM info_oe 
         WHERE 
         MATCH (etiquetas, descripcion, texto, capitulo) 
-        AGAINST (:terminos IN NATURAL LANGUAGE MODE)
-        union
-        SELECT id, tipo_recurso AS tipo,
-        concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
-        null as texto, capitulo, etiquetas, descripcion 
-        FROM recursos_mmd
-        WHERE 
-            UPPER(titulo) LIKE UPPER(:termino2)
-            OR UPPER(descripcion) LIKE UPPER(:termino2)
-            OR UPPER(ciudad_estado) LIKE UPPER(:termino2)
-            OR UPPER(anio_siglo) LIKE UPPER(:termino2)
-                ORDER BY tipo";
+        AGAINST (:terminos IN NATURAL LANGUAGE MODE)";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                ':terminos' => '"'.$parametros->terminos.'"',
-                ':termino2' => '%'.$parametros->terminos.'%'
+                ':terminos' => '"'.$parametros->terminos.'"'
             ));
 
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -238,15 +230,10 @@ class CnsltNovohisp {
             Resultado:
                  Una lista de N imagenes.
         ******************************************************************************************/
-        $statement = "SELECT referencia, descripcion, etiquetas, tipo 
+        $statement = "SELECT referencia, referencia_2, referencia_mini, descripcion, etiquetas, tipo,
+         titulo, autor, fecha 
         FROM info_oe 
-        WHERE tipo=2 
-        union
-        SELECT 
-            concat('./assets/fotos/catalogo/',id,'.jpg') as referencia,
-            CONCAT(titulo,', ',descripcion) AS descripcion,
-            etiquetas, tipo_recurso AS tipo
-        FROM recursos_mmd
+        WHERE tipo in (1,2,3,4,5,6) and id>=200
         ORDER BY RAND() LIMIT 5;";
 
         try {
