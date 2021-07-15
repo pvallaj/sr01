@@ -103,16 +103,18 @@ class CnsltNovohisp {
         //$correccion=explode(',',$parametros->capitulo);
         //$correccion=implode("%,%",$correccion);
         $parametros2=\str_replace(", ",",%",$parametros->capitulo);
-            $statement = "SELECT 0 id, tipo, referencia, referencia_2, referencia_mini, texto, capitulo, etiquetas, descripcion,
-            null as titulo, null as autor, null as fecha
-            FROM info_oe
+            $statement = "SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
             WHERE	
-                etiquetas = (
+                oe.etiquetas = (
                 SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=".$parametros->idc."
 				)
             UNION            
             SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
-				oe.titulo, oe.autor, oe.fecha
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
             FROM 
 					info_oe AS oe,
 					info_refs AS r
