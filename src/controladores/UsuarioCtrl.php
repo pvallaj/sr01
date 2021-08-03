@@ -293,7 +293,7 @@ class UsuarioCtrl {
 
     private function validatePersona($input)
     {
-        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "logs.txt");
+        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "log.txt");
         if (! isset($input['nombre'])) {
             return false;
         }
@@ -331,18 +331,29 @@ class UsuarioCtrl {
     public function validarToken()
     {
         //if(!array_key_exists('Authorization', getallheaders())) return false;   
-        $token = getallheaders()['Authorization'];
-        //error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
-        if(is_null($token)) return false;
+        if(!isset(getallheaders()['Authorization'])){
+            if(!isset(getallheaders()['authorization'])){
+                error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "log.txt");
+                return false;
+            }else{
+                $token = getallheaders()['authorization'];
+            }
+        }else{
+            $token = getallheaders()['Authorization'];
+        }
 
         $key=getenv('llave');
         try {
             $jwt = JWT::decode($token, $key,array('HS256'));
         } catch (\Throwable $th) {
+            error_log("headers AUTH: token no valido: ".$th.'--'.PHP_EOL, 3, "log.txt");
             return false;
         }
 
-        if($jwt->exp < time()) return false;
+        if($jwt->exp < time()){
+            error_log("headers AUTH: El token expiro".PHP_EOL, 3, "log.txt");
+            return false;
+        } 
         $this->userId=$jwt->data->diusr;
 
         return true;

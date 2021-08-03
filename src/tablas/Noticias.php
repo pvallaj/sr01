@@ -1,5 +1,6 @@
 <?php
 namespace Src\tablas;
+use PDO;
 
 class Noticias {
 
@@ -26,7 +27,7 @@ class Noticias {
             $rs->message="correcto";
             $rs->resultado=$res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
@@ -48,7 +49,7 @@ class Noticias {
             $rs->message="correcto";
             $rs->resultado=$res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
@@ -69,7 +70,7 @@ class Noticias {
             $rs->message="correcto";
             $rs->resultado=$res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
@@ -81,27 +82,30 @@ class Noticias {
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
 
-        $s_id = $this->db->prepare('SELECT MAX(IFNULL(id,0))+1 as id FROM noticias');
+        $s_id = $this->db->prepare('SELECT IFNULL(MAX(id),0)+1 as id FROM noticias');
         $s_id->execute();
-        $id=$s_id->fetch()['id'];
+        $regs=$s_id->fetch(PDO::FETCH_ASSOC);
+        $id=$regs['id'];
+        error_log("IDN : ".$id." en ".count($regs)."<<<<".PHP_EOL, 3, "log.txt");
+        
 
         $statement = "INSERT INTO noticias(id, titulo, texto, imagen, ligaExterna,  inicio, termino) 
         values(:id, :titulo, :texto, :imagen, :ligaExterna,  :inicio, :termino);";
-
+        
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(
-            ':id'     =>        $id,
+            $idn = $statement->execute(array(
+            ':id'   =>          $id,
             ':titulo' =>        $p->titulo,
             ':texto' =>         $p->texto,
-            ':imagen' =>        $id.'.jpg',
+            ':imagen' =>        $id.".jpg",
             ':ligaExterna' =>   isset($p->ligaExterna)?$p->ligaExterna:null,
             ':inicio' =>        $p->inicio,
             ':termino' =>       $p->termino,
             ));
-            
+
             if($p->nombre_archivo){
-                $directorio = "img_noticias/"; 
+                $directorio = "/var/www/html/hlmnovohispana/api/img_noticias/"; 
                 $data = explode(',', $p->file);
                 $contenido = base64_decode($data[1]);
                 $file=fopen($directorio.$id.'.jpg','wb');
@@ -113,10 +117,11 @@ class Noticias {
             $rs->message="correcto";
             
         } catch (\Exception $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
+
         return  $rs;
     }
 
@@ -132,7 +137,7 @@ class Noticias {
                     unlink(realpath($ruta_archivo));
                 }
             } catch (\Throwable $th) {
-                error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "logs.txt");
+                error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "log.txt");
             }
 
             $directorio = "img_noticias/"; 
@@ -169,7 +174,7 @@ class Noticias {
             
 
         } catch (\PDOException $e) {
-            error_log("ERROR ACT imagen: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR ACT imagen: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
@@ -189,19 +194,19 @@ class Noticias {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
 
         try {
             $ruta='./img_noticias/';
-            error_log("Imagen a borrar: ".realpath($ruta.$id.'_'.$res[0]['imagen']).PHP_EOL, 3, "logs.txt");
+            error_log("Imagen a borrar: ".realpath($ruta.$id.'_'.$res[0]['imagen']).PHP_EOL, 3, "log.txt");
             
             if (file_exists(realpath($ruta.$id.'_'.$res[0]['imagen']))) {
                 unlink(realpath($ruta.$id.'_'.$res[0]['imagen']));
              }
         } catch (\Throwable $th) {
-            error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "log.txt");
         }
 
         $statement = "DELETE FROM noticias where id=:id;";
@@ -213,7 +218,7 @@ class Noticias {
             $rs->message="El registro de noticia fue eliminado exitosamente";
             
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             $rs->ok=false;
             $rs->message="Error interno. Favor de revisar el log";
         }
@@ -232,10 +237,25 @@ class Noticias {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
     }
   
+    public function crearNoticiaPrueba($p)
+    {
+        $rs=new \stdClass();
+        $rs->resultado=new \stdClass();
+
+        $s_id = $this->db->prepare('SELECT MAX(IFNULL(id,0))+1 as id FROM noticias');
+        $s_id->execute();
+        $regs=$s_id->fetch(PDO::FETCH_ASSOC);
+        print_r($regs);
+        $id=$regs['id'];
+        error_log("IDN : ".$id." en ".count($regs)."<<<<".PHP_EOL, 3, "log.txt");
+        
+
+        return  $rs;
+    }
 }

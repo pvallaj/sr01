@@ -59,7 +59,7 @@ class UsuarioIF {
                 usuarios
             WHERE correo = ?;
         ";
-        //error_log("USUARIOS: ".$usuario.PHP_EOL, 3, "logs.txt");
+        //error_log("USUARIOS: ".$usuario.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array($usuario));
@@ -81,7 +81,7 @@ class UsuarioIF {
                 (:nombre, :paterno, :materno, :correo, :role, :contrasena, :telefono);
         ";
         $hash = password_hash($input['contrasena'], PASSWORD_DEFAULT, [15]);
-        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "logs.txt");
+        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
@@ -138,7 +138,7 @@ class UsuarioIF {
                     'correo' => $datos['correo'] ,
                     'role' => $datos['role']
                 ));
-                //error_log("USUARIOS: Sin contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+                //error_log("USUARIOS: Sin contraseña ".$datos['contrasena'].PHP_EOL, 3, "log.txt");
             }else{
                 $statement->execute(array(
                     'id' => (int) $datos['id'],
@@ -149,7 +149,7 @@ class UsuarioIF {
                     'role' => $datos['role'] ,
                     'contrasena' => $hash ,
                 ));
-                //error_log("USUARIOS: CON contraseña ".$datos['contrasena'].PHP_EOL, 3, "logs.txt");
+                //error_log("USUARIOS: CON contraseña ".$datos['contrasena'].PHP_EOL, 3, "log.txt");
             }
             return $statement->rowCount();
         } catch (\PDOException $e) {

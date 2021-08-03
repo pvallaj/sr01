@@ -36,7 +36,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         "PRECAUCION: ".PHP_EOL.
         $message.PHP_EOL.
         $filename.PHP_EOL.
-        $lineno.PHP_EOL, 3, "logs.txt");
+        $lineno.PHP_EOL, 3, "log.txt");
   }
   if (error_reporting() & $severity) {
     //throw new ErrorException($message, 0, $severity, $filename, $lineno);
@@ -44,7 +44,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         "ERROR: ".PHP_EOL.
         $message.PHP_EOL.
         $filename.PHP_EOL.
-        $lineno.PHP_EOL, 3, "logs.txt");
+        $lineno.PHP_EOL, 3, "log.txt");
   }
 }
 
@@ -59,7 +59,7 @@ if($parametros==null){
 
 $Util = new Util($dbSys);
 $Util->regEvento($parametros['cn']);
-error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "logs.txt");
+error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "log.txt");
 switch ($parametros['cn']->seccion) {
     case 'usuarios':
         $controller = new UsuarioCtrl($dbSys, null, null);
@@ -95,21 +95,18 @@ switch ($parametros['cn']->seccion) {
         $controller->procesa();
         break;
     case 'sermones':
-        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltSermonesCtrl($dbSNH, $requestMethod);
         $controller->procesa();
         break;
     case 'novohisp':
-        //error_log("cnovohisp 11. Recibiendo peticion de novohisp ".PHP_EOL, 3, "logs.txt");
         $catalogo = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltNovohispCtrl($dbSys,$dbNNH, $dbSNH, $requestMethod);
         $controller->procesa();
         break;
     case 'noticias':
-        //error_log("csermones 10. Recibiendo peticion de sermones ".PHP_EOL, 3, "c:\\log\\logs.txt");
         $controller = new NoticiasCtrl($dbSys, $parametros['cn']);
         $controller->procesa();
         break;

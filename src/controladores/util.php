@@ -36,7 +36,7 @@ class Util {
             }
             
         } catch (\PDOException $e) {
-            error_log("ERROR: al crear el registro".PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: al crear el registro".PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
 

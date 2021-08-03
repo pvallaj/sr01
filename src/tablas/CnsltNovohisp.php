@@ -37,7 +37,7 @@ class CnsltNovohisp {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -67,7 +67,7 @@ class CnsltNovohisp {
             $statement->execute();
             $resultado->estructura = $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
 
@@ -81,7 +81,7 @@ class CnsltNovohisp {
             $statement->execute();
             $resultado->imagenes = $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
 
@@ -122,13 +122,13 @@ class CnsltNovohisp {
 					oe.id=r.id
                     and oe.tipo in (1,2,3,4,5,6)
 					AND r.id_ref=".$parametros->idc.";";
-        error_log("Sentencia: ".$statement.PHP_EOL, 3, "logs.txt");
+        error_log("Sentencia: ".$statement.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $resultado->capitulo = $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
 
@@ -176,7 +176,7 @@ class CnsltNovohisp {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -215,7 +215,7 @@ class CnsltNovohisp {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -244,7 +244,7 @@ class CnsltNovohisp {
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -277,7 +277,7 @@ class CnsltNovohisp {
 
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;

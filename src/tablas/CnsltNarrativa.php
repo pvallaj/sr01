@@ -696,14 +696,14 @@ FROM
 WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
         AND t.id_texto=sa.id_texto";
-        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -730,14 +730,14 @@ WHERE
         WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
         AND t.id_texto=v.id_texto";
-        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -766,14 +766,14 @@ WHERE
         cat_bibliografia cb
         WHERE 
         t.Id_bibliografia=cb.Id_bibliografia";
-        //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+        //error_log("NVH : ".$statement.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;
@@ -839,7 +839,7 @@ WHERE
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
         return  $res;

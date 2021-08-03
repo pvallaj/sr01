@@ -349,7 +349,7 @@ class CnsltSermones {
             
             error_log("CnslSermones. ----
             ".$statement.'
-            ----'.PHP_EOL, 3, "logs.txt");
+            ----'.PHP_EOL, 3, "log.txt");
             $statement = $this->db->prepare($statement);
             if(count($arr_parametros)>0)
                 $statement->execute($arr_parametros);
@@ -561,14 +561,14 @@ class CnsltSermones {
         a.id_autor=s.id_autor
         AND  upper(CONCAT( a.autor_nombre,' ', ifnull(concat(a.autor_particula,' '),''),a.autor_apellido,' ', s.titulo)) 
         LIKE UPPER(:terminos);";
-            //error_log("NVH : ".$statement.PHP_EOL, 3, "logs.txt");
+            //error_log("NVH : ".$statement.PHP_EOL, 3, "log.txt");
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));
             $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $res;
         } catch (\PDOException $e) {
-            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "logs.txt");
+            error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return null;
         }
         return  $res;

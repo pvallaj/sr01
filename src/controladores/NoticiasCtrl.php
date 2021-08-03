@@ -33,7 +33,8 @@ class NoticiasCtrl {
     {
         if(
             $this->parametros->accion!='obtener todas las noticias activas' &&
-            $this->parametros->accion!='obtener Noticia'
+            $this->parametros->accion!='obtener Noticia' &&
+            $this->parametros->accion!='crear Noticia Prueba'
         ){
             //validar autorización
             if(!$this->validarToken()){
@@ -46,7 +47,7 @@ class NoticiasCtrl {
                 return;
             }
         }
-        //error_log("Se valido el token: ".$this->parametros->accion.PHP_EOL, 3, "logs.txt");
+        //error_log("Se valido el token: ".$this->parametros->accion.PHP_EOL, 3, "log.txt");
         switch ($this->parametros->accion ) {
             case 'obtener todas las noticias':
                 $this->resultado(1, $this->Noticias->obtenerTodasNoticias());
@@ -59,6 +60,9 @@ class NoticiasCtrl {
                 break;
             case 'crear Noticia':
                 $this->resultado(1, $this->Noticias->crearNoticia($this->parametros->parametros));
+                break;
+            case 'crear Noticia Prueba':
+                $this->resultado(1, $this->Noticias->crearNoticiaPrueba($this->parametros->parametros));
                 break;
             case 'actualizar Noticia':
                 $this->resultado(1, $this->Noticias->actualizarNoticia($this->parametros->parametros));
@@ -94,27 +98,30 @@ class NoticiasCtrl {
     }
   
     public function validarToken()
-    {
-        //if(!array_key_exists('Authorization', getallheaders())) return false;   
-        $token = getallheaders()['authorization'];
-        if(is_null($token)) $token = getallheaders()['Authorization'];
-        
-        error_log("headers AUTH: ".$token.PHP_EOL, 3, "logs.txt");
-        if(is_null($token)){
-            error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "logs.txt");
-            return false;
-        } 
+    { 
 
+
+        if(!isset(getallheaders()['Authorization'])){
+            if(!isset(getallheaders()['authorization'])){
+                error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "log.txt");
+                return false;
+            }else{
+                $token = getallheaders()['authorization'];
+            }
+        }else{
+            $token = getallheaders()['Authorization'];
+        }
+        error_log("headers AUTH: ".$token.PHP_EOL, 3, "log.txt");
         $key=getenv('llave');
         try {
             $jwt = JWT::decode($token, $key,array('HS256'));
         } catch (\Throwable $th) {
-            error_log("headers AUTH: token no valido: ".$th.'--'.PHP_EOL, 3, "logs.txt");
+            error_log("headers AUTH: token no valido: ".$th.'--'.PHP_EOL, 3, "log.txt");
             return false;
         }
 
         if($jwt->exp < time()){
-            error_log("headers AUTH: El token expiro".PHP_EOL, 3, "logs.txt");
+            error_log("headers AUTH: El token expiro".PHP_EOL, 3, "log.txt");
             return false;
         } 
         $this->userId=$jwt->data->diusr;
