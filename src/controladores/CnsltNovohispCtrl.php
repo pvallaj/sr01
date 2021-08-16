@@ -71,11 +71,15 @@ class CnsltNovohispCtrl {
                     $response = $this->buscar();
                     break;
                 case 'imagenes aleatorias':
-                        $response = $this->imagenesAleatorias();
-                        break;
+                    $response = $this->imagenesAleatorias();
+                    break;
                 case 'referencias recurso':
-                        $response = $this->consultaReferenciasRecurso();
-                        break;
+                    $response = $this->consultaReferenciasRecurso();
+                    break;
+                case 'tomos':
+                    $response = $this->consultaTomos();
+                    break;
+
                 default:
                     $response = $this->notFoundResponse();
                     break;
@@ -154,6 +158,18 @@ class CnsltNovohispCtrl {
         $response['body'] = json_encode($this->resp);
         return $response;
     }
+
+    private function consultaTomos()
+    {
+        $result = $this->Consulta->consultaTomos($this->parametros->parametros);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $this->resp->ok='true';
+        $this->resp->message='correcto';
+        $this->resp->resultado=$result;
+        $response['body'] = json_encode($this->resp);
+        return $response;
+    }
+
     private function buscar()
     {
         $rOE = $this->Consulta->buscar($this->parametros->parametros);

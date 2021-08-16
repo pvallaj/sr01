@@ -1,38 +1,19 @@
 inicio: noticias
->>cache-control --> max-age=0
->>sec-fetch-site --> same-origin
->>sec-fetch-mode --> cors
->>sec-fetch-dest --> empty
->>referer --> http://localhost:4200/
->>connection --> close
->>origin --> http://localhost:4200
->>content-length --> 85
->>authorization --> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mjc5MDQwMjgsImV4cCI6MTYyNzk5MDQyOCwiZGF0YSI6eyJ1c3IiOiJwdmFsbGFqQGdtYWlsLmNvbSIsImRpdXNyIjoiMSIsIm5vbWJyZSI6InBhdWxpbm8gdmFsbGFkYXJlcyBqdXN0byJ9fQ.-GbrWnQqFR2gJ5VTxGdZVlFQjgR0_NRyv_LKlZJQj88
->>content-type --> application/x-www-form-urlencoded; charset=UTF-8
->>content --> application/json
->>accept-encoding --> gzip, deflate
->>accept-language --> en-US,en;q=0.5
->>accept --> application/json, text/plain, */*
->>user-agent --> Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0
->>host --> 127.0.0.1:8000
-headers AUTH: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mjc5MDQwMjgsImV4cCI6MTYyNzk5MDQyOCwiZGF0YSI6eyJ1c3IiOiJwdmFsbGFqQGdtYWlsLmNvbSIsImRpdXNyIjoiMSIsIm5vbWJyZSI6InBhdWxpbm8gdmFsbGFkYXJlcyBqdXN0byJ9fQ.-GbrWnQqFR2gJ5VTxGdZVlFQjgR0_NRyv_LKlZJQj88
-inicio: usuarios
-ERROR: 
-Undefined variable: cabecera
-C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\UsuarioCtrl.php
-339
-ERROR: 
-Trying to access array offset on value of type null
-C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\UsuarioCtrl.php
-339
-headers AUTH: token no valido: UnexpectedValueException: Wrong number of segments in C:\proyectos\UNAM\codigo\servidor2\sr01\vendor\firebase\php-jwt\src\JWT.php:83
-Stack trace:
-#0 C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\UsuarioCtrl.php(347): Firebase\JWT\JWT::decode(NULL, '(((((LLAVE$$$$l...', Array)
-#1 C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\UsuarioCtrl.php(158): Src\controladores\UsuarioCtrl->validarToken()
-#2 C:\proyectos\UNAM\codigo\servidor2\sr01\public\api\index.php(66): Src\controladores\UsuarioCtrl->usuario()
-#3 {main}--
-inicio: usuarios
-inicio: usuarios
-inicio: usuarios
-inicio: usuarios
-inicio: usuarios
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp

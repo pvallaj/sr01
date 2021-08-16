@@ -114,12 +114,12 @@ class UsuarioCtrl {
         //var_dump($input);
         if ( !$usuario) {
             $this->resp->ok='false';
-            $this->resp->message='Usuario / o contraseña incorrectos 1';
+            $this->resp->message='Usuario / o contraseña incorrectos ';
             $this->resp->resultado=null;
             
         }else{
             if(!password_verify($input['contrasena'], $usuario[0]['contrasena'])){
-                $this->resp->message='Usuario / o contraseña incorrectos 2';
+                $this->resp->message='Usuario / o contraseña incorrectos ';
                 $this->resp->ok='false';
             }else{
                 $this->resp->message='Registro exitoso';
@@ -155,14 +155,16 @@ class UsuarioCtrl {
     //Usuario
     public function usuario(){
         $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
-        if(!$this->validarToken() && $input['accion']!= 'acceso'){
-            $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-            $this->resp->ok='false';
-            $this->resp->message='Sesion no valida';
-            $this->resp->resultado=null;
-            $response['body'] = json_encode($this->resp);
-            echo $response['body'];
-            return $response; 
+        if($input['accion']!= 'crear'){
+            if(!$this->validarToken() && $input['accion']!= 'acceso'){
+                $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
+                $this->resp->ok='false';
+                $this->resp->message='Sesion no valida';
+                $this->resp->resultado=null;
+                $response['body'] = json_encode($this->resp);
+                echo $response['body'];
+                return $response; 
+            }
         }
        
         switch ($input['accion'] ) {

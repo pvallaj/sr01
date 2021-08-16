@@ -23,24 +23,35 @@ class CnsltNovohisp {
     }
 
 
-    public function consultaEstructura()
+    public function consultaTomos()
     {
         /*****************************************************************************************
-        * Obtiene la estructura de la obra escrita, del primer volumen siglo XVI.
-        * Nota. Actualmente no se usa.
+        * Obtiene los tomos que componen cada obra.
+        * 
         ******************************************************************************************/
-        $statement = "SELECT valor FROM informacion WHERE id=1;";
-
+        $resultado= (object)null;
         try {
+            $statement = "SELECT obra, tomo, desc_tomo FROM tomos where obra='XVI';";
             $statement = $this->db->prepare($statement);
             $statement->execute();
-            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $res;
+            $resultado->sxvi = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            $statement = "SELECT obra, tomo, desc_tomo FROM tomos where obra='XVII';";
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->sxvii = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            $statement = "SELECT obra, tomo, desc_tomo FROM tomos where obra='XVIII';";
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $resultado->sxviii = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            return $resultado;
         } catch (\PDOException $e) {
             error_log("ERROR: ".$e->getMessage().PHP_EOL, 3, "log.txt");
             return $e->getMessage();
         }
-        return  $res;
+
     }
 
     public function consultaEstructuraXTomo($parametros)
@@ -232,7 +243,7 @@ class CnsltNovohisp {
             Resultado:
                  Una lista de N imagenes.
         ******************************************************************************************/
-        $statement = "SELECT referencia, referencia_2, referencia_mini, descripcion, etiquetas, tipo,
+        $statement = "SELECT id, referencia, referencia_2, referencia_mini, descripcion, etiquetas, tipo,
          titulo, autor, fecha 
         FROM info_oe 
         WHERE tipo in (1,2,3,4,5,6) and id>=200
