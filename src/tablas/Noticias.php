@@ -1,19 +1,52 @@
 <?php
+/*****************************************************************************************
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
+******************************************************************************************/
 namespace Src\tablas;
 use PDO;
 
 class Noticias {
-
+    /*****************************************************************************************
+    Descripción:
+        Obtiene la información de la base de datos para la sección de Noticias.
+******************************************************************************************/
     private $db = null;
 
     public function __construct($db)
     {
+        /*****************************************************************************************
+            Descripción:
+                constructr 
+            Parametros:
+                $db. Objeto de conexión a la base de datos. 
+            Resultado:
+                ninguno 
+        ******************************************************************************************/
         $this->db = $db;
     }
 
 
     public function obtenerTodasNoticiasActivas()
     {
+        /*****************************************************************************************
+            Descripción:
+                genera una lista con todas las noticias activas. Las noticias se consideran activas si
+                se encuentran en el periodo de vigencia. 
+            Parametros:
+                Ninguno 
+            Resultado:
+                Una lista con todas las noticias activas. 
+        ******************************************************************************************/
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
         $statement = "SELECT id, titulo, texto, imagen, ligaExterna, DATE_FORMAT(inicio, '%d/%m/%Y') as inicio, DATE_FORMAT(termino, '%d/%m/%Y') as termino
@@ -36,6 +69,14 @@ class Noticias {
 
     public function obtenerTodasNoticias()
     {
+        /*****************************************************************************************
+            Descripción:
+                Genera una lista con todas las noticias, sin importar si estan vigentes o no. 
+            Parametros:
+                Ninguno
+            Resultado:
+                Una lista con las noticias existentes. 
+        ******************************************************************************************/
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
         $statement = "SELECT id, titulo, texto, imagen, ligaExterna, DATE_FORMAT(inicio, '%d/%m/%Y') as inicio, DATE_FORMAT(termino, '%d/%m/%Y') as termino
@@ -58,6 +99,14 @@ class Noticias {
 
     public function obtenerNoticia($id)
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene el detalle de la noticia especificada. 
+            Parametros:
+                id. Es el identificador de la noticia.
+            Resultado:
+                Toda la información relacionada a la noticia especificada.
+        ******************************************************************************************/
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
         $statement = "SELECT * FROM noticias where id=:id;";
@@ -79,6 +128,24 @@ class Noticias {
 
     public function crearNoticia($p)
     {
+        /*****************************************************************************************
+            Descripción:
+                Crea un nuevo registro de noticia en la base de datos.
+            Parametros:
+                p. Contiene todos los datos de la noticia, a saber: 
+                   titulo de la noticia, 
+                   texto de la noticia,
+                   imagen relacionada a la noticia,
+                   liga o direccion URL relacionada a la noticia, 
+                   inicio de vigencia de la noticia,
+                   termino de la vigencia de la noticia
+                El inicio y termino de la vigencia determinan el periodo de tiempo durante el 
+                cual la noticia estará vigente.
+            Resultado:
+                estructura
+                    ok -> con valor true si todo dalio bien y false en otro caso.
+                    message -> 'correcto' si todo salio bien. 
+        ******************************************************************************************/
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
 
@@ -243,19 +310,5 @@ class Noticias {
         return  $res;
     }
   
-    public function crearNoticiaPrueba($p)
-    {
-        $rs=new \stdClass();
-        $rs->resultado=new \stdClass();
 
-        $s_id = $this->db->prepare('SELECT MAX(IFNULL(id,0))+1 as id FROM noticias');
-        $s_id->execute();
-        $regs=$s_id->fetch(PDO::FETCH_ASSOC);
-        print_r($regs);
-        $id=$regs['id'];
-        error_log("IDN : ".$id." en ".count($regs)."<<<<".PHP_EOL, 3, "log.txt");
-        
-
-        return  $rs;
-    }
 }

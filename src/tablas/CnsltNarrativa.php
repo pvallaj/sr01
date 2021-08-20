@@ -1,12 +1,16 @@
 <?php
 /*****************************************************************************************
- Descripción: Permite las consultas sobre la base de datos de "relaciones" o "narrativas".
- Autor: Paulino Valladares Justo.
- Fecha creación: 18/01/2020
- Historial de correcciones:
- -----------------------------------------------------------------------------------------
- Fecha:
- Descripción:
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
 ******************************************************************************************/
 namespace Src\tablas;
 

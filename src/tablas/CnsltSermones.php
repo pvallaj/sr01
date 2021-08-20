@@ -1,18 +1,25 @@
 <?php
 /*****************************************************************************************
-    Descripción:
-        Obtiene la información de la base de datos para la sección de SERMONES.
-    Autor: Paulino Valladares Justo.
-    Fecha creación: 18/01/2020
-    Historial de correcciones:
-    -----------------------------------------------------------------------------------------
-    Fecha:
-    Descripción:
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
 ******************************************************************************************/
+
 namespace Src\tablas;
 
 class CnsltSermones {
-
+    /*****************************************************************************************
+    Descripción:
+        Obtiene la información de la base de datos para la sección de SERMONES.
+******************************************************************************************/
     private $db = null;
 
     public function __construct($db)
@@ -21,7 +28,7 @@ class CnsltSermones {
             Descripción:
                 constructr 
             Parametros:
-                ninguno 
+                $db. Objeto de conexión a la base de datos. 
             Resultado:
                 ninguno 
         ******************************************************************************************/

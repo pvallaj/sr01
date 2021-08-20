@@ -1,23 +1,34 @@
 <?php
 /*****************************************************************************************
- Descripción: Permite las consultas sobre la base de datos de "novohisp" o "sección de obra escrita".
- Autor: Paulino Valladares Justo.
- Fecha creación: 18/01/2020
- Historial de correcciones:
- -----------------------------------------------------------------------------------------
- Fecha:
- Descripción:
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
 ******************************************************************************************/
+
 namespace Src\tablas;
 
 class CnsltNovohisp {
+    /*****************************************************************************************
+    Descripción: Permite las consultas sobre la base de datos de "novohisp" o "sección de obra escrita".
+    Autor: Paulino Valladares Justo.
+    Fecha creación: 18/01/2020
 
+    ******************************************************************************************/
     private $db = null;
 
     public function __construct($db)
     {
         /*****************************************************************************************
-        * Contrcutor del objeto.
+            Descripción: 
+            Contrcutor del objeto. define el objeto de conexión a la base de datos.
         ******************************************************************************************/
         $this->db = $db;
     }
@@ -25,10 +36,14 @@ class CnsltNovohisp {
 
     public function consultaTomos()
     {
-        /*****************************************************************************************
-        * Obtiene los tomos que componen cada obra.
-        * 
-        ******************************************************************************************/
+       /*****************************************************************************************
+           Descripción:
+               Obtiene los tomos que componen toda la obra, agrupados por siglo. 
+           Parametros:
+                Ninguno
+           Resultado:
+                Una estructura agrupada por siglo, de los tomos que componen cada siglo.
+       ******************************************************************************************/
         $resultado= (object)null;
         try {
             $statement = "SELECT obra, tomo, desc_tomo FROM tomos where obra='XVI';";
@@ -207,7 +222,7 @@ class CnsltNovohisp {
             Parametros:
                 terminos. son las parablas a buscar.
             Resultado:
-                 Una lista con todos los elementos que coinciden con el termino buscado.
+                Una lista con todos los elementos que coinciden con el termino buscado.
         ******************************************************************************************/
         $statement = "SELECT 
             id, tipo, referencia, referencia_2, referencia_mini, texto, capitulo, etiquetas, descripcion,
