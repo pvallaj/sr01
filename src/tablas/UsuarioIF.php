@@ -1,17 +1,50 @@
 <?php
+/*****************************************************************************************
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
+******************************************************************************************/
 namespace Src\tablas;
 
 class UsuarioIF {
-
+    /*****************************************************************************************
+    Descripción:
+        Permite realizar todas las operaciones necesarias en la sección de usuarios, es decir:
+        alta, bajas, cambios, etc de usuario.
+******************************************************************************************/
     private $db = null;
 
     public function __construct($db)
     {
+        /*****************************************************************************************
+            Descripción:
+                constructor 
+            Parametros:
+                $db. Objeto de conexión a la base de datos. 
+            Resultado:
+                ninguno 
+        ******************************************************************************************/
         $this->db = $db;
     }
 
     public function obtenerUsuarios()
     {
+        /*****************************************************************************************
+            Descripción:
+                Genera una lista con los usuarios existentes en la base de datos. 
+            Parametros:
+                Ninguno.
+            Resultado:
+                Una lista de los usuarios encontrados. 
+        ******************************************************************************************/
         $statement = "
             SELECT 
                 id, nombre, paterno, materno, correo, role, telefono
@@ -30,6 +63,14 @@ class UsuarioIF {
 
     public function find($id)
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene los datos del usuario especificado por su ID 
+            Parametros:
+                $id. es el identificador del usuario. 
+            Resultado:
+                una estructura que contiene los datos del usuarios, o null en caso de no encontrar datos. 
+        ******************************************************************************************/
         $statement = "
             SELECT 
                 id, nombre, paterno, materno, correo, role
@@ -52,6 +93,14 @@ class UsuarioIF {
 
     public function buscarUsuario($usuario)
     {
+        /*****************************************************************************************
+            Descripción:
+                Obtiene los datos del usuario especificado por su correo 
+            Parametros:
+                $usuario. es el correo del usuario. 
+            Resultado:
+                una estructura que contiene los datos del usuarios, o null en caso de no encontrar datos. 
+        ******************************************************************************************/
         $statement = "
             SELECT 
                 id, nombre, paterno, materno, role, contrasena
@@ -73,7 +122,15 @@ class UsuarioIF {
 
     public function crearUsuario(Array $input)
     {
-
+        /*****************************************************************************************
+            Descripción:
+                Crea un nuevo registro de usuario. 
+            Parametros:
+                $input. es una estructura que contiene toda la información del usuario: nombre, 
+                apellido paterno, apellido materno, correo, role, telefono y contraseña.  
+            Resultado:
+                 El numero de registros insertados, 1 en caso e exito y 0 en caso de error.
+        ******************************************************************************************/
         $statement = "
             INSERT INTO usuarios 
                 (nombre, paterno, materno, correo, role, contrasena,telefono)

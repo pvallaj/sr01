@@ -18,7 +18,8 @@ use PDO;
 class Noticias {
     /*****************************************************************************************
     Descripción:
-        Obtiene la información de la base de datos para la sección de Noticias.
+        Permite realizar todas las operaciones necesarias para los procesos de mantenimiento
+        de la sección de usuarios.
 ******************************************************************************************/
     private $db = null;
 
@@ -26,7 +27,7 @@ class Noticias {
     {
         /*****************************************************************************************
             Descripción:
-                constructr 
+                constructor 
             Parametros:
                 $db. Objeto de conexión a la base de datos. 
             Resultado:
@@ -173,6 +174,7 @@ class Noticias {
 
             if($p->nombre_archivo){
                 $directorio = "/var/www/html/hlmnovohispana/api/img_noticias/"; 
+
                 $data = explode(',', $p->file);
                 $contenido = base64_decode($data[1]);
                 $file=fopen($directorio.$id.'.jpg','wb');
@@ -194,14 +196,26 @@ class Noticias {
 
     public function actualizarNoticia($p)
     {
+        /*****************************************************************************************
+            Descripción:
+                Permite actualizados los datos que forman una noticia, incluyendo la imagen que acompaña
+                la noticia. 
+            Parametros:
+                $p. Contiene todos los datos de la noticia.
+                    La imagen viene en formato de base64 
+            Resultado:
+                estructura
+                    ok -> con valor true si todo dalio bien y false en otro caso.
+                    message -> 'correcto' si todo salio bien.  
+        ******************************************************************************************/
         $rs=new \stdClass();
         
         if($p->nombre_archivo){
 
-            $ruta_archivo="./img_noticias/".$p->id.".jpg";
+            $ruta_archivo="/var/www/html/hlmnovohispana/api/img_noticias/".$p->id.".jpg";
             try {   
-                if (file_exists(realpath($ruta_archivo))) {
-                    unlink(realpath($ruta_archivo));
+                if (file_exists($ruta_archivo)) {
+                    unlink($ruta_archivo);
                 }
             } catch (\Throwable $th) {
                 error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "log.txt");
@@ -252,6 +266,16 @@ class Noticias {
 
     public function eliminarNoticia($id)
     {
+        /*****************************************************************************************
+            Descripción:
+                Permite eliminar la noticia especificada por su ID. 
+            Parametros:
+                $id. Es el identificador de la noticia 
+            Resultado:
+                 estructura
+                    ok -> con valor true si todo dalio bien y false en otro caso.
+                    message -> 'correcto' si todo salio bien.  
+        ******************************************************************************************/
         $rs=new \stdClass();
         $rs->resultado=new \stdClass();
         $statement = "SELECT imagen FROM noticias where id=:id;";
@@ -266,11 +290,10 @@ class Noticias {
         }
 
         try {
-            $ruta='./img_noticias/';
-            error_log("Imagen a borrar: ".realpath($ruta.$id.'_'.$res[0]['imagen']).PHP_EOL, 3, "log.txt");
+            $ruta="/var/www/html/hlmnovohispana/api/img_noticias/";
             
-            if (file_exists(realpath($ruta.$id.'_'.$res[0]['imagen']))) {
-                unlink(realpath($ruta.$id.'_'.$res[0]['imagen']));
+            if (file_exists($ruta.$res[0]['imagen'])) {
+                unlink($ruta.$res[0]['imagen']);
              }
         } catch (\Throwable $th) {
             error_log("ERROR al borrar el archivo: ".$th->getMessage().PHP_EOL, 3, "log.txt");
@@ -295,7 +318,16 @@ class Noticias {
 
     public function cambiarEstado($p)
     {
-        
+         /*****************************************************************************************
+            Descripción:
+                Permite cambiar el estado de la noticia especificada por su ID. 
+            Parametros:
+                $p->id. Es el identificador de la noticia 
+            Resultado:
+                 estructura
+                    ok -> con valor true si todo dalio bien y false en otro caso.
+                    message -> 'correcto' si todo salio bien.  
+        ******************************************************************************************/
         $statement = "UPDATE noticias SET estado=:estado where id=:id;";
 
         try {

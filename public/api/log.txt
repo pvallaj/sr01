@@ -17,3 +17,746 @@ inicio: novohisp
 inicio: noticias
 inicio: novohisp
 inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=73
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=73;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp

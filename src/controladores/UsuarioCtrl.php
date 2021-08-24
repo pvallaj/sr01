@@ -1,4 +1,17 @@
 <?php
+/*****************************************************************************************
+Autor: Paulino Valladares Justo.
+Registro de cambios
+-------------------------------
+Fecha:  
+Versión: 1.0
+Descripción: Liberación.
+-------------------------------
+Fecha:  
+Versión: 
+Descripción: 
+-------------------------------
+******************************************************************************************/
 namespace Src\controladores;
 
 use Firebase\JWT\JWT;
@@ -7,7 +20,11 @@ use Src\tablas\UsuarioIF;
 use Src\controladores\Respuesta;
 
 class UsuarioCtrl {
-
+    /*****************************************************************************************
+        Descripción:
+            Realiza las operaciones necesarias en la sección de usuario, esto es: altas, bajas, 
+            cambios y listados de los usuarios de este sistema.
+    ******************************************************************************************/
     private $db;
     private $requestMethod;
     private $userId;
@@ -17,6 +34,19 @@ class UsuarioCtrl {
 
     public function __construct($db, $requestMethod, $userId)
     {
+        /*****************************************************************************************
+            Descripción: 
+                Constructor, realiza las siguidentes actividades:
+                Define el bariable de conexión a la base de datos. 
+                Extrae los valores de los parametros, definidos en la petición del usuario.
+            Parametros
+                $db. conexión a la base de datos.
+                $requestMethod. es el tipo de requerimiento: POST o GET. En esta aplicación solo se
+                usa el POST 
+                $userId. Es el identificador del usuario.
+            resultado:
+                Ninguno
+        ******************************************************************************************/
         $this->db = $db;
         $this->requestMethod = $requestMethod;
         $this->userId = $userId;
@@ -25,6 +55,14 @@ class UsuarioCtrl {
     }
     
     public function obtHeaders($dato){
+         /*****************************************************************************************
+            Descripción:
+                Busca en los header de la petición, un valor especifico. 
+            Parametros:
+                $dato -> Es el valor buscado. 
+            Resultado:
+                El valor del header buscado, en caso de que exista, si no existe regresa null.
+        ******************************************************************************************/
         foreach(getallheaders() as $campo => $valor){
             if($dato === $campo){
                 return $valor;
@@ -35,6 +73,15 @@ class UsuarioCtrl {
 
     public function processRequest()
     {
+        /*****************************************************************************************
+            Descripción:
+                Determina el proceso a ejecutar de acuerdo a la petición del usuario. 
+            Parametros:
+                token. Es el identificador de la sesión y se toma de la petición del usuario. Si el token
+                       no existe o no es valido, la petición no se realiza. 
+            Resultado:
+                cada proceso genera su propio resultado 
+        ******************************************************************************************/
         switch ($this->requestMethod) {
             case 'GET':            
                 if(!$this->validarToken()){
@@ -77,6 +124,7 @@ class UsuarioCtrl {
 
     private function getUser($id)
     {
+        
         $result = $this->UsuarioIF->find($id);
         if (! $result) {
             return $this->notFoundResponse();
