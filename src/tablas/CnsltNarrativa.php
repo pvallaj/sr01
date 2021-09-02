@@ -46,7 +46,10 @@ class CnsltNarrativa {
         $resultado= (object)null;
         //------------------------------------------------------------------
         //Obtiene la lista de los autores disponibles en la base de datos.
-        $statement = "SELECT distinct autor from cat_bibliografia order by autor;";
+        $statement = "SELECT 
+        id_autor, 
+        CONCAT(autor_apellido, ', ', autor_nombre, IFNULL(concat(' ',particula),''), IFNULL(CONCAT(' (',alias,')'),'')) AS autor
+        FROM cat_autor;";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -56,7 +59,15 @@ class CnsltNarrativa {
         }
         //------------------------------------------------------------------
         //Obtiene la lista de las obras existentes en la base de datos.
-        $statement = "SELECT distinct autor, obra from cat_bibliografia;";
+        $statement = "SELECT
+        o.obra, CONCAT(autor_apellido, ', ', autor_nombre, IFNULL(concat(' ',particula),''), IFNULL(CONCAT(' (',alias,')'),'')) AS autor
+    FROM
+    (SELECT
+        ao.id_autor, o.obra
+    FROM
+        cat_obra AS o INNER JOIN tx_autores_obra AS ao ON o.Id_bibliografia=ao.id_obra
+    ) AS o
+        INNER JOIN cat_autor AS a ON a.id_autor=o.id_autor";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
@@ -159,12 +170,12 @@ class CnsltNarrativa {
         ******************************************************************************************/
         $select=" SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion,
-        cb.autor, cb.obra 
+        obt_autor(cb.id_bibliografia) as autor, cb.obra 
         ";
 
         $from=" FROM 
         texto t,
-        cat_bibliografia cb 
+        cat_bibliografia_v cb 
         ";
         
         $where="WHERE 
@@ -176,14 +187,10 @@ class CnsltNarrativa {
             /*****************************************************************************************
             * Cuando existe el filtro de autor, se agrega la parte correpondiente en la consulta.
             ******************************************************************************************/
-            if(strpos($parametros->autor, "','")){
-                $where= $where." and cb.autor in (".$parametros->autor.") 
-                ";
-            }else{
-                $where= $where." and cb.autor=:autor 
+            $where= $where."and cb.autor_c =:autor 
                 ";
                 $arr_parametros['autor']= $parametros->autor;
-            }
+            
         }
         if($parametros->obra != null ){
             /*****************************************************************************************
@@ -332,7 +339,7 @@ class CnsltNarrativa {
         $statement=" SELECT COUNT(*) total
          FROM 
         texto t,
-        cat_bibliografia cb 
+        cat_bibliografia_v cb 
         WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
         ";
@@ -378,7 +385,7 @@ class CnsltNarrativa {
         $resultado= (object)null;
         $statement = "select
         t.nombre, t.narratio, t.ubicacion,
-        b.autor, b.obra,  
+        obt_autor(b.id_bibliografia) as autor, b.obra,  
         b.editor, 
         b.`ed paleográfica` AS ed_paleo, 
         b.director_coord AS director_cor,
@@ -392,7 +399,7 @@ class CnsltNarrativa {
         b.coleccion AS coleccion,
         b.`pp princeps` AS pp
     FROM 
-        cat_bibliografia AS b,
+        cat_bibliografia_v AS b,
         texto AS t
     WHERE
         b.Id_bibliografia=t.Id_bibliografia
@@ -424,7 +431,7 @@ class CnsltNarrativa {
         p.Archivo_Dig as archivo_dig,
         b.`pp princeps` as princeps
     from 
-        cat_bibliografia AS b,
+        cat_bibliografia_v AS b,
         texto AS t,
         cat_princep as p
     where
@@ -679,7 +686,7 @@ class CnsltNarrativa {
         ******************************************************************************************/
         $statement = "SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
-        cb.autor, cb.obra,
+        cb.autor_c as autor, cb.obra,
         sa.gesto_dram_ AS gestos_dramaticos,
         sa.mov_dra_ AS movimientos_dramaticos,
         sa.mov_dra_ AS voz_dramaticos,
@@ -695,7 +702,7 @@ class CnsltNarrativa {
         concat_ws(sa.gesto_dieg_no, ' ', sa.mov_dieg_no, ' ', sa.voz_dieg_no, ' ', sa.Vista_dieg_no) AS implicitos
 FROM 
         texto t,
-        cat_bibliografia cb,
+        cat_bibliografia_v cb,
         signos_actor sa
 WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
@@ -725,11 +732,11 @@ WHERE
         ******************************************************************************************/
         $statement = "SELECT t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
-        cb.autor, cb.obra,
+        cb.autor_c as autor, cb.obra,
         v.visuales, v.auditivos, v.presente_accion, v.ref_discurso, v.apltvo_recep, v.apltvo_espect
         FROM 
         texto t,
-        cat_bibliografia cb,
+        cat_bibliografia_v cb,
         vinculos v
         WHERE 
         t.Id_bibliografia=cb.Id_bibliografia
@@ -760,14 +767,14 @@ WHERE
         $statement = "SELECT 
         t.id_texto,
         t.nombre, t.narratio, t.ubicacion, t.ubicacion,
-        cb.autor, cb.obra,
+        cb.autor_c as autor, cb.obra,
         t.argumento, t.accion_dramatica, t.marco_anterior, t.marco_posterior,t.formula_apertura, 
         t.formula_cierre,
         concat_ws(t.esp_dram_abierto,'\n ', t.esp_dram_cerrado) AS tiempo, 
         concat_ws(t.esp_dieg_abierto,'\n ', t.esp_dieg_cerrado) AS tiempo_referido
         FROM 
         texto t,
-        cat_bibliografia cb
+        cat_bibliografia_v cb
         WHERE 
         t.Id_bibliografia=cb.Id_bibliografia";
         //error_log("NVH : ".$statement.PHP_EOL, 3, "log.txt");
@@ -829,14 +836,17 @@ WHERE
     $statement = "SELECT 
       t.id_texto,
       t.nombre, t.narratio, t.ubicacion,
-      cb.autor, cb.obra 
+      obt_autor(cb.id_bibliografia) as autor, cb.obra 
     FROM  
-        cat_bibliografia as cb,
+        cat_bibliografia_v as cb,
         texto as t
     WHERE 
         cb.Id_bibliografia=t.Id_bibliografia
-        AND CONCAT(cb.autor,' ',cb.obra,' ',cb.`año`) 
-        LIKE UPPER(:terminos);";
+        AND (CONCAT(cb.autor_c,' ',cb.obra,' ',cb.`año`) 
+        LIKE UPPER(:terminos)
+        OR
+        CONCAT(cb.autor_d,' ',cb.obra,' ',cb.`año`) 
+        LIKE UPPER(:terminos));";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(':terminos' => '%'.$parametros->terminos.'%'));

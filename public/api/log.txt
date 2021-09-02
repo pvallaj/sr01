@@ -760,3 +760,199 @@ Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_m
 inicio: novohisp
 inicio: novohisp
 inicio: novohisp
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$autor
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+186
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Undefined property: stdClass::$obra
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\tablas\CnsltNarrativa.php
+195
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+ERROR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 14
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+ERROR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 14
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: novohisp
+inicio: novohisp
+inicio: narrativas
+inicio: narrativas
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: sermones
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
