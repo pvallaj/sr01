@@ -168,7 +168,7 @@ class CnsltNarrativa {
         /*****************************************************************************************
          * Se construye la base de la consulta
         ******************************************************************************************/
-        $select=" SELECT t.id_texto,
+        $select=" SELECT distinct t.id_texto,
         t.nombre, t.narratio, t.ubicacion,
         obt_autor(cb.id_bibliografia) as autor, cb.obra 
         ";
