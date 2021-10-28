@@ -1,0 +1,1885 @@
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=56
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=56;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=58
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=58;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=58
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=58;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=58
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=58;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=58
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=58;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=66
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=66;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=56
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=56;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=63
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=63;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=65
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=65;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=63
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=63;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=66
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=66;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=56
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=56;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: noticias
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=56
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=56;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=58
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=58;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=59
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=59;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=60
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=60;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=61
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=61;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=63
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=63;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=64
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=64;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=65
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=65;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=63
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=63;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=64
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=64;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=65
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=65;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=63
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=63;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=64
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=64;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=65
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=65;
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=66
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=66;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=67
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=67;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=61
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=61;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=79
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=79;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=79
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=79;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=78
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=78;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=79
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=79;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=78
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=78;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=79
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=79;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=79
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=79;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=60
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=60;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=54
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=54;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=56
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=56;
+inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=57
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=57;
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: sermones
+inicio: sermones
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: sermones
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: noticias
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: novohisp
+inicio: narrativas
+inicio: sermones
+inicio: sermones
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: sermones
+inicio: sermones
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltSermonesCtrl.php
+141
+inicio: sermones
+inicio: sermones
+inicio: sermones
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltSermonesCtrl.php
+141
+inicio: sermones
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: sermones
+inicio: sermones
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltSermonesCtrl.php
+141
+inicio: sermones
+inicio: sermones
+inicio: sermones
+inicio: narrativas
+inicio: narrativas
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltNarrativaCtrl.php
+172
+inicio: narrativas
+inicio: narrativas
+inicio: sermones
+inicio: sermones
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+C:\proyectos\UNAM\codigo\servidor2\sr01\src\controladores\CnsltSermonesCtrl.php
+141
+inicio: sermones

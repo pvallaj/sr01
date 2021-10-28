@@ -225,8 +225,8 @@ class CnsltNovohisp {
                 Una lista con todos los elementos que coinciden con el termino buscado.
         ******************************************************************************************/
         $statement = "SELECT 
-            id, tipo, referencia, referencia_2, referencia_mini, texto, capitulo, etiquetas, descripcion,
-            titulo, autor, fecha 
+            id, tipo, referencia, referencia_2, ifnull(referencia_mini, referencia) referencia_mini, texto, capitulo, etiquetas, descripcion,
+            ifnull(titulo, texto) titulo, autor, fecha 
         FROM info_oe 
         WHERE 
         MATCH (etiquetas, descripcion, texto, capitulo) 
