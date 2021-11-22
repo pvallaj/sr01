@@ -19,7 +19,7 @@ use Src\controladores\Respuesta;
 class CnsltSermonesCtrl {
     /*****************************************************************************************
         Descripción:
-            Esta clase ejecuta los procesos relacionados a la sección de sermones de proyecto.     
+            Esta clase ejecuta los procesos relacionados a la sección de sermones de proyecto.
                      
     ******************************************************************************************/
     private $db;
@@ -54,7 +54,7 @@ class CnsltSermonesCtrl {
             //$resultado['accion']=$ptrms['cn']->accion;
             if(strpos($this->parametros['cn']->accion, ':')){
                 $this->parametros=explode(':',$this->parametros['cn']->accion);
-                $this->accion=$datos[0];
+                //$this->accion=$datos[0];
             }else{
                 $this->accion=$this->parametros['cn']->accion;
             }
@@ -105,7 +105,7 @@ class CnsltSermonesCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                ejecuta el proceso que obtiene los cátalogos que el usuario usara en sus consultas
+                ejecuta el proceso que obtiene los catálogos que el usuario usara en sus consultas
                 a la base de datos de sermones. 
             Parametros:
                  Ninguno.
@@ -150,10 +150,10 @@ class CnsltSermonesCtrl {
                 Ejecuta el proceso que obtiene toda la información relacionada al sermón seleccionado 
                 por el usuario 
             Parametros:
-                identificador del sermón seleccionado. viene en la petición del usuario y  fue previamente 
+                Identificador del sermón seleccionado. viene en la petición del usuario y  fue previamente 
                 procesado por el constructor de está clase. 
             Resultado:
-                una estructura con la información del sermón especificado.
+                Una estructura con la información del sermón especificado.
         ******************************************************************************************/
         $result = $this->ConsultaSermones->consultaDetalleSermon($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';

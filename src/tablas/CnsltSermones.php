@@ -18,7 +18,7 @@ namespace Src\tablas;
 class CnsltSermones {
     /*****************************************************************************************
     Descripción:
-        Obtiene la información de la base de datos para la sección de SERMONES.
+        Esta clase contiene la definición de todas las operaciones relacionadas a la consulta a la base de datos de “sermones”.
 ******************************************************************************************/
     private $db = null;
 
@@ -39,7 +39,7 @@ class CnsltSermones {
     {
         /*****************************************************************************************
             Descripción:
-                Obtiene todos los datos necesarios para el formulario de consulta. 
+                Obtiene todos los catálogos que el usuario puede usar como filtros en la consulta de los sermones existentes. 
             Parametros:
                 ninguno
             Resultado:
@@ -400,6 +400,7 @@ class CnsltSermones {
             Parametros:
                 id_sermon. identificador del sermón seleccionado por el usuario.
             Resultado:
+                Una estructura con la información relacionada a un sermón y que está formada por los siguientes datos: 
                 detalle bibliografico del sermón.
                 detalle del libro relacionado al sermón.
                 detalle de los preliminares del sermón.
@@ -513,35 +514,7 @@ class CnsltSermones {
         return $resultado;
     }
 
-    /*public function consultaDetalleCatalogo($parametros)
-    {
-        switch ($parametros->catalogo) {
-            case 'palabras':
-                $statement = "SELECT idPalabra as id, palabra, descrip as descripcion FROM cat_palabras2;";
-                break;
-
-            case 'categoria':
-                    $statement = "select t.id_texto as id, t.nombre, t.narratio 
-                    from 
-                        texto t, 
-                        tx_clasificacion tx
-                    where
-                        t.id_texto=tx.id_texto
-                        and id_clasificacion= :cid ;";
-                    break;
-            default:
-                return null;
-        }
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->execute(array('cid' => $parametros->id));
-            $res = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $res;
-        } catch (\PDOException $e) {
-            return $e->getMessage();
-        }
-    }*/
+    
 
     public function buscar($parametros)
     {
@@ -550,7 +523,7 @@ class CnsltSermones {
                 Realiza la busqueda basada en palabras, se activa cuando el usuario utiliza la 
                 herramienta de "buscar", en la parte superior de la pantalla.
                 La consulta se realiza en forma de "Lenguaje natural", lo que implica que se tomará
-                como coincidente cada palabra de la frace proporcionada, sin considerar mayusculas y minusculas, 
+                como coincidente cada palabra de la frase proporcionada, sin considerar mayusculas y minusculas, 
                 ni acentos.
             Parametros:
                  terminos. son las palabras a buscar.

@@ -22,7 +22,8 @@ use Src\controladores\Respuesta;
 class NoticiasCtrl {
      /*****************************************************************************************
         Descripción:
-            Esta clase ejecuta los procesos relacionados a la sección privada de noticias de proyecto.     
+            Esta clase ejecuta los procesos relacionados a la sección privada de noticias
+            de proyecto,es decir, crear editar y eliminar noticias.
 
     ******************************************************************************************/
     private $db;
@@ -121,7 +122,7 @@ class NoticiasCtrl {
     public function resultado($tipo, $resultado){
         /*****************************************************************************************
             Descripción:
-                Evalua el resultado y genera los encabezados para el tipo de respuesta. 
+                Evalúa el resultado y genera los encabezados para el tipo de respuesta. 
             Parametros:
                 $tipo: 0 para un proceso no existente, 1 para un proceso. 
                 $resultado. Es el resultado a evaluar.
@@ -148,8 +149,8 @@ class NoticiasCtrl {
     { 
         /*****************************************************************************************
             Descripción:
-                Determina si el token en la petición del usuario es valido, es decir, 
-                si esta activo y si fue generado por este servicio. 
+                Determina si el token en la petición del usuario es válido, es decir, 
+                si está activo y si fue generado por este servicio. 
             Parametros:
                 ninguno. Los datos necesarios se toman del encabezado de la petición. 
             Resultado:

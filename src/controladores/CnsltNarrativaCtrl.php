@@ -18,9 +18,9 @@ use Src\controladores\Respuesta;
 
 class CnsltNarrativaCtrl {
     /*****************************************************************************************
-        Descripción:
-            Esta clase ejecuta los procesos relacionados a la sección de relaciones o narrativas de proyecto.     
-                     
+    Descripción:
+    Esta clase ejecuta los procesos relacionados a la sección de relaciones o narrativas.     
+    Obtiene los datos de la petición y ejecuta el proceso adecuado para responder a la solicitud.    
     ******************************************************************************************/
     private $db;
     private $requestMethod;
@@ -33,9 +33,9 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Constructor, realiza las siguidentes actividades.
-                Define el bariable de conexión a la base de datos. 
-                Extrae los valores de los parametros de usuario.
+                Constructor, realiza las siguientes actividades.
+                Define las variables de conexión a la base de datos. 
+                Extrae los valores de los parámetros de usuario.
             Parametros:
                 $db. Objeto de conexión a la base de datos.
                 $requestMethod. es el tipo de requerimiento: POST o GET. En esta aplicación solo se
@@ -55,7 +55,6 @@ class CnsltNarrativaCtrl {
             $resultado['accion']=$this->parametros['cn']->accion;
             if(strpos($this->parametros['cn']->accion, ':')){
                 $this->parametros=explode(':',$this->parametros['cn']->accion);
-                $this->accion=$datos[0];
             }else{
                 $this->accion=$this->parametros['cn']->accion;
             }
@@ -70,7 +69,7 @@ class CnsltNarrativaCtrl {
             Descripción:
                 Busca en los header de la petición, un valor especifico. 
             Parametros:
-                $dato -> Es el valor buscado. 
+                $dato. Es el valor buscado. 
             Resultado:
                 El valor del header buscado, en caso de que exista, si no existe regresa null.
         ******************************************************************************************/
@@ -86,9 +85,9 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                determina que acción se realiza, de acuerdo a los paramentros del usuario. 
+                determina que acción se realiza, de acuerdo a los parámetros del usuario. 
             Parametros:
-                ninguno, los datos vienen del contructor.
+                ninguno, los datos vienen del constructor.
             Resultado:
                 Regresa el resultado definido por cada proceso, en caso de que no se encuentre el proceso
                 regresa un error de 'pagina no encontrada'. 
@@ -131,11 +130,11 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ejecuta el proceso que obtiene los catalogos para la consulta de las "relaciones". 
+                Ejecuta el proceso que obtiene los catálogos para la consulta de las "relaciones". 
             Parametros:
                 Ninguno
             Resultado:
-                Los catalogos de
+                Los catalogos de:
                 * autores.
                 * obras
                 * Palabras clave
@@ -178,9 +177,9 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ontiene toda la información relacionada a la RELACIÓN especificada por el usuario. 
+                Obtiene toda la información relacionada a la RELACIÓN especificada por el usuario. 
             Parametros:
-                Ninguno. Los parametros los toma de la petición del usuario, previamente procesadas 
+                Ninguno. Los parámetros los toma de la petición del usuario, previamente procesadas 
                 por el constructor.
             Resultado:
                 Una estructura con la información de la relación. 
@@ -199,7 +198,7 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ejecuta el proceso para la obtención de la infomación que construira el mapa de signos actorales. 
+                Ejecuta el proceso para la obtención de la información que construirá el mapa de signos actorales. 
             Parametros:
                 Ninguno. 
             Resultado:
@@ -218,7 +217,7 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ejecuta el proceso para la obtención de la infomación que construira el mapa de Vinculos actorales. 
+                Ejecuta el proceso para la obtención de la información que construirá el mapa de Vinculos actorales. 
             Parametros:
                 Ninguno. 
             Resultado:
@@ -237,11 +236,11 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ejecuta el proceso para la obtención de la infomación que construira el mapa de contexto actorales. 
+                Ejecuta el proceso para la obtención de la información que construirá el mapa de contexto. 
             Parametros:
                 Ninguno. 
             Resultado:
-                Una estructura con los contexto actorales.
+                Una estructura con los datos de contexto.
         ******************************************************************************************/
         $result = $this->ConsultaCats->consultaContexto();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -256,11 +255,11 @@ class CnsltNarrativaCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Genera una respuesta de "Pagina no encontrada". para los casos en los que la opción de proceso, no existe.
+                Genera una respuesta de "Página no encontrada". para los casos en los que la opción de proceso, no existe.
             Parametros:
                 Ninguno. 
             Resultado:
-                codigo de pagina no enontrada.
+                Código de página no encontrada.
         ******************************************************************************************/
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;

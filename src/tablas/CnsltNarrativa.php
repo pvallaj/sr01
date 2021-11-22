@@ -18,8 +18,14 @@ class CnsltNarrativa {
 
     private $db = null;
 
-    public function __construct($db)
-    {
+    public function __construct($db){
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Define la conexión a la base de datos.   
+
+        PARAMETROS
+        $db. Es la conexión a la base de datos. 
+        ******************************************************************************************/
         $this->db = $db;
     }
 
@@ -161,7 +167,14 @@ class CnsltNarrativa {
                 clasificacion: Si existe, es el ID de la clasificación.
 
             Resultado:
-                Una estrucutra con la lista de las narrativas 
+                Una estructura con la lista de las narrativas, la estructura contiene la siguiente información: 
+
+                Id_texto. 
+                Nombre. 
+                Narratio. 
+                Ubicación 
+                Autor. 
+                Obra. 
         ******************************************************************************************/
         $arr_parametros = array();
 
@@ -333,7 +346,7 @@ class CnsltNarrativa {
                 ninguno
 
             Resultado:
-                total de registros de relaciones existentes en la bas de datos. 
+                total de registros de relaciones existentes en la base de datos. 
         ******************************************************************************************/
 
         $statement=" SELECT COUNT(*) total

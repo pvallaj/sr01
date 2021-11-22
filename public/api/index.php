@@ -1,10 +1,23 @@
 <?php
-/*
-    configuración del ini
+ /******************************************************************************************
+ DESCRIPCIÓN:
+ Servicio principal. este componente recibe todas las solicitudes de la aplicación "Historia de las literaturas en México"
+ y las distribuye a otros componentes, de acuerdo a la acción que se desea realizar.
+ Todas las peticiones deben tener un elemento llamado "accion", el cual debe tener dos partes,
+ separadas por el carácter ":", el lado izquierdo identifica el componente y el lado derecho identifica
+ la acción que realizara el componente.
+ Cada componente se especializa en una de las siguientes secciones:
+sección privada.
+    Administrador de usuarios.
+    Creación y consulta de noticias
+Sección pública
+    Consulta de las relaciones.
+    Consulta de los sermones.
+    Consulta generales.
 
-    post_max_size = 128M
-    memory_limit = 512M
-*/
+La sección privada requiere que el usuario este registrado y con una sesión activa.
+La parte publica puede ser accedida por todos.
+ ******************************************************************************************/
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Request-Headers: *');
 header("Access-Control-Allow-Headers: Content, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
@@ -39,7 +52,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         $lineno.PHP_EOL, 3, "log.txt");
   }
   if (error_reporting() & $severity) {
-    //throw new ErrorException($message, 0, $severity, $filename, $lineno);
     error_log(
         "ERROR: ".PHP_EOL.
         $message.PHP_EOL.
@@ -59,37 +71,17 @@ if($parametros==null){
 
 $Util = new Util($dbSys);
 $Util->regEvento($parametros['cn']);
-error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "log.txt");
+//error_log("inicio: ".$parametros['cn']->seccion.PHP_EOL, 3, "log.txt");
 switch ($parametros['cn']->seccion) {
     case 'usuarios':
         $controller = new UsuarioCtrl($dbSys, null, null);
         $controller->usuario();
-        break;
-    case 'catalogos':
-        $catalogo = null;
-        if (isset($uri[2])) {
-            $catalogo =  $uri[2];
-        }
-
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $controller = new CnsltCatalogoCtrl($dbNNH, $requestMethod, $catalogo);
-        $controller->procesa();
-        break;
-    case 'detalleCatalogos':
-        $catalogo = null;
-        if (isset($uri[2])) {
-            $catalogo =  $uri[2];   
-        }
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $controller = new CnsltCatalogoCtrl($dbNNH, $requestMethod, $catalogo);
-        $controller->procesaDetalle();
         break;
     case 'narrativas':
         $catalogo = null;
         if (isset($uri[2])) {
             $catalogo =  $uri[2];
         }
-
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $controller = new CnsltNarrativaCtrl($dbNNH, $requestMethod, $catalogo);
         $controller->procesa();
@@ -114,4 +106,4 @@ switch ($parametros['cn']->seccion) {
         header("HTTP/1.1 404 Not Found");
         exit();
 }
-// the user id is, of course, optional and must be a number:
+

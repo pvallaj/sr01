@@ -22,7 +22,7 @@ use Src\controladores\Respuesta;
 class CnsltNovohispCtrl {
     /*****************************************************************************************
         Descripción:
-            Esta clase ejecuta los procesos relacionados a la sección de obra escrita de proyecto.     
+            Esta clase ejecuta los procesos relacionados a la sección de obra escrita de proyecto.
                      
     ******************************************************************************************/
     private $db;
@@ -60,7 +60,7 @@ class CnsltNovohispCtrl {
             $resultado['accion']=$this->parametros['cn']->accion;
             if(strpos($this->parametros['cn']->accion, ':')){
                 $this->parametros=explode(':',$this->parametros['cn']->accion);
-                $this->accion=$datos[0];
+                //$this->accion=$datos[0];
             }else{
                 $this->accion=$this->parametros['cn']->accion;
             }
@@ -101,9 +101,6 @@ class CnsltNovohispCtrl {
         if ($this->requestMethod =='POST'  ){
             
             switch ($this->accion ) {
-                case 'consulta estructura':
-                    $response = $this->consultaEstrucutra();
-                    break;
                 case 'consulta estructura x tomo':
                     $response = $this->consultaEstrucutraXTomo();
                     break;
@@ -144,11 +141,11 @@ class CnsltNovohispCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Obtiene una lista de imagenes, del stock de imagenes, en forma alatoria. 
+                Obtiene una lista de imágenes, del stock de imágenes, en forma aleatoria. 
             Parametros:
-                Ningono. 
-            Resultado:
                 Ninguno. 
+            Resultado:
+                Una lista estructurada con las imágenes e información relacionada a ellas. 
         ******************************************************************************************/
         $result = $this->Consulta->imagenesAleatorias($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -170,7 +167,8 @@ class CnsltNovohispCtrl {
                 Ninguno. Los parametros se obtiene de la petición realizada por el usuario y 
                 previamente procesadas por el constructor de esta clase.
             Resultado:
-                Ninguno. 
+                Una lista estructurada con la información de los capítulos y subcapítulos relacionados al tomo. 
+                Con esta información se construye el índice de tomo con el cual el usuario puede navegar. 
         ******************************************************************************************/
         $result = $this->Consulta->consultaEstructuraXTomo($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -185,10 +183,11 @@ class CnsltNovohispCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Obtiene el detalle del capitulo seleccionado, es decir, su descripción y los recursos relacionados 
+                Obtiene el detalle del capítulo seleccionado, es decir, su descripción y los recursos relacionados 
             Parametros:
                 Ninguno. Los parametros se obtiene de la petición realizada por el usuario y 
-                previamente procesadas por el constructor de esta clase. 
+                previamente procesadas por el constructor de esta clase y se discriben en detalle en el proceso
+                que resuelve la petición. 
             Resultado:
                 Una estructura con la descripción del capitulo y los recursos relacionados al mismo. 
         ******************************************************************************************/
@@ -211,7 +210,7 @@ class CnsltNovohispCtrl {
                 Ninguno. Los parametros se obtiene de la petición realizada por el usuario y 
                 previamente procesadas por el constructor de esta clase. 
             Resultado:
-                Una lista con los capitulos en donde se encuentra el recurso. 
+                Una lista con las referencias del recurso, es decir, los capítulos en donde se encuentra el recurso.
         ******************************************************************************************/
         $result = $this->Consulta->obtReferencias($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -226,11 +225,11 @@ class CnsltNovohispCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Realiza la consulta de los terminos especificados por el usuario.
+                Realiza la consulta de los términos especificados por el usuario. Da funcionalidad a la herramienta de consulta general, en la sección de obra escrita.
             Parametros:
                 Los "terminos", es decir, las palabras especificadas por el usuario. 
             Resultado:
-                Una lista con los recursos relacionados a los terminos especificados por el usuario.
+                Una lista con los recursos relacionados a los términos especificados por el usuario.
         ******************************************************************************************/
         $result = $this->Consulta->consultaInformacionOE($this->parametros->parametros);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -264,7 +263,7 @@ class CnsltNovohispCtrl {
     {
         /*****************************************************************************************
             Descripción:
-                Ejecuta los procesos de consulta de los terminos definidos por el usuarios. La
+                Ejecuta los procesos de consulta de los términos definidos por el usuarios. La
                 Consulta se realiza en las bases de datos de sermones, de relaciones y en la
                 información de obra escrita. 
             Parametros:

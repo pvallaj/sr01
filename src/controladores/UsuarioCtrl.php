@@ -71,60 +71,16 @@ class UsuarioCtrl {
         return null;
     }
 
-    public function processRequest()
-    {
-        /*****************************************************************************************
-            Descripción:
-                Determina el proceso a ejecutar de acuerdo a la petición del usuario. 
-            Parametros:
-                token. Es el identificador de la sesión y se toma de la petición del usuario. Si el token
-                       no existe o no es valido, la petición no se realiza. 
-            Resultado:
-                cada proceso genera su propio resultado 
-        ******************************************************************************************/
-        switch ($this->requestMethod) {
-            case 'GET':            
-                if(!$this->validarToken()){
-                    $response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-                    $this->resp->responde('false', 'Sesion novalida', null);
-                    header($response['status_code_header']);
-                    $response['body'] = json_encode($this->resp);
-                    return $response;
-                }
- 
-                if ($this->userId) {
-                    $response = $this->getUser($this->userId);
-                } else {
-                    $response = $this->getAllUsers();
-                };
-                break;
-            case 'POST':
-                $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
-                if ($input['accion']='actualizar'){
-                    $response = $this->updateUserFromRequest($this->userId);
-                }
-                if ($input['accion']='crear'){
-                    $response = $this->createUserFromRequest();    
-                }
-                break;
-            case 'DELETE':
-                $response = $this->deleteUser($this->userId);
-                break;
-            default:
-                $response = $this->notFoundResponse();
-                break;
-        }
-        header($response['status_code_header']);
-        if ($response['body']) {
-            echo $response['body'];
-        }
-    }
-
-    
-
     private function getUser($id)
     {
-        
+        /******************************************************************************************
+        DESCRIPCIÓN:
+            Obtiene los datos relacionados a un usuario
+        PARAMETROS:
+            $id. es el identificador del usuario a buscar.
+        RESULTADO:
+            Una estructura con los datos encontrados, null en otro caso.
+        ******************************************************************************************/
         $result = $this->UsuarioIF->find($id);
         if (! $result) {
             return $this->notFoundResponse();
@@ -137,12 +93,13 @@ class UsuarioCtrl {
         return $response;
     }
 
-    
-
-    
-
     private function notFoundResponse()
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Genera una respuesta de pagina no encontrada. Se ejecuta cuando no se encontro proceso 
+        asociado a la petición realizada o bien cuando ocurrio un error durante el proceso.
+        ******************************************************************************************/
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
     
         $this->resp->ok='false';
@@ -156,7 +113,14 @@ class UsuarioCtrl {
     //Registro 
     public function registrarAcceso()
     {
-        
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Verifica los datos del usuario (usuario y contraseña) y en caso de ser validas, genera una nueva sesión.
+        PARAMETROS
+        $usuario. Es el nombre del usuario que se desea registrar. En este caso se usa el correo electrónico registrado como usuario.  
+        $contrasena. Es la contraseña registrada por el usuario.  
+        Estos datos vienen en el header de la petición POST. 
+        ******************************************************************************************/
         $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn']['parametros'];
         $usuario = $this->UsuarioIF->buscarUsuario($input['usuario']);
         //var_dump($input);
@@ -202,6 +166,23 @@ class UsuarioCtrl {
     }
     //Usuario
     public function usuario(){
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Determina que acción se realiza, de acuerdo a los parámetros del usuario. 
+        Las acciones a las cuales puede responder este proceso son: 
+
+        'crear'. 
+        'actualizar'. 
+        'Eliminar'. 
+        'cambiar perfil'. 
+        'acceso'. 
+        'obtener usuarios'. 
+        PARAMETROS 
+            accion. Es la acción que desea realizar el usuario. 
+            
+            Cada acción tiene diferentes parámetros, por lo que se explican en cada proceso.  
+
+        ******************************************************************************************/
         $input = ((array) json_decode(file_get_contents('php://input'), TRUE))['cn'];
         if($input['accion']!= 'crear'){
             if(!$this->validarToken() && $input['accion']!= 'acceso'){
@@ -231,11 +212,9 @@ class UsuarioCtrl {
             case 'acceso':
                 $response = $this->registrarAcceso();
                 break;
-
             case 'obtener usuarios':
                 $response = $this->obtenerUsuarios();
                 break;
-            
             default:
                 $response = $this->notFoundResponse();
                 break;
@@ -252,6 +231,16 @@ class UsuarioCtrl {
 
     private function obtenerUsuarios()
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        
+        Genera una lista de los usuarios existentes en la base de datos.
+
+        RESULTADO 
+
+        Una lista estructurada con los usuarios encontrados. 
+
+        ******************************************************************************************/
         $result = $this->UsuarioIF->obtenerUsuarios();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $this->resp->ok='true';
@@ -263,7 +252,11 @@ class UsuarioCtrl {
 
     private function crearUsuario($datos)
     {
-
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Crea un nuevo registro de usuario, validando que no se repita, en este caso el identificador
+        es el correo electronico, es decir, no se puede repetir.
+        ******************************************************************************************/
         if (! $this->validatePersona($datos)) {
             return $this->noProcesable();
         }
@@ -289,6 +282,15 @@ class UsuarioCtrl {
 
     private function actualizarUsuario($parametros)
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Actualiza los datos del usuario por medio del identificador "id".
+        PARAMETROS 
+        Estructura con los datos del usuario que actualizaran los existentes. 
+
+        RESULTADO 
+        Estructura->ok con true si el registro fue exitoso, false si no fue posible crear el nuevo usuario. 
+        ******************************************************************************************/
         $result = $this->UsuarioIF->find($parametros['id']);
         if (! $result) {
             return $this->notFoundResponse();
@@ -313,6 +315,16 @@ class UsuarioCtrl {
 
     private function eliminarUsuario($id)
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Elimina un usuario de la base de usuarios existentes.
+        PARAMETROS 
+        Id. Es el identificador del usuario a eliminar. 
+
+        RESULTADO 
+        Estructura->ok con true si el registro del usuario fue eliminado, false si no fue posible. 
+
+        ******************************************************************************************/
         $result = $this->UsuarioIF->find($id);
         if (! $result) {
             return $this->notFoundResponse();
@@ -328,6 +340,21 @@ class UsuarioCtrl {
 
     private function cambiarRole($id, $role)
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        cambia el rol de un usuario. en este caso solo existen 2 roles posibles: usuario y publicador.
+
+        Un "usuario" es solamente una persona registrada, no tiene permiso de acciones especiales.
+
+        Un "publicador" es un usuario que tiene permisos para administrar las noticias, es decir, para
+        registrar, cambiar o eliminar noticias.
+
+        PARAMETROS 
+        Id. Es el identificador del usuario al cual se le cambiará el rol. 
+
+        RESULTADO 
+        Estructura->ok con true si el registro del usuario fue actualizado en su rol, false si no fue posible. 
+        ******************************************************************************************/
         $result = $this->UsuarioIF->find($id);
         if (! $result) {
             return $this->notFoundResponse();
@@ -343,7 +370,15 @@ class UsuarioCtrl {
 
     private function validatePersona($input)
     {
-        //error_log("USUARIOS: ".$hash.'---'.$input['nombre'].PHP_EOL, 3, "log.txt");
+        /******************************************************************************************
+        DESCRIPCIÓN:
+            Valida que todos los datos de una persona existan.
+        PARAMETROS
+            $input. es una estructura que contiene los datos de una persona.
+        Resultado.
+            true si todos los datos existen, false si falta alguno de los datos.
+        ******************************************************************************************/
+    
         if (! isset($input['nombre'])) {
             return false;
         }
@@ -370,6 +405,12 @@ class UsuarioCtrl {
 
     private function noProcesable()
     {
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        Genera una respuesta de error.
+        Se ejecuta cuando no se encuentra un proceso relacionado a la petición realizada 
+        o cuando ocurre un error durante el proceso.
+        ******************************************************************************************/
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
         $this->resp->ok='false';
         $this->resp->message='información NO VALIDA';
@@ -380,7 +421,13 @@ class UsuarioCtrl {
 
     public function validarToken()
     {
-        //if(!array_key_exists('Authorization', getallheaders())) return false;   
+        /******************************************************************************************
+        DESCRIPCIÓN:
+        verifica si la petición contiene u token llmado "Authorization" y en caso de existir calida 
+        que sea valido.
+        El token es requerido para todas las acciones relacionadas a los usuarios.
+        ******************************************************************************************/
+        
         if(!isset(getallheaders()['Authorization'])){
             if(!isset(getallheaders()['authorization'])){
                 error_log("headers AUTH: Se requiere token y no se encontro".PHP_EOL, 3, "log.txt");

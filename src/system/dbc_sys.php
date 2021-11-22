@@ -2,7 +2,10 @@
 namespace Src\system;
 
 class dbc_sys {
-
+    /******************************************************************************************
+    DESCRIPCIÓN:
+    Crea un objeto de conexión a la base de datos de ""
+    ******************************************************************************************/
     private $dbConnection = null;
 
     public function __construct()
@@ -12,7 +15,6 @@ class dbc_sys {
         $db   = getenv('DB_DATABASE_SYS');
         $user = getenv('DB_USERNAME_SYS');
         $pass = getenv('DB_PASSWORD_SYS');
-        //error_log("SYS ".$host." - ".$port." - ".$db." - ".$user." - ".$pass.PHP_EOL, 3, "c:\\log\\log.txt");
         try {
             $this->dbConnection = new \PDO(
                 "mysql:host=$host;port=$port;charset=utf8mb4;dbname=$db",
