@@ -2088,3 +2088,169 @@ inicio: novohisp
 inicio: novohisp
 inicio: novohisp
 inicio: novohisp
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=53
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=53;
+Sentencia: SELECT 0 id, oe.tipo, oe.referencia, oe.referencia_2, oe.referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+            null as titulo, null as autor, null as fecha, rp.referencia AS referencia_portada
+            FROM 
+					info_oe as oe INNER JOIN 
+					oe_ref_portada as rp ON oe.id=rp.id
+            WHERE	
+                oe.etiquetas = (
+                SELECT replace(etiquetas, 'estructura','portada' ) FROM info_oe WHERE id=71
+				)
+            UNION            
+            SELECT oe.id, oe.tipo, oe.referencia, oe.referencia_2, referencia_mini, oe.texto, oe.capitulo, oe.etiquetas, oe.descripcion,
+				oe.titulo, oe.autor, oe.fecha, null as referencia_portada
+            FROM 
+					info_oe AS oe,
+					info_refs AS r
+            WHERE	
+					oe.id=r.id
+                    and oe.tipo in (1,2,3,4,5,6)
+					AND r.id_ref=71;
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltNarrativaCtrl.php
+171
+ERROR: 
+Undefined property: stdClass::$autor
+/Users/paulinovj/proyectos/unam/sr01/src/tablas/CnsltNarrativa.php
+199
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltNarrativaCtrl.php
+171
+ERROR: 
+Undefined property: stdClass::$autor
+/Users/paulinovj/proyectos/unam/sr01/src/tablas/CnsltNarrativa.php
+199
+ERROR: 
+Undefined property: stdClass::$obra
+/Users/paulinovj/proyectos/unam/sr01/src/tablas/CnsltNarrativa.php
+208
+ERROR: 
+Undefined offset: 2
+/Users/paulinovj/proyectos/unam/sr01/src/tablas/CnsltNarrativa.php
+295
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltNarrativaCtrl.php
+171
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and a.id_autor=:id_autor 
+                 and upper(CONCAT( a.autor_apellido, ', ', a.autor_nombre,' ', ifnull(a.autor_particula,''))) like upper(:autor) 
+                 and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and upper(titulo) like upper(:titulo) 
+                 and s.`Año` between :inicio and :fin 
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año`=:anio
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año`=:anio
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año`=:anio
+                    
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
+CnslSermones. ----
+             SELECT
+        s.id_sermon,
+        a.autor_apellido, a.autor_nombre,  a.autor_particula, a.autor_orden,
+        s.titulo, s.ciudad, s.`Año` as anio
+        FROM
+         autores as a,
+         sermones as s WHERE 
+        a.id_autor=s.id_autor
+         and s.`Año` between :inicio and :fin 
+                     and s.impresor = :impresor 
+                
+            ----
+ERROR: 
+Creating default object from empty value
+/Users/paulinovj/proyectos/unam/sr01/src/controladores/CnsltSermonesCtrl.php
+141
